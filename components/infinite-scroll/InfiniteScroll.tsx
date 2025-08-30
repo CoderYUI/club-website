@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import styles from './InfiniteScroll.module.css';
 
 const InfiniteScroll = () => {
@@ -27,22 +28,22 @@ const InfiniteScroll = () => {
 
   // Sample items for the infinite scroll with club-related content
   const items = [
-    { id: 1, name: 'Workshops' },
-    { id: 2, name: 'Hackathons' },
-    { id: 3, name: 'Tech Talks' },
-    { id: 4, name: 'Projects' },
-    { id: 5, name: 'Mentorship' },
-    { id: 6, name: 'Networking' },
-    { id: 7, name: 'Competitions' },
-    { id: 8, name: 'Resources' },
-    { id: 9, name: 'Tutorials' },
-    { id: 10, name: 'Webinars' },
-    { id: 11, name: 'Bootcamps' },
-    { id: 12, name: 'Challenges' },
-    { id: 13, name: 'Showcases' },
-    { id: 14, name: 'Meetups' },
-    { id: 15, name: 'Seminars' },
-    { id: 16, name: 'Labs' },
+    { id: 1, name: 'Workshops', image: '/images/tutorial1.png' },
+    { id: 2, name: 'Hackathons', image: '/images/hero-image-2.jpg' },
+    { id: 3, name: 'Tech Talks', image: '/images/image2.jpg' },
+    { id: 4, name: 'Projects', image: '/images/image3.jpg' },
+    { id: 5, name: 'Mentorship', image: '/images/image4.jpg' },
+    { id: 6, name: 'Networking', image: '/images/image5.jpg' },
+    { id: 7, name: 'Competitions', image: '/images/image7.jpg' },
+    { id: 8, name: 'Resources', image: '/images/image8.jpg' },
+    { id: 9, name: 'Tutorials', image: '/images/tutorial2.jpg' },
+    { id: 10, name: 'Webinars', image: '/images/image9.jpg' },
+    { id: 11, name: 'Bootcamps', image: '/images/image10.jpg' },
+    { id: 12, name: 'Challenges', image: '/images/image11.jpg' },
+    { id: 13, name: 'Showcases', image: '/images/image12.jpg' },
+    { id: 14, name: 'Meetups', image: '/images/hero-image-3.jpg' },
+    { id: 15, name: 'Seminars', image: '/images/matlab.png' },
+    { id: 16, name: 'Labs', image: '/images/overleaf.png' },
   ];
 
   // Create multiple duplicates for smoother infinite scroll
@@ -66,7 +67,15 @@ const InfiniteScroll = () => {
               className={styles.item}
               onTouchStart={(e) => isMobile && e.stopPropagation()}
             >
-              {item.name}
+              <div className={styles.imageContainer}>
+                <Image 
+                  src={item.image} 
+                  alt={item.name}
+                  fill
+                  sizes="200px"
+                  className={styles.itemImage}
+                />
+              </div>
             </div>
           ))}
         </div>
