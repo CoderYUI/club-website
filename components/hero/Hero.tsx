@@ -93,10 +93,10 @@ export default function Hero() {
     
     // Tell ScrollTrigger to use Lenis as the scroller
     ScrollTrigger.scrollerProxy(document.documentElement, {
-      scrollTop(value) {
-        if (arguments.length) {
-          lenis.scrollTo(value);
-          return value;
+      scrollTop: (value?: number) => {
+        if (arguments.length && value !== undefined) {
+          lenis.scrollTo(value as number);
+          return value as number;
         }
         return lenis.scroll;
       },
