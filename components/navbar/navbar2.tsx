@@ -10,7 +10,6 @@ import gsap from "gsap";
 
 const Navbar2: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isDesktopMenuOpen, setIsDesktopMenuOpen] = useState(false);
   const router = useRouter();
   const [isLinksHovered, setIsLinksHovered] = useState(false);
   const [isNavbarHovered, setIsNavbarHovered] = useState(false);
@@ -18,15 +17,11 @@ const Navbar2: React.FC = () => {
 
   // Refs for GSAP animations
   const navRef = useRef(null);
-  const desktopNavRef = useRef(null);
   const linksRef = useRef([]);
-  const desktopLinksRef = useRef([]);
   const contactRef = useRef(null);
-  const desktopContactRef = useRef(null);
   const topLineRef = useRef(null);
   const bottomLineRef = useRef(null);
   const tl = useRef(null);
-  const desktopTl = useRef(null);
   const iconTL = useRef(null);
   const burgerRef = useRef(null);
   const isOpenRef = useRef(isOpen);
@@ -38,24 +33,18 @@ const Navbar2: React.FC = () => {
 
   // GSAP animations
   useGSAP(() => {
-    // Set initial states for mobile menu
-    gsap.set(navRef.current, { xPercent: 100 });
+    // Set initial states
+    gsap.set(navRef.current, { xPercent: 100, display: 'none' });
     gsap.set([gsap.utils.toArray(linksRef.current), contactRef.current], {
       autoAlpha: 0,
       x: -20,
     });
 
-    // Set initial states for desktop menu
-    gsap.set(desktopNavRef.current, { xPercent: 100 });
-    gsap.set([gsap.utils.toArray(desktopLinksRef.current), desktopContactRef.current], {
-      autoAlpha: 0,
-      x: -20,
-    });
-
-    // Slide in mobile menu animation
+    // Slide in menu animation
     tl.current = gsap
       .timeline({ paused: true })
       .to(navRef.current, {
+        display: 'flex',
         xPercent: 0,
         duration: 1,
         ease: "power3.out",
@@ -73,36 +62,6 @@ const Navbar2: React.FC = () => {
       )
       .to(
         contactRef.current,
-        {
-          autoAlpha: 1,
-          x: 0,
-          duration: 0.5,
-          ease: "power2.out",
-        },
-        "<+0.6"
-      );
-
-    // Slide in desktop menu animation
-    desktopTl.current = gsap
-      .timeline({ paused: true })
-      .to(desktopNavRef.current, {
-        xPercent: 0,
-        duration: 1,
-        ease: "power3.out",
-      })
-      .to(
-        gsap.utils.toArray(desktopLinksRef.current),
-        {
-          autoAlpha: 1,
-          x: 0,
-          duration: 0.5,
-          ease: "power2.out",
-          stagger: 0.1,
-        },
-        "<+0.6"
-      )
-      .to(
-        desktopContactRef.current,
         {
           autoAlpha: 1,
           x: 0,
@@ -137,22 +96,18 @@ const Navbar2: React.FC = () => {
 
   const toggleMenu = () => {
     if (isOpen) {
-      tl.current.reverse();
+      tl.current.reverse().then(() => {
+        if (navRef.current) {
+          gsap.set(navRef.current, { display: 'none' });
+        }
+      });
       iconTL.current.reverse();
     } else {
+      gsap.set(navRef.current, { display: 'flex' });
       tl.current.play();
       iconTL.current.play();
     }
     setIsOpen(!isOpen);
-  };
-
-  const toggleDesktopMenu = () => {
-    if (isDesktopMenuOpen) {
-      desktopTl.current.reverse();
-    } else {
-      desktopTl.current.play();
-    }
-    setIsDesktopMenuOpen(!isDesktopMenuOpen);
   };
 
   const burgerColor = (hovering) => {
@@ -191,7 +146,6 @@ const Navbar2: React.FC = () => {
         }
       }
       setIsOpen(false); // Close mobile menu if open
-      setIsDesktopMenuOpen(false); // Close desktop menu if open
     }
   };
 
@@ -332,102 +286,14 @@ const Navbar2: React.FC = () => {
         </div>
       </nav>
 
-      {/* Desktop Menu with Sliding Animation */}
-      <nav
-        ref={desktopNavRef}
-        className="fixed z-40 flex flex-col justify-between w-1/2 h-[100vh] px-10 uppercase bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 py-20 gap-y-10 right-0 top-0 shadow-2xl border-l-2 border-gray-100 dark:border-gray-800 hidden md:block"
-      >
-        <div className="flex flex-col text-4xl gap-y-4">
-          {navItems.map((item, index) => {
-            return (
-              <div
-                key={item.name}
-                ref={(el) => {
-                  return (desktopLinksRef.current[index] = el);
-                }}
-              >
-                {item.href.startsWith('http') ? (
-                  <a
-                    className="transition-all duration-300 cursor-pointer hover:text-yellow-500 dark:hover:text-yellow-400"
-                    href={item.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => setIsDesktopMenuOpen(false)}
-                  >
-                    {item.name}
-                  </a>
-                ) : (
-                  <Link
-                    className="transition-all duration-300 cursor-pointer hover:text-yellow-500 dark:hover:text-yellow-400"
-                    href={item.href}
-                    onClick={(e) => {
-                      handleScroll(e, item.href);
-                      handleNavigation(e, item.href);
-                      setIsDesktopMenuOpen(false);
-                    }}
-                  >
-                    {item.name}
-                  </Link>
-                )}
-              </div>
-            );
-          })}
-        </div>
-        <div
-          ref={desktopContactRef}
-          className="flex flex-col flex-wrap justify-between gap-8"
-        >
-          <div>
-            <p className="tracking-wider text-gray-500 dark:text-gray-400">Contact</p>
-            <a
-              className="tracking-widest text-xl lowercase text-pretty cursor-pointer transition-all duration-300 hover:text-yellow-500 dark:hover:text-yellow-400"
-              href="mailto:contact@matlablatex.club"
-            >
-              contact@matlablatex.club
-            </a>
-          </div>
-          <div>
-            <p className="tracking-wider text-gray-500 dark:text-gray-400">Social Media</p>
-            <div className="flex flex-col flex-wrap gap-x-4">
-              <a
-                href="https://github.com/matlab-latex-club"
-                target="_blank"
-                className="tracking-widest leading-loose text-xl uppercase text-pretty transition-all duration-300 cursor-pointer hover:text-yellow-500 dark:hover:text-yellow-400"
-              >
-                {"{ "}GitHub{" }"}
-              </a>
-              <a
-                href="https://linkedin.com/company/matlab-latex-club"
-                target="_blank"
-                className="tracking-widest leading-loose text-xl uppercase text-pretty transition-all duration-300 cursor-pointer hover:text-yellow-500 dark:hover:text-yellow-400"
-              >
-                {"{ "}LinkedIn{" }"}
-              </a>
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      {/* Desktop Menu Toggle Button */}
-      <button
-        onClick={toggleDesktopMenu}
-        className="hidden md:block fixed right-10 top-10 z-50 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 focus:outline-none"
-        aria-label="Toggle desktop menu"
-      >
-        <div className="flex flex-col items-center justify-center gap-2 cursor-pointer">
-          <span
-            className={`block w-8 h-0.5 bg-gray-700 dark:bg-gray-300 rounded-full origin-center transition-transform duration-300 ${isDesktopMenuOpen ? 'rotate-45 translate-y-1.5' : ''}`}
-          ></span>
-          <span
-            className={`block w-8 h-0.5 bg-gray-700 dark:bg-gray-300 rounded-full origin-center transition-transform duration-300 ${isDesktopMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}
-          ></span>
-        </div>
-      </button>
-
       {/* Mobile Menu with Sliding Animation */}
       <nav
         ref={navRef}
         className="fixed z-50 flex flex-col justify-between w-[105vw] h-[100vh] px-5 sm:px-10 uppercase py-20 gap-y-10 md:w-1/2 md:left-1/2 md:hidden shadow-2xl border-l-2 border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200"
+        style={{ 
+          xPercent: 100,
+          display: 'none'
+        }}
       >
         {/* Add margin top to avoid navbar overlap */}
         <div className="mt-20"></div>
