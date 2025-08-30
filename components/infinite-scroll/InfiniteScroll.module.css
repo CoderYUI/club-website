@@ -20,8 +20,18 @@
   animation: scroll 40s linear infinite;
 }
 
-.track:hover {
-  animation-play-state: paused;
+/* Only pause on hover for desktop devices */
+@media (hover: hover) and (pointer: fine) {
+  .track:hover {
+    animation-play-state: paused;
+  }
+}
+
+/* Class to ensure continuous scrolling on mobile */
+.noInterrupt {
+  animation-play-state: running !important;
+  pointer-events: none !important;
+  touch-action: none !important;
 }
 
 @keyframes scroll {
