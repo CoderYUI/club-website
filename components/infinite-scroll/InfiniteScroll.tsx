@@ -28,7 +28,7 @@ const InfiniteScroll = () => {
 
   // Sample items for the infinite scroll with club-related content
   const items = [
-    { id: 1, name: 'Workshops', image: '/images/tutorial1.png' },
+    { id: 1, name: 'Workshops', image: '/apple-touch-icon.png' },
     { id: 2, name: 'Hackathons', image: '/images/hero-image-2.jpg' },
     { id: 3, name: 'Tech Talks', image: '/images/image2.jpg' },
     { id: 4, name: 'Projects', image: '/images/image3.jpg' },

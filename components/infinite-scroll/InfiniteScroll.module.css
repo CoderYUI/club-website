@@ -63,7 +63,6 @@
 .item {
   min-width: 200px;
   height: 100px; /* Return to original height */
-  border-radius: 8px;
   margin-right: 20px;
   display: flex;
   flex-direction: column;
@@ -72,8 +71,7 @@
   color: white;
   font-weight: bold;
   font-size: 1.1rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: none;
   flex-shrink: 0;
   background: linear-gradient(135deg, 
     rgba(255,255,255,0.1) 0%,
@@ -90,16 +88,14 @@
     rgba(255,255,255,0.8) 100%
   );
   color: #1f2937; /* gray-800 */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: none;
 }
 
 /* Dark mode specific styles - Darker muted gray background */
 .dark .item {
   background: #1c1c1c; /* Even darker muted gray */
   color: #f9fafb; /* gray-50 */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  border: 1px solid #2c2c2c; /* Slightly lighter gray for border */
+  box-shadow: none;
 }
 
 /* Different accent colors for each item in light mode */
@@ -108,96 +104,80 @@
     #fef2f2 0%,
     #fee2e2 100%
   );
-  border: 1px solid #fecaca;
 }
 .item:nth-child(16n+2) { 
   background: linear-gradient(135deg, 
     #eff6ff 0%,
     #dbeafe 100%
   );
-  border: 1px solid #bfdbfe;
 }
 .item:nth-child(16n+3) { 
   background: linear-gradient(135deg, 
     #f0fdf4 0%,
     #dcfce7 100%
   );
-  border: 1px solid #bbf7d0;
 }
 .item:nth-child(16n+4) { 
   background: linear-gradient(135deg, 
     #fefce8 0%,
     #fef9c3 100%
   );
-  border: 1px solid #fde047;
 }
 .item:nth-child(16n+5) { 
   background: linear-gradient(135deg, 
     #f5f3ff 0%,
     #ede9fe 100%
   );
-  border: 1px solid #ddd6fe;
 }
 .item:nth-child(16n+6) { 
   background: linear-gradient(135deg, 
     #fdf2f8 0%,
     #fce7f3 100%
   );
-  border: 1px solid #fbcfe8;
 }
 .item:nth-child(16n+7) { 
   background: linear-gradient(135deg, 
     #f0f4ff 0%,
     #e0e7ff 100%
   );
-  border: 1px solid #c7d2fe;
 }
 .item:nth-child(16n+8) { 
   background: linear-gradient(135deg, 
     #ecfdf5 0%,
     #d1fae5 100%
   );
-  border: 1px solid #a7f3d0;
 }
 
 /* Different accent colors for each item in dark mode - Using even darker muted grays with slight color tint */
 .dark .item:nth-child(16n+1) { 
   background: #241c1c; /* Even darker muted gray with red tint */
-  border: 1px solid #2c2c2c; 
   color: #fecaca; /* red-200 */
 }
 .dark .item:nth-child(16n+2) { 
   background: #1c1e24; /* Even darker muted gray with blue tint */
-  border: 1px solid #2c2c2c; 
   color: #bfdbfe; /* blue-200 */
 }
 .dark .item:nth-child(16n+3) { 
   background: #1c2420; /* Even darker muted gray with green tint */
-  border: 1px solid #2c2c2c; 
   color: #6ee7b7; /* emerald-200 */
 }
 .dark .item:nth-child(16n+4) { 
   background: #24211c; /* Even darker muted gray with amber tint */
-  border: 1px solid #2c2c2c; 
   color: #fde68a; /* amber-200 */
 }
 .dark .item:nth-child(16n+5) { 
   background: #201c24; /* Even darker muted gray with purple tint */
-  border: 1px solid #2c2c2c; 
   color: #c4b5fd; /* purple-200 */
 }
 .dark .item:nth-child(16n+6) { 
   background: #241c21; /* Even darker muted gray with pink tint */
-  border: 1px solid #2c2c2c; 
   color: #f9a8d4; /* pink-200 */
 }
 .dark .item:nth-child(16n+7) { 
   background: #1d1c24; /* Even darker muted gray with indigo tint */
-  border: 1px solid #2c2c2c; 
   color: #a5b4fc; /* indigo-200 */
 }
 .dark .item:nth-child(16n+8) { 
   background: #1c2421; /* Even darker muted gray with teal tint */
-  border: 1px solid #2c2c2c; 
   color: #5eead4; /* teal-200 */
 }
