@@ -16,14 +16,14 @@ const Navbar2: React.FC = () => {
   const { startTransition } = useStairs();
 
   // Refs for GSAP animations
-  const navRef = useRef(null);
-  const linksRef = useRef([]);
-  const contactRef = useRef(null);
-  const topLineRef = useRef(null);
-  const bottomLineRef = useRef(null);
-  const tl = useRef(null);
-  const iconTL = useRef(null);
-  const burgerRef = useRef(null);
+  const navRef = useRef<HTMLDivElement>(null);
+  const linksRef = useRef<HTMLDivElement[]>([]);
+  const contactRef = useRef<HTMLDivElement>(null);
+  const topLineRef = useRef<HTMLSpanElement>(null);
+  const bottomLineRef = useRef<HTMLSpanElement>(null);
+  const tl = useRef<gsap.core.Timeline | null>(null);
+  const iconTL = useRef<gsap.core.Timeline | null>(null);
+  const burgerRef = useRef<HTMLButtonElement>(null);
   const isOpenRef = useRef(isOpen);
 
   // Update ref when isOpen changes
@@ -34,11 +34,19 @@ const Navbar2: React.FC = () => {
   // GSAP animations
   useGSAP(() => {
     // Set initial states
-    gsap.set(navRef.current, { xPercent: 100, display: 'none' });
-    gsap.set([gsap.utils.toArray(linksRef.current), contactRef.current], {
-      autoAlpha: 0,
-      x: -20,
-    });
+    if (navRef.current) {
+      gsap.set(navRef.current, { xPercent: 100, display: 'none' });
+    }
+    
+    const allLinks = gsap.utils.toArray(linksRef.current);
+    const contactElement = contactRef.current;
+    
+    if (allLinks.length > 0 || contactElement) {
+      gsap.set([allLinks, contactElement].filter(Boolean), {
+        autoAlpha: 0,
+        x: -20,
+      });
+    }
 
     // Slide in menu animation
     tl.current = gsap
@@ -50,7 +58,7 @@ const Navbar2: React.FC = () => {
         ease: "power3.out",
       })
       .to(
-        gsap.utils.toArray(linksRef.current),
+        allLinks,
         {
           autoAlpha: 1,
           x: 0,
@@ -61,7 +69,7 @@ const Navbar2: React.FC = () => {
         "<+0.6"
       )
       .to(
-        contactRef.current,
+        contactElement,
         {
           autoAlpha: 1,
           x: 0,
@@ -72,46 +80,58 @@ const Navbar2: React.FC = () => {
       );
 
     // Hamburger icon animation
-    iconTL.current = gsap
-      .timeline({
-        paused: true,
-      })
-      .to(topLineRef.current, {
-        rotation: 45,
-        y: 4.5,
-        duration: 0.8,
-        ease: "power2.out",
-      })
-      .to(
-        bottomLineRef.current,
-        {
-          rotation: -45,
-          y: -4.5,
+    if (topLineRef.current && bottomLineRef.current) {
+      iconTL.current = gsap
+        .timeline({
+          paused: true,
+        })
+        .to(topLineRef.current, {
+          rotation: 45,
+          y: 4.5,
           duration: 0.8,
           ease: "power2.out",
-        },
-        "<"
-      );
+        })
+        .to(
+          bottomLineRef.current,
+          {
+            rotation: -45,
+            y: -4.5,
+            duration: 0.8,
+            ease: "power2.out",
+          },
+          "<"
+        );
+    }
   }, []);
 
   const toggleMenu = () => {
     if (isOpen) {
-      tl.current.reverse().then(() => {
-        if (navRef.current) {
-          gsap.set(navRef.current, { display: 'none' });
-        }
-      });
-      iconTL.current.reverse();
+      if (tl.current) {
+        tl.current.reverse().then(() => {
+          if (navRef.current) {
+            gsap.set(navRef.current, { display: 'none' });
+          }
+        });
+      }
+      if (iconTL.current) {
+        iconTL.current.reverse();
+      }
     } else {
-      gsap.set(navRef.current, { display: 'flex' });
-      tl.current.play();
-      iconTL.current.play();
+      if (navRef.current) {
+        gsap.set(navRef.current, { display: 'flex' });
+      }
+      if (tl.current) {
+        tl.current.play();
+      }
+      if (iconTL.current) {
+        iconTL.current.play();
+      }
     }
     setIsOpen(!isOpen);
   };
 
-  const burgerColor = (hovering) => {
-    if (isOpen) {
+  const burgerColor = (hovering: boolean) => {
+    if (isOpen && topLineRef.current && bottomLineRef.current) {
       gsap.to([topLineRef.current, bottomLineRef.current], {
         background: hovering ? "#333" : "#666",
         duration: 0.3,
@@ -290,10 +310,6 @@ const Navbar2: React.FC = () => {
       <nav
         ref={navRef}
         className="fixed z-50 flex flex-col justify-between w-[105vw] h-[100vh] px-5 sm:px-10 uppercase py-20 gap-y-10 md:w-1/2 md:left-1/2 md:hidden shadow-2xl border-l-2 border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200"
-        style={{ 
-          xPercent: 100,
-          display: 'none'
-        }}
       >
         {/* Add margin top to avoid navbar overlap */}
         <div className="mt-20"></div>
@@ -304,7 +320,9 @@ const Navbar2: React.FC = () => {
               <div
                 key={item.name}
                 ref={(el) => {
-                  return (linksRef.current[index] = el);
+                  if (el) {
+                    linksRef.current[index] = el;
+                  }
                 }}
               >
                 {item.href.startsWith('http') ? (
