@@ -4,12 +4,14 @@ import MagazineContactSection from '@/components/footer/MagazineContactSection'
 import Hero from '@/components/hero/Hero'
 import ImgeSlider from '@/components/carousel/ImgeSlider'
 import Section4 from '@/components/section/section4'
+import InfiniteScroll from '@/components/infinite-scroll/InfiniteScroll'
 import React from 'react'
 
 export default function page() {
   return (
     <div>
       <Hero/>
+      <InfiniteScroll />
       <ImgeSlider />
       <Section4/>
       <MagazineResearchSection />
