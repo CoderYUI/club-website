@@ -41,10 +41,13 @@ void main() {
         // Show video texture directly in full-screen mode
         finalTexture = videoTexture;
     } else {
-        // Create a sharp transition between image and video
-        // Use a step function for a clean switch
-        float transition = step(0.5, uHoverState);
-        finalTexture = mix(imgTexture, videoTexture, transition);
+        // When hovered (uHoverState > 0.5), show only the video
+        // Otherwise, show only the image
+        if (uHoverState > 0.5) {
+            finalTexture = videoTexture;
+        } else {
+            finalTexture = imgTexture;
+        }
     }
 
     // Add the hover effect color

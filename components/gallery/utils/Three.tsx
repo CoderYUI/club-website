@@ -372,9 +372,9 @@ export default class Three {
                             if (this.currentHovered) {
                                 const prevStoreItem = this.imageStore.find((s: any) => s.mesh === this.currentHovered);
                                 gsap.to((this.currentHovered.material as THREE.ShaderMaterial).uniforms.uHoverState, {
-                                    duration: 0.5,
+                                    duration: 0.3, // Reduced from 0.5 to 0.3 for sharper transition
                                     value: 0,
-                                    ease: "circ.inOut",
+                                    ease: "power2.in",
                                 });
                                 if (prevStoreItem && !isMobile) {
                                     const projectContainer = prevStoreItem.img.closest('.project_container');
@@ -393,6 +393,11 @@ export default class Three {
                                             duration: 0.5,
                                             ease: "circ.inOut",
                                         });
+                                    }
+                                    
+                                    // Show the HTML image when not hovering
+                                    if (prevStoreItem.img) {
+                                        prevStoreItem.img.style.opacity = '1';
                                     }
                                 }
                                 this.currentHovered.userData.hovered = false;
@@ -424,6 +429,11 @@ export default class Three {
                                         duration: 0.5,
                                         ease: "circ.inOut",
                                     });
+                                }
+                                
+                                // Hide the HTML image when hovering to show only the WebGL video
+                                if (storeItem.img) {
+                                    storeItem.img.style.opacity = '0';
                                 }
                             }
                             this.currentHovered = obj;
@@ -457,6 +467,11 @@ export default class Three {
                                     duration: 0.5,
                                     ease: "circ.inOut",
                                 });
+                            }
+                            
+                            // Show the HTML image when not hovering
+                            if (prevStoreItem.img) {
+                                prevStoreItem.img.style.opacity = '1';
                             }
                         }
                         this.currentHovered.userData.hovered = false;

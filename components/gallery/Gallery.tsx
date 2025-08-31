@@ -163,7 +163,8 @@ const Gallery: React.FC = () => {
               <div className="list_img_cont" style={{ 
                 width: 'calc(100vw / 30 * 5.2)', 
                 height: 'calc(100vw / 30 * 3.0)', 
-                backgroundColor: '#e5e5e5' 
+                backgroundColor: 'transparent',
+                position: 'relative'
               }}>
                 <img data-webgl-media src="/gallery/1.jpg" alt="" style={{ 
                   width: '100%', 
@@ -172,9 +173,20 @@ const Gallery: React.FC = () => {
                   objectPosition: 'center', 
                   opacity: 1, 
                   zIndex: 1, 
-                  pointerEvents: 'none' 
+                  pointerEvents: 'none',
+                  transition: 'opacity 0.3s ease'
                 }} />
-                <video className="project_video" src="/gallery/1.mp4" loop muted style={{ display: 'none' }}></video>
+                <video className="project_video" src="/gallery/1.mp4" loop muted style={{ 
+                  display: 'none', 
+                  position: 'absolute', 
+                  top: 0, 
+                  left: 0, 
+                  width: '100%', 
+                  height: '100%', 
+                  objectFit: 'cover', 
+                  objectPosition: 'center',
+                  zIndex: 2 
+                }}></video>
               </div>
               <h2 className="list_title dark:text-white" style={{ fontSize: 'calc(100vw / 30 * 0.45)' }}><span>MN concept movie</span></h2>
             </a>
@@ -185,7 +197,8 @@ const Gallery: React.FC = () => {
               <div className="list_img_cont" style={{ 
                 width: 'calc(100vw / 30 * 5.2)', 
                 height: 'calc(100vw / 30 * 3.0)', 
-                backgroundColor: '#e5e5e5' 
+                backgroundColor: 'transparent',
+                position: 'relative'
               }}>
                 <img data-webgl-media src="/gallery/2.jpg" alt="" style={{ 
                   width: '100%', 
@@ -194,9 +207,20 @@ const Gallery: React.FC = () => {
                   objectPosition: 'center', 
                   opacity: 1, 
                   zIndex: 1, 
-                  pointerEvents: 'none' 
+                  pointerEvents: 'none',
+                  transition: 'opacity 0.3s ease'
                 }} />
-                <video className="project_video" src="/gallery/2.mp4" loop muted style={{ display: 'none' }}></video>
+                <video className="project_video" src="/gallery/2.mp4" loop muted style={{ 
+                  display: 'none', 
+                  position: 'absolute', 
+                  top: 0, 
+                  left: 0, 
+                  width: '100%', 
+                  height: '100%', 
+                  objectFit: 'cover', 
+                  objectPosition: 'center',
+                  zIndex: 2 
+                }}></video>
               </div>
               <h2 className="list_title dark:text-white" style={{ fontSize: 'calc(100vw / 30 * 0.45)' }}><span>TELE - Play - prism</span></h2>
             </a>
@@ -207,7 +231,8 @@ const Gallery: React.FC = () => {
               <div className="list_img_cont" style={{ 
                 width: 'calc(100vw / 30 * 5.2)', 
                 height: 'calc(100vw / 30 * 3.0)', 
-                backgroundColor: '#e5e5e5' 
+                backgroundColor: 'transparent',
+                position: 'relative'
               }}>
                 <img data-webgl-media src="/gallery/3.jpg" alt="" style={{ 
                   width: '100%', 
@@ -216,9 +241,20 @@ const Gallery: React.FC = () => {
                   objectPosition: 'center', 
                   opacity: 1, 
                   zIndex: 1, 
-                  pointerEvents: 'none' 
+                  pointerEvents: 'none',
+                  transition: 'opacity 0.3s ease'
                 }} />
-                <video className="project_video" src="/gallery/3.mp4" loop muted style={{ display: 'none' }}></video>
+                <video className="project_video" src="/gallery/3.mp4" loop muted style={{ 
+                  display: 'none', 
+                  position: 'absolute', 
+                  top: 0, 
+                  left: 0, 
+                  width: '100%', 
+                  height: '100%', 
+                  objectFit: 'cover', 
+                  objectPosition: 'center',
+                  zIndex: 2 
+                }}></video>
               </div>
               <h2 className="list_title dark:text-white" style={{ fontSize: 'calc(100vw / 30 * 0.45)' }}><span>Additional Project 1</span></h2>
             </a>
@@ -229,7 +265,8 @@ const Gallery: React.FC = () => {
               <div className="list_img_cont" style={{ 
                 width: 'calc(100vw / 30 * 5.2)', 
                 height: 'calc(100vw / 30 * 3.0)', 
-                backgroundColor: '#e5e5e5' 
+                backgroundColor: 'transparent',
+                position: 'relative'
               }}>
                 <img data-webgl-media src="/gallery/4.jpg" alt="" style={{ 
                   width: '100%', 
@@ -238,9 +275,20 @@ const Gallery: React.FC = () => {
                   objectPosition: 'center', 
                   opacity: 1, 
                   zIndex: 1, 
-                  pointerEvents: 'none' 
+                  pointerEvents: 'none',
+                  transition: 'opacity 0.3s ease'
                 }} />
-                <video className="project_video" src="/gallery/4.mp4" loop muted style={{ display: 'none' }}></video>
+                <video className="project_video" src="/gallery/4.mp4" loop muted style={{ 
+                  display: 'none', 
+                  position: 'absolute', 
+                  top: 0, 
+                  left: 0, 
+                  width: '100%', 
+                  height: '100%', 
+                  objectFit: 'cover', 
+                  objectPosition: 'center',
+                  zIndex: 2 
+                }}></video>
               </div>
               <h2 className="list_title dark:text-white" style={{ fontSize: 'calc(100vw / 30 * 0.45)' }}><span>Additional Project 2</span></h2>
             </a>
@@ -259,7 +307,8 @@ const Gallery: React.FC = () => {
               <div className="list_img_cont" style={{ 
                 width: 'calc(100vw / 30 * 5.2)', 
                 height: 'calc(100vw / 30 * 3.0)', 
-                backgroundColor: '#e5e5e5' 
+                backgroundColor: 'transparent',
+                position: 'relative'
               }}>
                 <img data-webgl-media src="/gallery/5.jpg" alt="" style={{ 
                   width: '100%', 
@@ -268,9 +317,20 @@ const Gallery: React.FC = () => {
                   objectPosition: 'center', 
                   opacity: 1, 
                   zIndex: 1, 
-                  pointerEvents: 'none' 
+                  pointerEvents: 'none',
+                  transition: 'opacity 0.3s ease'
                 }} />
-                <video className="project_video" src="/gallery/5.mp4" loop muted style={{ display: 'none' }}></video>
+                <video className="project_video" src="/gallery/5.mp4" loop muted style={{ 
+                  display: 'none', 
+                  position: 'absolute', 
+                  top: 0, 
+                  left: 0, 
+                  width: '100%', 
+                  height: '100%', 
+                  objectFit: 'cover', 
+                  objectPosition: 'center',
+                  zIndex: 2 
+                }}></video>
               </div>
               <h2 className="list_title dark:text-white" style={{ fontSize: 'calc(100vw / 30 * 0.45)' }}><span>CITIZEN - Attesa</span></h2>
             </a>
@@ -281,7 +341,8 @@ const Gallery: React.FC = () => {
               <div className="list_img_cont" style={{ 
                 width: 'calc(100vw / 30 * 5.2)', 
                 height: 'calc(100vw / 30 * 3.0)', 
-                backgroundColor: '#e5e5e5' 
+                backgroundColor: 'transparent',
+                position: 'relative'
               }}>
                 <img data-webgl-media src="/gallery/6.jpg" alt="" style={{ 
                   width: '100%', 
@@ -290,9 +351,20 @@ const Gallery: React.FC = () => {
                   objectPosition: 'center', 
                   opacity: 1, 
                   zIndex: 1, 
-                  pointerEvents: 'none' 
+                  pointerEvents: 'none',
+                  transition: 'opacity 0.3s ease'
                 }} />
-                <video className="project_video" src="/gallery/6.mp4" loop muted style={{ display: 'none' }}></video>
+                <video className="project_video" src="/gallery/6.mp4" loop muted style={{ 
+                  display: 'none', 
+                  position: 'absolute', 
+                  top: 0, 
+                  left: 0, 
+                  width: '100%', 
+                  height: '100%', 
+                  objectFit: 'cover', 
+                  objectPosition: 'center',
+                  zIndex: 2 
+                }}></video>
               </div>
               <h2 className="list_title dark:text-white" style={{ fontSize: 'calc(100vw / 30 * 0.45)' }}><span>NIGHT Stroll</span></h2>
             </a>
@@ -303,7 +375,8 @@ const Gallery: React.FC = () => {
               <div className="list_img_cont" style={{ 
                 width: 'calc(100vw / 30 * 5.2)', 
                 height: 'calc(100vw / 30 * 3.0)', 
-                backgroundColor: '#e5e5e5' 
+                backgroundColor: 'transparent',
+                position: 'relative'
               }}>
                 <img data-webgl-media src="/gallery/7.jpg" alt="" style={{ 
                   width: '100%', 
@@ -312,9 +385,20 @@ const Gallery: React.FC = () => {
                   objectPosition: 'center', 
                   opacity: 1, 
                   zIndex: 1, 
-                  pointerEvents: 'none' 
+                  pointerEvents: 'none',
+                  transition: 'opacity 0.3s ease'
                 }} />
-                <video className="project_video" src="/gallery/7.mp4" loop muted style={{ display: 'none' }}></video>
+                <video className="project_video" src="/gallery/7.mp4" loop muted style={{ 
+                  display: 'none', 
+                  position: 'absolute', 
+                  top: 0, 
+                  left: 0, 
+                  width: '100%', 
+                  height: '100%', 
+                  objectFit: 'cover', 
+                  objectPosition: 'center',
+                  zIndex: 2 
+                }}></video>
               </div>
               <h2 className="list_title dark:text-white" style={{ fontSize: 'calc(100vw / 30 * 0.45)' }}><span>Additional Project 3</span></h2>
             </a>
@@ -325,7 +409,8 @@ const Gallery: React.FC = () => {
               <div className="list_img_cont" style={{ 
                 width: 'calc(100vw / 30 * 5.2)', 
                 height: 'calc(100vw / 30 * 3.0)', 
-                backgroundColor: '#e5e5e5' 
+                backgroundColor: 'transparent',
+                position: 'relative'
               }}>
                 <img data-webgl-media src="/gallery/8.jpg" alt="" style={{ 
                   width: '100%', 
@@ -334,9 +419,20 @@ const Gallery: React.FC = () => {
                   objectPosition: 'center', 
                   opacity: 1, 
                   zIndex: 1, 
-                  pointerEvents: 'none' 
+                  pointerEvents: 'none',
+                  transition: 'opacity 0.3s ease'
                 }} />
-                <video className="project_video" src="/gallery/8.mp4" loop muted style={{ display: 'none' }}></video>
+                <video className="project_video" src="/gallery/8.mp4" loop muted style={{ 
+                  display: 'none', 
+                  position: 'absolute', 
+                  top: 0, 
+                  left: 0, 
+                  width: '100%', 
+                  height: '100%', 
+                  objectFit: 'cover', 
+                  objectPosition: 'center',
+                  zIndex: 2 
+                }}></video>
               </div>
               <h2 className="list_title dark:text-white" style={{ fontSize: 'calc(100vw / 30 * 0.45)' }}><span>Additional Project 4</span></h2>
             </a>
@@ -355,7 +451,8 @@ const Gallery: React.FC = () => {
               <div className="list_img_cont" style={{ 
                 width: 'calc(100vw / 30 * 5.2)', 
                 height: 'calc(100vw / 30 * 3.0)', 
-                backgroundColor: '#e5e5e5' 
+                backgroundColor: 'transparent',
+                position: 'relative'
               }}>
                 <img data-webgl-media src="/gallery/1.jpg" alt="" style={{ 
                   width: '100%', 
@@ -364,9 +461,20 @@ const Gallery: React.FC = () => {
                   objectPosition: 'center', 
                   opacity: 1, 
                   zIndex: 1, 
-                  pointerEvents: 'none' 
+                  pointerEvents: 'none',
+                  transition: 'opacity 0.3s ease'
                 }} />
-                <video className="project_video" src="/gallery/1.mp4" loop muted style={{ display: 'none' }}></video>
+                <video className="project_video" src="/gallery/1.mp4" loop muted style={{ 
+                  display: 'none', 
+                  position: 'absolute', 
+                  top: 0, 
+                  left: 0, 
+                  width: '100%', 
+                  height: '100%', 
+                  objectFit: 'cover', 
+                  objectPosition: 'center',
+                  zIndex: 2 
+                }}></video>
               </div>
               <h2 className="list_title dark:text-white" style={{ fontSize: 'calc(100vw / 30 * 0.45)' }}><span>Xperiax ERA</span></h2>
             </a>
@@ -377,7 +485,8 @@ const Gallery: React.FC = () => {
               <div className="list_img_cont" style={{ 
                 width: 'calc(100vw / 30 * 5.2)', 
                 height: 'calc(100vw / 30 * 3.0)', 
-                backgroundColor: '#e5e5e5' 
+                backgroundColor: 'transparent',
+                position: 'relative'
               }}>
                 <img data-webgl-media src="/gallery/2.jpg" alt="" style={{ 
                   width: '100%', 
@@ -386,9 +495,20 @@ const Gallery: React.FC = () => {
                   objectPosition: 'center', 
                   opacity: 1, 
                   zIndex: 1, 
-                  pointerEvents: 'none' 
+                  pointerEvents: 'none',
+                  transition: 'opacity 0.3s ease'
                 }} />
-                <video className="project_video" src="/gallery/2.mp4" loop muted style={{ display: 'none' }}></video>
+                <video className="project_video" src="/gallery/2.mp4" loop muted style={{ 
+                  display: 'none', 
+                  position: 'absolute', 
+                  top: 0, 
+                  left: 0, 
+                  width: '100%', 
+                  height: '100%', 
+                  objectFit: 'cover', 
+                  objectPosition: 'center',
+                  zIndex: 2 
+                }}></video>
               </div>
               <h2 className="list_title dark:text-white" style={{ fontSize: 'calc(100vw / 30 * 0.45)' }}><span>MTV Ultrahits</span></h2>
             </a>
@@ -399,7 +519,8 @@ const Gallery: React.FC = () => {
               <div className="list_img_cont" style={{ 
                 width: 'calc(100vw / 30 * 5.2)', 
                 height: 'calc(100vw / 30 * 3.0)', 
-                backgroundColor: '#e5e5e5' 
+                backgroundColor: 'transparent',
+                position: 'relative'
               }}>
                 <img data-webgl-media src="/gallery/3.jpg" alt="" style={{ 
                   width: '100%', 
@@ -408,9 +529,20 @@ const Gallery: React.FC = () => {
                   objectPosition: 'center', 
                   opacity: 1, 
                   zIndex: 1, 
-                  pointerEvents: 'none' 
+                  pointerEvents: 'none',
+                  transition: 'opacity 0.3s ease'
                 }} />
-                <video className="project_video" src="/gallery/3.mp4" loop muted style={{ display: 'none' }}></video>
+                <video className="project_video" src="/gallery/3.mp4" loop muted style={{ 
+                  display: 'none', 
+                  position: 'absolute', 
+                  top: 0, 
+                  left: 0, 
+                  width: '100%', 
+                  height: '100%', 
+                  objectFit: 'cover', 
+                  objectPosition: 'center',
+                  zIndex: 2 
+                }}></video>
               </div>
               <h2 className="list_title dark:text-white" style={{ fontSize: 'calc(100vw / 30 * 0.45)' }}><span>Additional Project 5</span></h2>
             </a>
@@ -421,7 +553,8 @@ const Gallery: React.FC = () => {
               <div className="list_img_cont" style={{ 
                 width: 'calc(100vw / 30 * 5.2)', 
                 height: 'calc(100vw / 30 * 3.0)', 
-                backgroundColor: '#e5e5e5' 
+                backgroundColor: 'transparent',
+                position: 'relative'
               }}>
                 <img data-webgl-media src="/gallery/4.jpg" alt="" style={{ 
                   width: '100%', 
@@ -430,9 +563,20 @@ const Gallery: React.FC = () => {
                   objectPosition: 'center', 
                   opacity: 1, 
                   zIndex: 1, 
-                  pointerEvents: 'none' 
+                  pointerEvents: 'none',
+                  transition: 'opacity 0.3s ease'
                 }} />
-                <video className="project_video" src="/gallery/4.mp4" loop muted style={{ display: 'none' }}></video>
+                <video className="project_video" src="/gallery/4.mp4" loop muted style={{ 
+                  display: 'none', 
+                  position: 'absolute', 
+                  top: 0, 
+                  left: 0, 
+                  width: '100%', 
+                  height: '100%', 
+                  objectFit: 'cover', 
+                  objectPosition: 'center',
+                  zIndex: 2 
+                }}></video>
               </div>
               <h2 className="list_title dark:text-white" style={{ fontSize: 'calc(100vw / 30 * 0.45)' }}><span>Additional Project 6</span></h2>
             </a>
