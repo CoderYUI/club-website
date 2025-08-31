@@ -32,9 +32,10 @@ void main() {
     float waves = sin(dist * frequency - uTime * 7.) * amplitude;
 
     if (uIsFullScreen == 0.0 && uIsMobile == 0.0) {
-        // Apply hover effects only when not in fullscreen mode
+        // vec2 direction = normalize(correctAspectUV - correctAspectHover);
         newPosition.x += -uHover.x * 0.125 * uHoverState;
         newPosition.xy *= 1.0 + 0.25 * uHoverState;
+        // newPosition.xy += direction * waves * uHoverState;
         newPosition.z += waves * circle * uHoverState;
         vCircle = waves * circle * uHoverState;
     } else {
@@ -61,3 +62,5 @@ void main() {
 
     gl_Position = projectionMatrix * viewMatrix * finalState;
 }
+
+

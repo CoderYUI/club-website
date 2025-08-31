@@ -41,14 +41,20 @@ void main() {
         // Show video texture directly in full-screen mode
         finalTexture = videoTexture;
     } else {
-        // Create a sharp transition between image and video
-        // Use a step function for a clean switch
-        float transition = step(0.5, uHoverState);
-        finalTexture = mix(imgTexture, videoTexture, transition);
+        // Diagonal transition effect for hover
+        vec2 p = newUv;
+        float x = uHoverState;
+        float diag = (p.x - p.y) * 0.65; // Diagonal coordinate (difference of x and y)
+        float sineWave = sin(diag * 3.14159 + 0.01 * 0.5) * 0.5 + 0.5; // Slower sine wave
+        x = smoothstep(0.0, 1.0, x * 2.45 + diag - 1.0 + sineWave * 0.75); // Slower transition
+
+        finalTexture = mix(
+            texture2D(uImage, (p - 0.5) * (1.0 - x) + 0.5),
+            texture2D(uImage1, (p - 0.5) * x + 0.5),
+            x
+        );
     }
 
-    // Add the hover effect color
-    finalTexture.rgb += vCircle/4.;
-
     gl_FragColor = finalTexture;
+    gl_FragColor.rgb += vCircle/4.;
 }

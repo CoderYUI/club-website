@@ -7,21 +7,38 @@ const Gallery: React.FC = () => {
   const threeInstance = useRef<any>(null);
 
   useEffect(() => {
-    if (canvasRef.current && !threeInstance.current) {
-      // Add a small delay to ensure DOM is fully rendered
-      setTimeout(() => {
+    // Ensure we're in the browser environment
+    if (typeof window === 'undefined') return;
+
+    const initGallery = async () => {
+      if (canvasRef.current && !threeInstance.current) {
         try {
+          console.log('Loading Three.js module...');
+          const ThreeModule = await import('./utils/Three');
+          const Three = ThreeModule.default;
+          
+          // Small delay to ensure DOM is fully rendered
+          await new Promise(resolve => setTimeout(resolve, 100));
+          
+          console.log('Initializing Three.js gallery component');
           threeInstance.current = new Three({
-            dom: canvasRef.current,
+            dom: canvasRef.current as unknown as HTMLElement,
           });
+          console.log('Three.js gallery component initialized successfully');
         } catch (error) {
-          console.error('Error initializing Three.js:', error);
+          console.error('Error initializing Three.js gallery:', error);
         }
-      }, 100);
-    }
+      }
+    };
+
+    // Initialize with a delay to ensure DOM is ready
+    const timer = setTimeout(() => {
+      initGallery();
+    }, 300);
 
     // Cleanup function
     return () => {
+      clearTimeout(timer);
       if (threeInstance.current) {
         // Call cleanup function if it exists
         if (typeof (window as any).galleryCleanup === 'function') {
@@ -38,6 +55,7 @@ const Gallery: React.FC = () => {
     // Prevent the default anchor behavior
     e.preventDefault();
     // The Three.js instance will handle the click through its own event listeners
+    console.log('Image clicked, Three.js should handle this');
   };
 
   return (
@@ -67,7 +85,7 @@ const Gallery: React.FC = () => {
         width: '100vw', 
         height: '100vh', 
         zIndex: 2, 
-        pointerEvents: 'none', // Keep pointer events disabled by default
+        pointerEvents: 'auto', // Changed from 'none' to 'auto' to allow interactions
         touchAction: 'auto' // Allow normal touch actions
       }}></div>
 
