@@ -139,7 +139,7 @@ function ConfirmationModal({
             transition={{ delay: 0.2 }}
             className="text-2xl font-extralight text-gray-900 dark:text-white mb-2"
           >
-            Certificate Generated <span className="font-semibold bg-gradient-to-r from-red-400 via-red-500 to-red-600 bg-clip-text text-transparent">Successfully!</span>
+            Certificate Generated <span className="font-semibold bg-gradient-to-r from-red-400 via-red-500 to-red-600 bg-clip-text text-transparent dark:bg-gradient-to-r dark:from-red-400 dark:via-red-500 dark:to-red-600">Successfully!</span>
           </motion.h3>
           <motion.p 
             initial={{ opacity: 0, y: 10 }}
@@ -308,7 +308,7 @@ export default function CertificateForm() {
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="text-4xl sm:text-5xl md:text-6xl font-extralight tracking-[-0.02em] text-white mb-6 leading-[0.9] font-serif max-w-4xl drop-shadow-xl"
               >
-                Event <span className="font-bold bg-gradient-to-r from-red-400 via-red-500 to-red-600 bg-clip-text text-transparent">Registration</span>
+                Event <span className="font-bold bg-gradient-to-r from-red-400 via-red-500 to-red-600 bg-clip-text text-transparent dark:bg-gradient-to-r dark:from-red-400 dark:via-red-500 dark:to-red-600">Registration</span>
               </motion.h1>
               
               <motion.p 
@@ -391,7 +391,7 @@ export default function CertificateForm() {
           >
             <div className="bg-white/80 dark:bg-black/80 backdrop-blur-xl shadow-2xl rounded-3xl p-6 sm:p-8 border border-white/50 dark:border-gray-800">
               <h2 className="text-2xl sm:text-3xl font-extralight text-gray-800 dark:text-white mb-6">
-                Certificate <span className="font-semibold bg-gradient-to-r from-red-400 via-red-500 to-red-600 bg-clip-text text-transparent">Details</span>
+                Certificate <span className="font-semibold bg-gradient-to-r from-red-400 via-red-500 to-red-600 bg-clip-text text-transparent dark:bg-gradient-to-r dark:from-red-400 dark:via-red-500 dark:to-red-600">Details</span>
               </h2>
               <form
                 onSubmit={generatecertificate}

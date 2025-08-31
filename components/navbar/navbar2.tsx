@@ -230,7 +230,9 @@ const Navbar2: React.FC = () => {
                 height={36}
                 className="rounded-full shadow-md"
               />
-              <span className="whitespace-nowrap font-bold tracking-wide bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 dark:from-white dark:via-gray-200 dark:to-white bg-clip-text text-transparent drop-shadow-sm text-lg md:text-xl">MATLAB & LaTeX Club</span>
+              <span className="whitespace-nowrap font-bold tracking-wide bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 dark:from-white dark:via-gray-200 dark:to-white bg-clip-text text-transparent drop-shadow-sm text-lg md:text-xl dark:bg-gradient-to-r dark:from-white dark:via-gray-200 dark:to-white">
+                MATLAB & LaTeX Club
+              </span>
             </div>
           </Link>
         </div>

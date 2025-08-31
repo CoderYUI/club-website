@@ -139,7 +139,7 @@ function ConfirmationModal({
             transition={{ delay: 0.2 }}
             className="text-2xl font-extralight text-gray-900 dark:text-white mb-2"
           >
-            Ticket Generated <span className="font-semibold bg-gradient-to-r from-red-400 via-red-500 to-red-600 bg-clip-text text-transparent">Successfully!</span>
+            Ticket Generated <span className="font-semibold bg-gradient-to-r from-red-400 via-red-500 to-red-600 bg-clip-text text-transparent dark:bg-gradient-to-r dark:from-red-400 dark:via-red-500 dark:to-red-600">Successfully!</span>
           </motion.h3>
           <motion.p 
             initial={{ opacity: 0, y: 10 }}
