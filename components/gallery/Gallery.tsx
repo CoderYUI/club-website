@@ -306,7 +306,7 @@ const Gallery: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 md:px-6">
           {events.map((event, index) => (
             <div key={event.id} className="event-section mb-16 md:mb-24 last:mb-12">
-              {/* Enhanced Event Header with Magazine Layout */}
+              {/* Event Header - Only the heading part appears above images on desktop */}
               <div className="event-header mb-10 md:mb-12">
                 <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-start">
                   {/* Left Column - Event Info */}
@@ -327,7 +327,70 @@ const Gallery: React.FC = () => {
                         {event.subtitle}
                       </p>
                     </div>
-                    
+                  </div>
+                </div>
+              </div>
+
+              {/* Event Images - Appears after heading */}
+              <div className={`event-images-container mb-12 md:mb-16 ${!isMobile ? 'infinite-scroll-container' : ''}`}>
+                {!isMobile ? (
+                  // Desktop Infinite Scroll
+                  <div className={`infinite-scroll-wrapper ${index % 2 === 0 ? 'scroll-left' : 'scroll-right'}`}>
+                    <div className="infinite-scroll-track">
+                      {getInfiniteImages(event.images).map((image, imgIndex) => (
+                        <div 
+                          key={`${event.id}-${imgIndex}`} 
+                          className="image-container-infinite"
+                          onClick={(e) => handleImageClick(e, image)}
+                        >
+                          <img 
+                            src={image.src} 
+                            alt={image.alt} 
+                            className="gallery-image"
+                            loading="lazy"
+                          />
+                          <div className="image-overlay">
+                            <div className="overlay-content">
+                              <div className="overlay-text">View Image</div>
+                              <div className="overlay-subtitle">{image.alt}</div>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ) : (
+                  // Mobile Grid Layout
+                  <div className="event-images-grid">
+                    {event.images.map((image, imgIndex) => (
+                      <div 
+                        key={imgIndex} 
+                        className="image-container"
+                        onClick={(e) => handleImageClick(e, image)}
+                      >
+                        <img 
+                          src={image.src} 
+                          alt={image.alt} 
+                          className="gallery-image"
+                          loading="lazy"
+                        />
+                        <div className="image-overlay">
+                          <div className="overlay-content">
+                            <div className="overlay-text">View Image</div>
+                            <div className="overlay-subtitle">{image.alt}</div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Event Details - Appears after images on desktop, same on mobile */}
+              <div className="event-details mb-10 md:mb-12">
+                <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-start">
+                  {/* Left Column - Event Info (without heading) */}
+                  <div className="space-y-4 md:space-y-6">
                     {/* Event Meta */}
                     <div className="flex flex-wrap gap-6 text-sm text-gray-500 dark:text-gray-400">
                       <div className="flex items-center space-x-2">
@@ -433,61 +496,6 @@ const Gallery: React.FC = () => {
                     </div>
                   </div>
                 </div>
-              </div>
-
-              {/* Event Images */}
-              <div className={`event-images-container ${!isMobile ? 'infinite-scroll-container' : ''}`}>
-                {!isMobile ? (
-                  // Desktop Infinite Scroll
-                  <div className={`infinite-scroll-wrapper ${index % 2 === 0 ? 'scroll-left' : 'scroll-right'}`}>
-                    <div className="infinite-scroll-track">
-                      {getInfiniteImages(event.images).map((image, imgIndex) => (
-                        <div 
-                          key={`${event.id}-${imgIndex}`} 
-                          className="image-container-infinite"
-                          onClick={(e) => handleImageClick(e, image)}
-                        >
-                          <img 
-                            src={image.src} 
-                            alt={image.alt} 
-                            className="gallery-image"
-                            loading="lazy"
-                          />
-                          <div className="image-overlay">
-                            <div className="overlay-content">
-                              <div className="overlay-text">View Image</div>
-                              <div className="overlay-subtitle">{image.alt}</div>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                ) : (
-                  // Mobile Grid Layout
-                  <div className="event-images-grid">
-                    {event.images.map((image, imgIndex) => (
-                      <div 
-                        key={imgIndex} 
-                        className="image-container"
-                        onClick={(e) => handleImageClick(e, image)}
-                      >
-                        <img 
-                          src={image.src} 
-                          alt={image.alt} 
-                          className="gallery-image"
-                          loading="lazy"
-                        />
-                        <div className="image-overlay">
-                          <div className="overlay-content">
-                            <div className="overlay-text">View Image</div>
-                            <div className="overlay-subtitle">{image.alt}</div>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
               </div>
             </div>
           ))}
