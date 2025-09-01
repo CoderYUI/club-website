@@ -152,7 +152,9 @@ const Gallery: React.FC = () => {
         "Live startup pitch competitions",
         "Interactive technology demonstrations",
         "Networking sessions with industry experts",
-        "Panel discussions on future tech trends"
+        "Panel discussions on future tech trends",
+        "Hands-on coding workshops",
+        "Startup incubation opportunities"
       ],
       images: [
         { src: "/gallery/1.jpg", alt: "Tech Summit Opening Ceremony" },
@@ -183,7 +185,9 @@ const Gallery: React.FC = () => {
         "Peer review sessions and feedback",
         "Faculty mentorship opportunities",
         "Research methodology workshops",
-        "Publication guidance sessions"
+        "Publication guidance sessions",
+        "Collaborative research projects",
+        "Industry partnership discussions"
       ],
       images: [
         { src: "/gallery/1.jpg", alt: "Research Presentation Hall" },
@@ -214,7 +218,9 @@ const Gallery: React.FC = () => {
         "Industry mentor guidance",
         "Real-world problem statements",
         "Cross-functional team collaboration",
-        "Prize pool worth ₹50,000"
+        "Prize pool worth ₹50,000",
+        "API integration workshops",
+        "Prototype presentation sessions"
       ],
       images: [
         { src: "/gallery/1.jpg", alt: "Hackathon Opening Ceremony" },
@@ -292,16 +298,13 @@ const Gallery: React.FC = () => {
             </span>
           </div>
           
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-extralight tracking-[-0.03em] text-white mb-4 leading-[0.85] font-serif">
-            <span className="block">Moments of</span>
-            <span className="block font-thin italic bg-gradient-to-r from-red-400 via-red-500 to-red-600 bg-clip-text text-transparent">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-extralight tracking-[-0.03em] text-white mb-8 leading-[0.85] font-serif">
+            <span className="inline-block md:inline">Moments of</span>
+            <span className="inline-block md:inline font-thin italic bg-gradient-to-r from-red-400 via-red-500 to-red-600 bg-clip-text text-transparent ml-0 md:ml-8">
               Innovation
             </span>
           </h1>
           
-          <p className="text-base md:text-lg text-white/80 font-light max-w-3xl mx-auto leading-relaxed">
-            Explore our comprehensive collection of technology events, research symposiums, and innovation showcases that define our journey in advancing scientific knowledge and fostering technological excellence.
-          </p>
         </div>
       </div>
 
@@ -347,33 +350,66 @@ const Gallery: React.FC = () => {
                     {/* Stats - Horizontal Layout */}
                     <div className="flex flex-col items-start justify-start py-3 md:py-4 border-t border-b border-gray-100 dark:border-gray-800">
                       <div className="flex flex-wrap gap-4 md:gap-6 mb-2">
-                        <div className="flex items-center space-x-2 bg-gray-50 dark:bg-gray-800/50 px-3 py-1.5 rounded-full">
-                          <div className="text-lg md:text-xl font-light text-black dark:text-white">
+                        <div className="flex items-center space-x-2 bg-red-50 dark:bg-red-900/20 px-3 py-1.5 rounded-full border border-red-100 dark:border-red-800/30">
+                          <div className="text-lg md:text-xl font-light text-red-600 dark:text-red-400">
                             {event.stats.participants}
                           </div>
-                          <div className="text-xs md:text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+                          <div className="text-xs md:text-sm text-red-500 dark:text-red-300 uppercase tracking-wide">
                             Participants
                           </div>
                         </div>
-                        <div className="flex items-center space-x-2 bg-gray-50 dark:bg-gray-800/50 px-3 py-1.5 rounded-full">
-                          <div className="text-lg md:text-xl font-light text-black dark:text-white">
+                        <div className="flex items-center space-x-2 bg-red-50 dark:bg-red-900/20 px-3 py-1.5 rounded-full border border-red-100 dark:border-red-800/30">
+                          <div className="text-lg md:text-xl font-light text-red-600 dark:text-red-400">
                             {event.stats.duration}
                           </div>
-                          <div className="text-xs md:text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+                          <div className="text-xs md:text-sm text-red-500 dark:text-red-300 uppercase tracking-wide">
                             Duration
                           </div>
                         </div>
                       </div>
                       {event.stats.projects && (
-                        <div className="flex items-center space-x-2 bg-gray-50 dark:bg-gray-800/50 px-3 py-1.5 rounded-full">
-                          <div className="text-lg md:text-xl font-light text-black dark:text-white">
+                        <div className="flex items-center space-x-2 bg-red-50 dark:bg-red-900/20 px-3 py-1.5 rounded-full border border-red-100 dark:border-red-800/30">
+                          <div className="text-lg md:text-xl font-light text-red-600 dark:text-red-400">
                             {event.stats.projects}
                           </div>
-                          <div className="text-xs md:text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+                          <div className="text-xs md:text-sm text-red-500 dark:text-red-300 uppercase tracking-wide">
                             Projects
                           </div>
                         </div>
                       )}
+                    </div>
+
+                    {/* Guest Members Section */}
+                    <div className="guest-members-section py-4 md:py-6">
+                      <div className="flex items-center space-x-2 mb-3">
+                        <div className="w-1 h-1 bg-red-500 rounded-full"></div>
+                        <h3 className="text-base md:text-lg font-semibold text-black dark:text-white tracking-wide">
+                          Guest Members
+                        </h3>
+                      </div>
+                      <div className="space-y-3">
+                        <div className="flex items-center space-x-3 bg-gray-50 dark:bg-gray-800/50 p-3 rounded-lg border border-gray-100 dark:border-gray-800">
+                          <div className="bg-gray-200 border-2 border-dashed rounded-full w-12 h-12" />
+                          <div>
+                            <div className="font-medium text-black dark:text-white text-sm">Dr. Alex Morgan</div>
+                            <div className="text-xs text-gray-500 dark:text-gray-400">Keynote Speaker</div>
+                          </div>
+                        </div>
+                        <div className="flex items-center space-x-3 bg-gray-50 dark:bg-gray-800/50 p-3 rounded-lg border border-gray-100 dark:border-gray-800">
+                          <div className="bg-gray-200 border-2 border-dashed rounded-full w-12 h-12" />
+                          <div>
+                            <div className="font-medium text-black dark:text-white text-sm">Prof. Sarah Johnson</div>
+                            <div className="text-xs text-gray-500 dark:text-gray-400">Industry Expert</div>
+                          </div>
+                        </div>
+                        <div className="flex items-center space-x-3 bg-gray-50 dark:bg-gray-800/50 p-3 rounded-lg border border-gray-100 dark:border-gray-800">
+                          <div className="bg-gray-200 border-2 border-dashed rounded-full w-12 h-12" />
+                          <div>
+                            <div className="font-medium text-black dark:text-white text-sm">Mr. James Wilson</div>
+                            <div className="text-xs text-gray-500 dark:text-gray-400">Tech Innovator</div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   
