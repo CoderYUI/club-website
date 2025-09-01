@@ -152,9 +152,7 @@ const Gallery: React.FC = () => {
         "Live startup pitch competitions",
         "Interactive technology demonstrations",
         "Networking sessions with industry experts",
-        "Panel discussions on future tech trends",
-        "Hands-on coding workshops",
-        "Startup incubation opportunities"
+        "Panel discussions on future tech trends"
       ],
       images: [
         { src: "/gallery/1.jpg", alt: "Tech Summit Opening Ceremony" },
@@ -185,9 +183,7 @@ const Gallery: React.FC = () => {
         "Peer review sessions and feedback",
         "Faculty mentorship opportunities",
         "Research methodology workshops",
-        "Publication guidance sessions",
-        "Collaborative research projects",
-        "Industry partnership discussions"
+        "Collaborative research projects"
       ],
       images: [
         { src: "/gallery/1.jpg", alt: "Research Presentation Hall" },
@@ -218,9 +214,7 @@ const Gallery: React.FC = () => {
         "Industry mentor guidance",
         "Real-world problem statements",
         "Cross-functional team collaboration",
-        "Prize pool worth ₹50,000",
-        "API integration workshops",
-        "Prototype presentation sessions"
+        "Prize pool worth ₹50,000"
       ],
       images: [
         { src: "/gallery/1.jpg", alt: "Hackathon Opening Ceremony" },
