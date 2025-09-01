@@ -461,29 +461,56 @@ const Gallery: React.FC = () => {
                         </div>
                       </div>
                     </div>
+
+                    {/* Event Quote Section - Visible only on desktop */}
+                    <div className="hidden md:block mt-8 pt-6 border-t border-gray-100 dark:border-gray-800">
+                      <div className="pl-4 border-l-2 border-red-500">
+                        <p className="text-xl md:text-2xl font-light italic text-gray-700 dark:text-gray-300 leading-relaxed tracking-wide">
+                          &ldquo;Innovation distinguishes between a leader and a follower.&rdquo;
+                        </p>
+                        <p className="mt-3 text-base font-medium text-gray-800 dark:text-gray-200">
+                          - Steve Jobs
+                        </p>
+                        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                          Reflecting on the spirit of {event.title}
+                        </p>
+                      </div>
+                    </div>
                   </div>
                   
                   {/* Right Column - Description */}
                   <div className="space-y-8">
-                    <div>
-                      <h3 className="text-xl font-semibold text-black dark:text-white mb-4 tracking-wide font-serif">
-                        About The Event
-                      </h3>
-                      <p className="text-gray-700 dark:text-gray-300 leading-loose font-light text-base md:text-lg tracking-wide font-sans">
-                        {event.description}
-                      </p>
+                    <div className="bg-white dark:bg-gray-800/50 rounded-2xl p-6 md:p-8 border border-gray-100 dark:border-gray-800 shadow-sm">
+                      <div className="flex items-center mb-5">
+                        <div className="w-1 h-4 bg-red-500 rounded-full mr-3"></div>
+                        <h3 className="text-xl font-semibold text-black dark:text-white tracking-wide font-serif">
+                          About The Event
+                        </h3>
+                      </div>
+                      <div className="text-gray-700 dark:text-gray-300 leading-relaxed font-light text-base md:text-lg tracking-wide font-sans space-y-4">
+                        {event.description.split('. ').map((sentence, idx, arr) => (
+                          <p key={idx} className="mb-3 last:mb-0">
+                            {sentence}{idx !== arr.length - 1 ? '.' : ''}
+                          </p>
+                        ))}
+                      </div>
                     </div>
                     
                     {/* Event Highlights */}
-                    <div>
-                      <h3 className="text-xl font-semibold text-black dark:text-white mb-4 tracking-wide font-serif">
-                        Event Highlights
-                      </h3>
+                    <div className="bg-white dark:bg-gray-800/50 rounded-2xl p-6 md:p-8 border border-gray-100 dark:border-gray-800 shadow-sm">
+                      <div className="flex items-center mb-5">
+                        <div className="w-1 h-4 bg-red-500 rounded-full mr-3"></div>
+                        <h3 className="text-xl font-semibold text-black dark:text-white tracking-wide font-serif">
+                          Event Highlights
+                        </h3>
+                      </div>
                       <ul className="space-y-4">
                         {event.highlights.map((highlight, idx) => (
-                          <li key={idx} className="flex items-start space-x-3 text-gray-700 dark:text-gray-300">
-                            <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
-                            <span className="font-light text-base leading-relaxed tracking-wide">{highlight}</span>
+                          <li key={idx} className="flex items-start space-x-4 group">
+                            <div className="mt-1.5 flex-shrink-0">
+                              <div className="w-2 h-2 bg-red-500 rounded-full group-hover:scale-125 transition-transform duration-200"></div>
+                            </div>
+                            <span className="font-light text-base leading-relaxed tracking-wide text-gray-700 dark:text-gray-300">{highlight}</span>
                           </li>
                         ))}
                       </ul>
