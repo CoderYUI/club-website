@@ -189,6 +189,7 @@ const Navbar2: React.FC = () => {
     // { name: "About Us", href: "/#aboutus" },
     { name: "Certificate", href: "/certificate" },
     { name: "Ticket", href: "/ticket" },
+    { name: "Gallery", href: "/gallery" },
   ];
 
   const getItemStyle = (itemName: string) => {
@@ -203,8 +204,8 @@ const Navbar2: React.FC = () => {
           flex items-center justify-between
           border border-gray-200/40 dark:border-gray-700/30 backdrop-blur-xl
           ${isNavbarHovered 
-            ? 'w-[99vw] max-w-7xl md:w-[90vw] md:max-w-6xl shadow-3xl' 
-            : 'w-[97vw] max-w-6xl md:w-[85vw] md:max-w-5xl'
+            ? 'w-[99vw] max-w-7xl md:w-[92vw] md:max-w-7xl' 
+            : 'w-[97vw] max-w-6xl md:w-[88vw] md:max-w-6xl'
           }
         `}
         style={{ 
