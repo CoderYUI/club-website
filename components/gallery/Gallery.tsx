@@ -1,9 +1,112 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import Lenis from '@studio-freight/lenis';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+// Register GSAP plugins
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 const Gallery: React.FC = () => {
   // State for modal
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalImage, setModalImage] = useState({ src: '', alt: '' });
+  const [isClient, setIsClient] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const lenisRef = useRef<any>(null);
+  const animationInitialized = useRef(false);
+  const galleryRef = useRef<HTMLDivElement>(null);
+
+  // Initialize client-side only features
+  useEffect(() => {
+    setIsClient(true);
+    
+    // Check if it's a mobile device
+    const checkMobile = () => {
+      const isTouchDevice = (
+        'ontouchstart' in window ||
+        navigator.maxTouchPoints > 0 ||
+        // @ts-ignore
+        navigator.msMaxTouchPoints > 0
+      );
+      setIsMobile(isTouchDevice);
+    };
+
+    checkMobile();
+  }, []);
+
+  // Clear timeouts on unmount
+  useEffect(() => {
+    return () => {
+      // Clean up Lenis
+      if (lenisRef.current) {
+        lenisRef.current.destroy();
+      }
+      // Clean up all ScrollTriggers
+      ScrollTrigger.getAll().forEach(st => st.kill());
+    };
+  }, []);
+
+  // Initialize animations only once
+  const initializeAnimations = useCallback(() => {
+    if (animationInitialized.current || !isClient) return;
+    animationInitialized.current = true;
+
+    // Ensure GSAP plugins are registered
+    if (typeof window !== 'undefined') {
+      gsap.registerPlugin(ScrollTrigger);
+    }
+
+    // Initialize Lenis smooth scroll
+    const lenis = new Lenis({
+      duration: 1.6,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      // Add syncTouch to work better with ScrollTrigger
+      syncTouch: true,
+    });
+    lenisRef.current = lenis;
+
+    // Sync ScrollTrigger with Lenis
+    lenis.on('scroll', ScrollTrigger.update);
+    
+    // Tell ScrollTrigger to use Lenis as the scroller
+    ScrollTrigger.scrollerProxy(document.documentElement, {
+      scrollTop: (value?: number) => {
+        if (arguments.length && value !== undefined) {
+          lenis.scrollTo(value as number);
+          return value as number;
+        }
+        return lenis.scroll;
+      },
+      getBoundingClientRect() {
+        return {top: 0, left: 0, width: window.innerWidth, height: window.innerHeight};
+      },
+      pinType: document.documentElement.style.transform ? "transform" : "fixed"
+    });
+
+    function raf(time: number) {
+      lenis.raf(time);
+      ScrollTrigger.update(); // Update ScrollTrigger on each frame
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    // Refresh ScrollTrigger after creation
+    setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 100);
+  }, [isClient]);
+
+  // Initialize animations when client is ready
+  useEffect(() => {
+    if (isClient) {
+      // Use requestAnimationFrame to ensure DOM is ready
+      requestAnimationFrame(() => {
+        initializeAnimations();
+      });
+    }
+  }, [isClient, initializeAnimations]);
 
   // Handle image click - to open modal
   const handleImageClick = (e: React.MouseEvent, image: { src: string; alt: string }) => {
@@ -71,8 +174,36 @@ const Gallery: React.FC = () => {
     }
   ];
 
+  // Create duplicated images for infinite scroll (desktop only)
+  const getDuplicatedImages = (images: any[]) => {
+    if (isMobile) return images;
+    // Create multiple duplicates for smoother infinite scroll
+    return [...images, ...images, ...images];
+  };
+
+  // Prevent rendering until client-side is ready
+  if (!isClient) {
+    return (
+      <main style={{ width: '100%', position: 'relative', top: 0, left: 0 }}>
+        <div className="gallery-header dark:text-white" style={{ 
+          position: 'relative',
+          width: '100%',
+          padding: '30px 0 20px 0',
+          textAlign: 'center',
+          zIndex: 10
+        }}>
+          <div className="max-w-7xl mx-auto px-6">
+          </div>
+        </div>
+      </main>
+    );
+  }
+
   return (
-    <main style={{ width: '100%', position: 'relative', top: 0, left: 0 }}>
+    <main 
+      ref={galleryRef}
+      style={{ width: '100%', position: 'relative', top: 0, left: 0 }}
+    >
       {/* Gallery Header - Minimal padding to reduce blank space */}
       <div className="gallery-header dark:text-white" style={{ 
         position: 'relative',
@@ -111,99 +242,225 @@ const Gallery: React.FC = () => {
                 </p>
               </div>
 
-              {/* Event Images Grid */}
-              <div className="event-images-grid" style={{ 
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
-                gap: 'calc(100vw / 30 * 1.2)',
-                width: '100%'
-              }}>
-                {event.images.map((image, imgIndex) => (
+              {/* Event Images Grid with Infinite Scroll for Desktop */}
+              <div 
+                className={`event-images-container ${!isMobile ? 'infinite-scroll-container' : ''}`}
+                style={{ 
+                  width: '100%',
+                  position: 'relative',
+                  overflow: 'hidden'
+                }}
+              >
+                {/* Desktop Infinite Scroll Wrapper */}
+                {!isMobile && (
                   <div 
-                    key={imgIndex} 
-                    className="image-container"
-                    style={{ 
-                      position: 'relative',
-                      width: '100%',
-                      height: '0',
-                      paddingBottom: '100%', // Square aspect ratio
-                      backgroundColor: 'transparent',
-                      borderRadius: '8px',
-                      overflow: 'hidden',
-                      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
-                      transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-                      cursor: 'pointer'
+                    className="infinite-scroll-track"
+                    style={{
+                      display: 'flex',
+                      width: 'fit-content',
+                      animation: 'scroll 60s linear infinite',
+                      padding: 0,
+                      margin: 0,
+                      willChange: 'transform'
                     }}
-                    onClick={(e) => handleImageClick(e, image)}
                     onMouseEnter={(e) => {
-                      // Enhance shadow and scale on hover for desktop
-                      if (window.innerWidth > 768) {
-                        e.currentTarget.style.transform = 'scale(1.05)';
-                        e.currentTarget.style.boxShadow = '0 12px 24px rgba(0, 0, 0, 0.15)';
-                        
-                        // Show overlay
-                        const overlay = e.currentTarget.querySelector('.image-overlay') as HTMLElement;
-                        if (overlay) {
-                          overlay.style.opacity = '1';
-                        }
-                      }
+                      // Pause animation on hover for desktop
+                      const target = e.currentTarget as HTMLElement;
+                      target.style.animationPlayState = 'paused';
                     }}
                     onMouseLeave={(e) => {
-                      // Reset styles when not hovering
-                      e.currentTarget.style.transform = 'scale(1)';
-                      e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.05)';
-                      
-                      // Hide overlay
-                      const overlay = e.currentTarget.querySelector('.image-overlay') as HTMLElement;
-                      if (overlay) {
-                        overlay.style.opacity = '0';
-                      }
+                      // Resume animation when not hovering
+                      const target = e.currentTarget as HTMLElement;
+                      target.style.animationPlayState = 'running';
                     }}
                   >
-                    <img 
-                      src={image.src} 
-                      alt={image.alt} 
-                      style={{ 
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                        objectPosition: 'center',
-                        opacity: 1,
-                        transition: 'opacity 0.3s ease'
-                      }} 
-                    />
-                    {/* Overlay for better visibility on hover */}
-                    <div 
-                      className="image-overlay"
-                      style={{
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        width: '100%',
-                        height: '100%',
-                        backgroundColor: 'rgba(0, 0, 0, 0.6)',
-                        opacity: 0,
-                        transition: 'opacity 0.3s ease',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                      }}
-                    >
-                      <div style={{
-                        color: 'white',
-                        fontSize: '1.5rem',
-                        fontWeight: 'light',
-                        textAlign: 'center',
-                        padding: '10px'
-                      }}>
-                        View Image
+                    {getDuplicatedImages(event.images).map((image, imgIndex) => (
+                      <div 
+                        key={`${event.id}-${imgIndex}`} 
+                        className="image-container-infinite"
+                        style={{ 
+                          position: 'relative',
+                          width: '250px',
+                          height: '250px',
+                          backgroundColor: 'transparent',
+                          borderRadius: '8px',
+                          overflow: 'hidden',
+                          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
+                          transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                          cursor: 'pointer',
+                          margin: '0 10px',
+                          flexShrink: 0
+                        }}
+                        onClick={(e) => handleImageClick(e, image)}
+                        onMouseEnter={(e) => {
+                          // Enhance shadow and scale on hover for desktop
+                          e.currentTarget.style.transform = 'scale(1.05)';
+                          e.currentTarget.style.boxShadow = '0 12px 24px rgba(0, 0, 0, 0.15)';
+                          
+                          // Show overlay
+                          const overlay = e.currentTarget.querySelector('.image-overlay') as HTMLElement;
+                          if (overlay) {
+                            overlay.style.opacity = '1';
+                          }
+                        }}
+                        onMouseLeave={(e) => {
+                          // Reset styles when not hovering
+                          e.currentTarget.style.transform = 'scale(1)';
+                          e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.05)';
+                          
+                          // Hide overlay
+                          const overlay = e.currentTarget.querySelector('.image-overlay') as HTMLElement;
+                          if (overlay) {
+                            overlay.style.opacity = '0';
+                          }
+                        }}
+                      >
+                        <img 
+                          src={image.src} 
+                          alt={image.alt} 
+                          style={{ 
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover',
+                            objectPosition: 'center',
+                            opacity: 1,
+                            transition: 'opacity 0.3s ease'
+                          }} 
+                        />
+                        {/* Overlay for better visibility on hover */}
+                        <div 
+                          className="image-overlay"
+                          style={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            width: '100%',
+                            height: '100%',
+                            backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                            opacity: 0,
+                            transition: 'opacity 0.3s ease',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          }}
+                        >
+                          <div style={{
+                            color: 'white',
+                            fontSize: '1.5rem',
+                            fontWeight: 'light',
+                            textAlign: 'center',
+                            padding: '10px'
+                          }}>
+                            View Image
+                          </div>
+                        </div>
                       </div>
-                    </div>
+                    ))}
                   </div>
-                ))}
+                )}
+
+                {/* Mobile Grid Layout (unchanged) */}
+                {isMobile && (
+                  <div 
+                    className="event-images-grid"
+                    style={{ 
+                      display: 'grid',
+                      gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
+                      gap: 'calc(100vw / 30 * 1.2)',
+                      width: '100%'
+                    }}
+                  >
+                    {event.images.map((image, imgIndex) => (
+                      <div 
+                        key={imgIndex} 
+                        className="image-container"
+                        style={{ 
+                          position: 'relative',
+                          width: '100%',
+                          height: '0',
+                          paddingBottom: '100%', // Square aspect ratio
+                          backgroundColor: 'transparent',
+                          borderRadius: '8px',
+                          overflow: 'hidden',
+                          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
+                          transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                          cursor: 'pointer'
+                        }}
+                        onClick={(e) => handleImageClick(e, image)}
+                        onMouseEnter={(e) => {
+                          // Enhance shadow and scale on hover for desktop
+                          if (window.innerWidth > 768) {
+                            e.currentTarget.style.transform = 'scale(1.05)';
+                            e.currentTarget.style.boxShadow = '0 12px 24px rgba(0, 0, 0, 0.15)';
+                            
+                            // Show overlay
+                            const overlay = e.currentTarget.querySelector('.image-overlay') as HTMLElement;
+                            if (overlay) {
+                              overlay.style.opacity = '1';
+                            }
+                          }
+                        }}
+                        onMouseLeave={(e) => {
+                          // Reset styles when not hovering
+                          e.currentTarget.style.transform = 'scale(1)';
+                          e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.05)';
+                          
+                          // Hide overlay
+                          const overlay = e.currentTarget.querySelector('.image-overlay') as HTMLElement;
+                          if (overlay) {
+                            overlay.style.opacity = '0';
+                          }
+                        }}
+                      >
+                        <img 
+                          src={image.src} 
+                          alt={image.alt} 
+                          style={{ 
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover',
+                            objectPosition: 'center',
+                            opacity: 1,
+                            transition: 'opacity 0.3s ease'
+                          }} 
+                        />
+                        {/* Overlay for better visibility on hover */}
+                        <div 
+                          className="image-overlay"
+                          style={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            width: '100%',
+                            height: '100%',
+                            backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                            opacity: 0,
+                            transition: 'opacity 0.3s ease',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          }}
+                        >
+                          <div style={{
+                            color: 'white',
+                            fontSize: '1.5rem',
+                            fontWeight: 'light',
+                            textAlign: 'center',
+                            padding: '10px'
+                          }}>
+                            View Image
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           ))}
@@ -289,6 +546,40 @@ const Gallery: React.FC = () => {
           }
         }
         
+        /* Infinite scroll animation */
+        @keyframes scroll {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-33.3333%);
+          }
+        }
+        
+        .infinite-scroll-container {
+          mask-image: linear-gradient(
+            to right,
+            transparent,
+            black 10%,
+            black 90%,
+            transparent
+          );
+          height: 270px;
+        }
+        
+        .infinite-scroll-track {
+          display: flex;
+          width: fit-content;
+          animation: scroll 60s linear infinite;
+          padding: 0;
+          margin: 0;
+          will-change: transform;
+        }
+        
+        .image-container-infinite:hover .image-overlay {
+          opacity: 1;
+        }
+        
         @media (max-width: 768px) {
           .event-images-grid {
             grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)) !important;
@@ -307,7 +598,7 @@ const Gallery: React.FC = () => {
             padding: 0 0 80px 0 !important; /* Minimal padding for mobile */
           }
           
-          /* Add more margin to first event section on mobile */
+          /* Add more margin to first event section on mobile */  
           .event-section:first-child {
             margin-top: 60px !important;
           }
@@ -326,6 +617,16 @@ const Gallery: React.FC = () => {
             maxWidth: 95% !important;
             maxHeight: 85vh !important;
           }
+          
+          /* Hide infinite scroll on mobile */
+          .infinite-scroll-container {
+            mask-image: none;
+            height: auto;
+          }
+          
+          .infinite-scroll-track {
+            display: none;
+          }
         }
         
         @media (max-width: 480px) {
@@ -340,7 +641,7 @@ const Gallery: React.FC = () => {
         
         /* Ensure proper cursor on desktop */
         @media (min-width: 769px) {
-          .image-container {
+          .image-container, .image-container-infinite {
             cursor: pointer;
           }
         }
