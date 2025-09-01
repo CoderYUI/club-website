@@ -185,12 +185,15 @@ const Navbar2: React.FC = () => {
   const navItems = [
     { name: "Home", href: "/#home" },
     { name: "Leaderboard", href: "https://leaderboard-linpack.vercel.app/" },
-    // { name: "Expense", href: "https://linpack-expense-tracker.vercel.app/" },
+    { name: "Expense", href: "https://linpack-expense-tracker.vercel.app/" },
     // { name: "About Us", href: "/#aboutus" },
     { name: "Certificate", href: "/certificate" },
     { name: "Ticket", href: "/ticket" },
     { name: "Gallery", href: "/gallery" },
   ];
+
+  // Create a separate array for desktop nav items excluding Expense
+  const desktopNavItems = navItems.filter(item => item.name !== "Expense");
 
   const getItemStyle = (itemName: string) => {
     return "hover:text-yellow-500 transition-all duration-300 ease-in-out bg-transparent shadow-none font-extralight tracking-wide bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 dark:from-white dark:via-gray-200 dark:to-white bg-clip-text text-transparent drop-shadow-sm";
@@ -249,7 +252,7 @@ const Navbar2: React.FC = () => {
             justifyContent: 'center',
           }}
         >
-          {navItems.map((item) => (
+          {desktopNavItems.map((item) => (
             <div key={item.name} className="relative">
               {item.href.startsWith('http') ? (
                 <a
