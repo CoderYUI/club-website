@@ -1,588 +1,350 @@
-import React, { useEffect, useRef } from 'react';
-// @ts-ignore
-import Three from './utils/Three';
+import React, { useState } from 'react';
 
 const Gallery: React.FC = () => {
-  const canvasRef = useRef<HTMLDivElement>(null);
-  const threeInstance = useRef<any>(null);
+  // State for modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalImage, setModalImage] = useState({ src: '', alt: '' });
 
-  useEffect(() => {
-    // Ensure we're in the browser environment
-    if (typeof window === 'undefined') return;
-
-    const initGallery = async () => {
-      if (canvasRef.current && !threeInstance.current) {
-        try {
-          console.log('Loading Three.js module...');
-          const ThreeModule = await import('./utils/Three');
-          const Three = ThreeModule.default;
-          
-          // Small delay to ensure DOM is fully rendered
-          await new Promise(resolve => setTimeout(resolve, 100));
-          
-          console.log('Initializing Three.js gallery component');
-          threeInstance.current = new Three({
-            dom: canvasRef.current as unknown as HTMLElement,
-          });
-          console.log('Three.js gallery component initialized successfully');
-        } catch (error) {
-          console.error('Error initializing Three.js gallery:', error);
-        }
-      }
-    };
-
-    // Initialize with a delay to ensure DOM is ready
-    const timer = setTimeout(() => {
-      initGallery();
-    }, 300);
-
-    // Cleanup function
-    return () => {
-      clearTimeout(timer);
-      if (threeInstance.current) {
-        // Call cleanup function if it exists
-        if (typeof (window as any).galleryCleanup === 'function') {
-          (window as any).galleryCleanup();
-        }
-        // Dispose of Three.js resources if needed
-        threeInstance.current = null;
-      }
-    };
-  }, []);
-
-  // Handle image click to trigger fullscreen in Three.js
-  const handleImageClick = (e: React.MouseEvent) => {
-    // Prevent the default anchor behavior
+  // Handle image click - to open modal
+  const handleImageClick = (e: React.MouseEvent, image: { src: string; alt: string }) => {
     e.preventDefault();
-    // The Three.js instance will handle the click through its own event listeners
-    console.log('Image clicked, Three.js should handle this');
+    setModalImage(image);
+    setIsModalOpen(true);
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
   };
+
+  // Close modal
+  const closeModal = () => {
+    setIsModalOpen(false);
+    document.body.style.overflow = 'auto'; // Restore scrolling
+  };
+
+  // Event data structure
+  const events = [
+    {
+      id: 1,
+      title: "Tech Innovation Summit",
+      date: "March 15, 2024",
+      description: "Annual summit showcasing cutting-edge technology innovations and research breakthroughs.",
+      images: [
+        { src: "/gallery/1.jpg", alt: "Tech Summit 1" },
+        { src: "/gallery/2.jpg", alt: "Tech Summit 2" },
+        { src: "/gallery/3.jpg", alt: "Tech Summit 3" },
+        { src: "/gallery/4.jpg", alt: "Tech Summit 4" },
+        { src: "/gallery/5.jpg", alt: "Tech Summit 5" },
+        { src: "/gallery/6.jpg", alt: "Tech Summit 6" },
+        { src: "/gallery/7.jpg", alt: "Tech Summit 7" },
+        { src: "/gallery/8.jpg", alt: "Tech Summit 8" }
+      ]
+    },
+    {
+      id: 2,
+      title: "Research Symposium",
+      date: "April 22, 2024",
+      description: "Student-led research presentations covering diverse fields from AI to biotechnology.",
+      images: [
+        { src: "/gallery/1.jpg", alt: "Research Symposium 1" },
+        { src: "/gallery/2.jpg", alt: "Research Symposium 2" },
+        { src: "/gallery/3.jpg", alt: "Research Symposium 3" },
+        { src: "/gallery/4.jpg", alt: "Research Symposium 4" },
+        { src: "/gallery/5.jpg", alt: "Research Symposium 5" },
+        { src: "/gallery/6.jpg", alt: "Research Symposium 6" },
+        { src: "/gallery/7.jpg", alt: "Research Symposium 7" },
+        { src: "/gallery/8.jpg", alt: "Research Symposium 8" }
+      ]
+    },
+    {
+      id: 3,
+      title: "Hackathon Challenge",
+      date: "May 10, 2024",
+      description: "48-hour coding marathon where students build innovative solutions to real-world problems.",
+      images: [
+        { src: "/gallery/1.jpg", alt: "Hackathon 1" },
+        { src: "/gallery/2.jpg", alt: "Hackathon 2" },
+        { src: "/gallery/3.jpg", alt: "Hackathon 3" },
+        { src: "/gallery/4.jpg", alt: "Hackathon 4" },
+        { src: "/gallery/5.jpg", alt: "Hackathon 5" },
+        { src: "/gallery/6.jpg", alt: "Hackathon 6" },
+        { src: "/gallery/7.jpg", alt: "Hackathon 7" },
+        { src: "/gallery/8.jpg", alt: "Hackathon 8" }
+      ]
+    }
+  ];
 
   return (
     <main style={{ width: '100%', position: 'relative', top: 0, left: 0 }}>
-      <div className="work" style={{ 
-        position: 'fixed', 
-        top: 0, 
-        left: 0, 
-        width: '100%', 
-        height: '100vh', 
-        backgroundColor: 'transparent', 
-        zIndex: 1, 
-        display: 'flex', 
-        alignItems: 'center', 
-        justifyContent: 'center', 
-        flexDirection: 'column', 
-        color: 'rgba(0, 0, 0, 0.10)', 
-        pointerEvents: 'none' 
+      {/* Gallery Header - Minimal padding to reduce blank space */}
+      <div className="gallery-header dark:text-white" style={{ 
+        position: 'relative',
+        width: '100%',
+        padding: '30px 0 20px 0', // Minimal padding to reduce blank space
+        textAlign: 'center',
+        zIndex: 10
       }}>
-        <p style={{ fontSize: 'calc(100vw / 4)' }} className="dark:hidden">Gallery</p>
-      </div>
-      
-      <div ref={canvasRef} className="canvas" style={{ 
-        position: 'fixed', 
-        top: 0, 
-        left: 0, 
-        width: '100vw', 
-        height: '100vh', 
-        zIndex: 2, 
-        pointerEvents: 'auto', // Changed from 'none' to 'auto' to allow interactions
-        touchAction: 'auto' // Allow normal touch actions
-      }}></div>
-
-      <div className="info dark:text-white" style={{ 
-        position: 'fixed', 
-        top: 0, 
-        right: 0, 
-        width: '100%', 
-        height: 'calc(100vw / 30 * 0.45)', 
-        zIndex: 99, 
-        display: 'flex', 
-        alignItems: 'center', 
-        justifyContent: 'center', 
-        flexDirection: 'column', 
-        overflow: 'hidden', 
-        backgroundColor: 'transparent', 
-        margin: 'calc(100vw / 30 * 0.15)' 
-      }}>
-        <h1 style={{ 
-          textAlign: 'end', 
-          fontSize: 'calc(100vw / 30 * 0.45)', 
-          fontWeight: 400, 
-          overflow: 'hidden', 
-          position: 'absolute', 
-          top: '50%', 
-          transform: 'translateY(-50%)', 
-          width: '100%', 
-          mixBlendMode: 'difference', 
-          color: 'gray' 
-        }} className="dark:text-white">
-          HOVER &nbsp; & &nbsp; CLICK &nbsp; IMAGES
-        </h1>
-        <h1 style={{ 
-          textAlign: 'end', 
-          fontSize: 'calc(100vw / 30 * 0.45)', 
-          fontWeight: 400, 
-          overflow: 'hidden', 
-          position: 'absolute', 
-          top: '50%', 
-          transform: 'translateY(-50%)', 
-          width: '100%', 
-          mixBlendMode: 'difference', 
-          color: '#f8f8f8' 
-        }} className="dark:text-white">
-          CLICK &nbsp; ANYWHERE &nbsp; TO &nbsp; BACK
-        </h1>
+        <div className="max-w-7xl mx-auto px-6">
+        </div>
       </div>
 
-      <div className="projects dark:text-white" style={{ 
+      {/* Events Section */}
+      <div className="events dark:text-white" style={{ 
         position: 'relative', 
-        top: '0', 
-        left: 0, 
         width: '100%', 
         backgroundColor: 'transparent', 
-        zIndex: 3, // Changed from 1 to 3 to be above canvas but below info
-        display: 'flex', 
-        alignItems: 'center', 
-        justifyContent: 'center', 
-        flexDirection: 'column', 
-        padding: 'calc(100vw / 30 * 2) 0', 
-        transition: 'none',
-        minHeight: '100vh', // Ensure it takes at least full viewport height
-        paddingTop: '100px' // Adjusted to place slightly below navbar (navbar height ~80px + 20px gap)
+        zIndex: 3,
+        padding: '10px 0 100px 0' // Reduced top padding
       }}>
-        <div className="projects_lines" style={{ 
-          width: 'calc(100vw / 30 * 19)', 
-          display: 'flex', 
-          alignItems: 'flex-start', 
-          justifyContent: 'center', 
-          gap: 'calc(100vw / 30 * 1.2)' 
-        }}>
-          <div className="project_container" style={{ marginTop: 'calc(100vw / 30 * 1.8 - 8px)' }}>
-            <a href="#" onClick={handleImageClick} style={{ textDecoration: 'none', color: 'black' }} className="dark:text-white">
-              <div className="list_num dark:text-white" style={{ fontSize: 'calc(100vw / 30 * 0.33)' }}><span>019</span></div>
-              <div className="list_img_cont" style={{ 
-                width: 'calc(100vw / 30 * 5.2)', 
-                height: 'calc(100vw / 30 * 3.0)', 
-                backgroundColor: 'transparent',
-                position: 'relative'
-              }}>
-                <img data-webgl-media src="/gallery/1.jpg" alt="" style={{ 
-                  width: '100%', 
-                  height: '100%', 
-                  objectFit: 'cover', 
-                  objectPosition: 'center', 
-                  opacity: 1, 
-                  zIndex: 1, 
-                  pointerEvents: 'none',
-                  transition: 'opacity 0.3s ease'
-                }} />
-                <video className="project_video" src="/gallery/1.mp4" loop muted style={{ 
-                  display: 'none', 
-                  position: 'absolute', 
-                  top: 0, 
-                  left: 0, 
-                  width: '100%', 
-                  height: '100%', 
-                  objectFit: 'cover', 
-                  objectPosition: 'center',
-                  zIndex: 2 
-                }}></video>
+        <div className="max-w-7xl mx-auto px-6">
+          {events.map((event, index) => (
+            <div key={event.id} className="event-section mb-20 last:mb-0" style={{ 
+              marginTop: index === 0 ? '30px' : '0' // Add margin to the first event section
+            }}>
+              {/* Event Header - Improved styling to match home page sections */}
+              <div className="event-header text-center mb-12">
+                <h2 className="text-2xl md:text-3xl font-extralight tracking-[-0.02em] text-black dark:text-white mb-2 leading-[0.9] font-serif">
+                  {event.title}
+                </h2>
+                <div className="flex items-center justify-center text-gray-500 dark:text-gray-400 mb-4">
+                  <span className="text-sm">{event.date}</span>
+                </div>
+                <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto font-extralight">
+                  {event.description}
+                </p>
               </div>
-              <h2 className="list_title dark:text-white" style={{ fontSize: 'calc(100vw / 30 * 0.45)' }}><span>MN concept movie</span></h2>
-            </a>
-          </div>
-          <div className="project_container">
-            <a href="#" onClick={handleImageClick} style={{ textDecoration: 'none', color: 'black' }} className="dark:text-white">
-              <div className="list_num dark:text-white" style={{ fontSize: 'calc(100vw / 30 * 0.33)' }}><span>018</span></div>
-              <div className="list_img_cont" style={{ 
-                width: 'calc(100vw / 30 * 5.2)', 
-                height: 'calc(100vw / 30 * 3.0)', 
-                backgroundColor: 'transparent',
-                position: 'relative'
+
+              {/* Event Images Grid */}
+              <div className="event-images-grid" style={{ 
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
+                gap: 'calc(100vw / 30 * 1.2)',
+                width: '100%'
               }}>
-                <img data-webgl-media src="/gallery/2.jpg" alt="" style={{ 
-                  width: '100%', 
-                  height: '100%', 
-                  objectFit: 'cover', 
-                  objectPosition: 'center', 
-                  opacity: 1, 
-                  zIndex: 1, 
-                  pointerEvents: 'none',
-                  transition: 'opacity 0.3s ease'
-                }} />
-                <video className="project_video" src="/gallery/2.mp4" loop muted style={{ 
-                  display: 'none', 
-                  position: 'absolute', 
-                  top: 0, 
-                  left: 0, 
-                  width: '100%', 
-                  height: '100%', 
-                  objectFit: 'cover', 
-                  objectPosition: 'center',
-                  zIndex: 2 
-                }}></video>
+                {event.images.map((image, imgIndex) => (
+                  <div 
+                    key={imgIndex} 
+                    className="image-container"
+                    style={{ 
+                      position: 'relative',
+                      width: '100%',
+                      height: '0',
+                      paddingBottom: '100%', // Square aspect ratio
+                      backgroundColor: 'transparent',
+                      borderRadius: '8px',
+                      overflow: 'hidden',
+                      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
+                      transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                      cursor: 'pointer'
+                    }}
+                    onClick={(e) => handleImageClick(e, image)}
+                    onMouseEnter={(e) => {
+                      // Enhance shadow and scale on hover for desktop
+                      if (window.innerWidth > 768) {
+                        e.currentTarget.style.transform = 'scale(1.05)';
+                        e.currentTarget.style.boxShadow = '0 12px 24px rgba(0, 0, 0, 0.15)';
+                        
+                        // Show overlay
+                        const overlay = e.currentTarget.querySelector('.image-overlay') as HTMLElement;
+                        if (overlay) {
+                          overlay.style.opacity = '1';
+                        }
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      // Reset styles when not hovering
+                      e.currentTarget.style.transform = 'scale(1)';
+                      e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.05)';
+                      
+                      // Hide overlay
+                      const overlay = e.currentTarget.querySelector('.image-overlay') as HTMLElement;
+                      if (overlay) {
+                        overlay.style.opacity = '0';
+                      }
+                    }}
+                  >
+                    <img 
+                      src={image.src} 
+                      alt={image.alt} 
+                      style={{ 
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        objectPosition: 'center',
+                        opacity: 1,
+                        transition: 'opacity 0.3s ease'
+                      }} 
+                    />
+                    {/* Overlay for better visibility on hover */}
+                    <div 
+                      className="image-overlay"
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                        opacity: 0,
+                        transition: 'opacity 0.3s ease',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                      }}
+                    >
+                      <div style={{
+                        color: 'white',
+                        fontSize: '1.5rem',
+                        fontWeight: 'light',
+                        textAlign: 'center',
+                        padding: '10px'
+                      }}>
+                        View Image
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
-              <h2 className="list_title dark:text-white" style={{ fontSize: 'calc(100vw / 30 * 0.45)' }}><span>TELE - Play - prism</span></h2>
-            </a>
-          </div>
-          <div className="project_container">
-            <a href="#" onClick={handleImageClick} style={{ textDecoration: 'none', color: 'black' }} className="dark:text-white">
-              <div className="list_num dark:text-white" style={{ fontSize: 'calc(100vw / 30 * 0.33)' }}><span>017</span></div>
-              <div className="list_img_cont" style={{ 
-                width: 'calc(100vw / 30 * 5.2)', 
-                height: 'calc(100vw / 30 * 3.0)', 
-                backgroundColor: 'transparent',
-                position: 'relative'
-              }}>
-                <img data-webgl-media src="/gallery/3.jpg" alt="" style={{ 
-                  width: '100%', 
-                  height: '100%', 
-                  objectFit: 'cover', 
-                  objectPosition: 'center', 
-                  opacity: 1, 
-                  zIndex: 1, 
-                  pointerEvents: 'none',
-                  transition: 'opacity 0.3s ease'
-                }} />
-                <video className="project_video" src="/gallery/3.mp4" loop muted style={{ 
-                  display: 'none', 
-                  position: 'absolute', 
-                  top: 0, 
-                  left: 0, 
-                  width: '100%', 
-                  height: '100%', 
-                  objectFit: 'cover', 
-                  objectPosition: 'center',
-                  zIndex: 2 
-                }}></video>
-              </div>
-              <h2 className="list_title dark:text-white" style={{ fontSize: 'calc(100vw / 30 * 0.45)' }}><span>Additional Project 1</span></h2>
-            </a>
-          </div>
-          <div className="project_container">
-            <a href="#" onClick={handleImageClick} style={{ textDecoration: 'none', color: 'black' }} className="dark:text-white">
-              <div className="list_num dark:text-white" style={{ fontSize: 'calc(100vw / 30 * 0.33)' }}><span>016</span></div>
-              <div className="list_img_cont" style={{ 
-                width: 'calc(100vw / 30 * 5.2)', 
-                height: 'calc(100vw / 30 * 3.0)', 
-                backgroundColor: 'transparent',
-                position: 'relative'
-              }}>
-                <img data-webgl-media src="/gallery/4.jpg" alt="" style={{ 
-                  width: '100%', 
-                  height: '100%', 
-                  objectFit: 'cover', 
-                  objectPosition: 'center', 
-                  opacity: 1, 
-                  zIndex: 1, 
-                  pointerEvents: 'none',
-                  transition: 'opacity 0.3s ease'
-                }} />
-                <video className="project_video" src="/gallery/4.mp4" loop muted style={{ 
-                  display: 'none', 
-                  position: 'absolute', 
-                  top: 0, 
-                  left: 0, 
-                  width: '100%', 
-                  height: '100%', 
-                  objectFit: 'cover', 
-                  objectPosition: 'center',
-                  zIndex: 2 
-                }}></video>
-              </div>
-              <h2 className="list_title dark:text-white" style={{ fontSize: 'calc(100vw / 30 * 0.45)' }}><span>Additional Project 2</span></h2>
-            </a>
-          </div>
-        </div>
-        <div className="projects_lines" style={{ 
-          width: 'calc(100vw / 30 * 19)', 
-          display: 'flex', 
-          alignItems: 'flex-start', 
-          justifyContent: 'center', 
-          gap: 'calc(100vw / 30 * 1.2)' 
-        }}>
-          <div className="project_container" style={{ marginTop: 'calc(100vw / 30 * 1.8 - 8px)' }}>
-            <a href="#" onClick={handleImageClick} style={{ textDecoration: 'none', color: 'black' }} className="dark:text-white">
-              <div className="list_num dark:text-white" style={{ fontSize: 'calc(100vw / 30 * 0.33)' }}><span>015</span></div>
-              <div className="list_img_cont" style={{ 
-                width: 'calc(100vw / 30 * 5.2)', 
-                height: 'calc(100vw / 30 * 3.0)', 
-                backgroundColor: 'transparent',
-                position: 'relative'
-              }}>
-                <img data-webgl-media src="/gallery/5.jpg" alt="" style={{ 
-                  width: '100%', 
-                  height: '100%', 
-                  objectFit: 'cover', 
-                  objectPosition: 'center', 
-                  opacity: 1, 
-                  zIndex: 1, 
-                  pointerEvents: 'none',
-                  transition: 'opacity 0.3s ease'
-                }} />
-                <video className="project_video" src="/gallery/5.mp4" loop muted style={{ 
-                  display: 'none', 
-                  position: 'absolute', 
-                  top: 0, 
-                  left: 0, 
-                  width: '100%', 
-                  height: '100%', 
-                  objectFit: 'cover', 
-                  objectPosition: 'center',
-                  zIndex: 2 
-                }}></video>
-              </div>
-              <h2 className="list_title dark:text-white" style={{ fontSize: 'calc(100vw / 30 * 0.45)' }}><span>CITIZEN - Attesa</span></h2>
-            </a>
-          </div>
-          <div className="project_container">
-            <a href="#" onClick={handleImageClick} style={{ textDecoration: 'none', color: 'black' }} className="dark:text-white">
-              <div className="list_num dark:text-white" style={{ fontSize: 'calc(100vw / 30 * 0.33)' }}><span>014</span></div>
-              <div className="list_img_cont" style={{ 
-                width: 'calc(100vw / 30 * 5.2)', 
-                height: 'calc(100vw / 30 * 3.0)', 
-                backgroundColor: 'transparent',
-                position: 'relative'
-              }}>
-                <img data-webgl-media src="/gallery/6.jpg" alt="" style={{ 
-                  width: '100%', 
-                  height: '100%', 
-                  objectFit: 'cover', 
-                  objectPosition: 'center', 
-                  opacity: 1, 
-                  zIndex: 1, 
-                  pointerEvents: 'none',
-                  transition: 'opacity 0.3s ease'
-                }} />
-                <video className="project_video" src="/gallery/6.mp4" loop muted style={{ 
-                  display: 'none', 
-                  position: 'absolute', 
-                  top: 0, 
-                  left: 0, 
-                  width: '100%', 
-                  height: '100%', 
-                  objectFit: 'cover', 
-                  objectPosition: 'center',
-                  zIndex: 2 
-                }}></video>
-              </div>
-              <h2 className="list_title dark:text-white" style={{ fontSize: 'calc(100vw / 30 * 0.45)' }}><span>NIGHT Stroll</span></h2>
-            </a>
-          </div>
-          <div className="project_container">
-            <a href="#" onClick={handleImageClick} style={{ textDecoration: 'none', color: 'black' }} className="dark:text-white">
-              <div className="list_num dark:text-white" style={{ fontSize: 'calc(100vw / 30 * 0.33)' }}><span>013</span></div>
-              <div className="list_img_cont" style={{ 
-                width: 'calc(100vw / 30 * 5.2)', 
-                height: 'calc(100vw / 30 * 3.0)', 
-                backgroundColor: 'transparent',
-                position: 'relative'
-              }}>
-                <img data-webgl-media src="/gallery/7.jpg" alt="" style={{ 
-                  width: '100%', 
-                  height: '100%', 
-                  objectFit: 'cover', 
-                  objectPosition: 'center', 
-                  opacity: 1, 
-                  zIndex: 1, 
-                  pointerEvents: 'none',
-                  transition: 'opacity 0.3s ease'
-                }} />
-                <video className="project_video" src="/gallery/7.mp4" loop muted style={{ 
-                  display: 'none', 
-                  position: 'absolute', 
-                  top: 0, 
-                  left: 0, 
-                  width: '100%', 
-                  height: '100%', 
-                  objectFit: 'cover', 
-                  objectPosition: 'center',
-                  zIndex: 2 
-                }}></video>
-              </div>
-              <h2 className="list_title dark:text-white" style={{ fontSize: 'calc(100vw / 30 * 0.45)' }}><span>Additional Project 3</span></h2>
-            </a>
-          </div>
-          <div className="project_container">
-            <a href="#" onClick={handleImageClick} style={{ textDecoration: 'none', color: 'black' }} className="dark:text-white">
-              <div className="list_num dark:text-white" style={{ fontSize: 'calc(100vw / 30 * 0.33)' }}><span>012</span></div>
-              <div className="list_img_cont" style={{ 
-                width: 'calc(100vw / 30 * 5.2)', 
-                height: 'calc(100vw / 30 * 3.0)', 
-                backgroundColor: 'transparent',
-                position: 'relative'
-              }}>
-                <img data-webgl-media src="/gallery/8.jpg" alt="" style={{ 
-                  width: '100%', 
-                  height: '100%', 
-                  objectFit: 'cover', 
-                  objectPosition: 'center', 
-                  opacity: 1, 
-                  zIndex: 1, 
-                  pointerEvents: 'none',
-                  transition: 'opacity 0.3s ease'
-                }} />
-                <video className="project_video" src="/gallery/8.mp4" loop muted style={{ 
-                  display: 'none', 
-                  position: 'absolute', 
-                  top: 0, 
-                  left: 0, 
-                  width: '100%', 
-                  height: '100%', 
-                  objectFit: 'cover', 
-                  objectPosition: 'center',
-                  zIndex: 2 
-                }}></video>
-              </div>
-              <h2 className="list_title dark:text-white" style={{ fontSize: 'calc(100vw / 30 * 0.45)' }}><span>Additional Project 4</span></h2>
-            </a>
-          </div>
-        </div>
-        <div className="projects_lines" style={{ 
-          width: 'calc(100vw / 30 * 19)', 
-          display: 'flex', 
-          alignItems: 'flex-start', 
-          justifyContent: 'center', 
-          gap: 'calc(100vw / 30 * 1.2)' 
-        }}>
-          <div className="project_container" style={{ marginTop: 'calc(100vw / 30 * 1.8 - 8px)' }}>
-            <a href="#" onClick={handleImageClick} style={{ textDecoration: 'none', color: 'black' }} className="dark:text-white">
-              <div className="list_num dark:text-white" style={{ fontSize: 'calc(100vw / 30 * 0.33)' }}><span>011</span></div>
-              <div className="list_img_cont" style={{ 
-                width: 'calc(100vw / 30 * 5.2)', 
-                height: 'calc(100vw / 30 * 3.0)', 
-                backgroundColor: 'transparent',
-                position: 'relative'
-              }}>
-                <img data-webgl-media src="/gallery/1.jpg" alt="" style={{ 
-                  width: '100%', 
-                  height: '100%', 
-                  objectFit: 'cover', 
-                  objectPosition: 'center', 
-                  opacity: 1, 
-                  zIndex: 1, 
-                  pointerEvents: 'none',
-                  transition: 'opacity 0.3s ease'
-                }} />
-                <video className="project_video" src="/gallery/1.mp4" loop muted style={{ 
-                  display: 'none', 
-                  position: 'absolute', 
-                  top: 0, 
-                  left: 0, 
-                  width: '100%', 
-                  height: '100%', 
-                  objectFit: 'cover', 
-                  objectPosition: 'center',
-                  zIndex: 2 
-                }}></video>
-              </div>
-              <h2 className="list_title dark:text-white" style={{ fontSize: 'calc(100vw / 30 * 0.45)' }}><span>Xperiax ERA</span></h2>
-            </a>
-          </div>
-          <div className="project_container">
-            <a href="#" onClick={handleImageClick} style={{ textDecoration: 'none', color: 'black' }} className="dark:text-white">
-              <div className="list_num dark:text-white" style={{ fontSize: 'calc(100vw / 30 * 0.33)' }}><span>010</span></div>
-              <div className="list_img_cont" style={{ 
-                width: 'calc(100vw / 30 * 5.2)', 
-                height: 'calc(100vw / 30 * 3.0)', 
-                backgroundColor: 'transparent',
-                position: 'relative'
-              }}>
-                <img data-webgl-media src="/gallery/2.jpg" alt="" style={{ 
-                  width: '100%', 
-                  height: '100%', 
-                  objectFit: 'cover', 
-                  objectPosition: 'center', 
-                  opacity: 1, 
-                  zIndex: 1, 
-                  pointerEvents: 'none',
-                  transition: 'opacity 0.3s ease'
-                }} />
-                <video className="project_video" src="/gallery/2.mp4" loop muted style={{ 
-                  display: 'none', 
-                  position: 'absolute', 
-                  top: 0, 
-                  left: 0, 
-                  width: '100%', 
-                  height: '100%', 
-                  objectFit: 'cover', 
-                  objectPosition: 'center',
-                  zIndex: 2 
-                }}></video>
-              </div>
-              <h2 className="list_title dark:text-white" style={{ fontSize: 'calc(100vw / 30 * 0.45)' }}><span>MTV Ultrahits</span></h2>
-            </a>
-          </div>
-          <div className="project_container">
-            <a href="#" onClick={handleImageClick} style={{ textDecoration: 'none', color: 'black' }} className="dark:text-white">
-              <div className="list_num dark:text-white" style={{ fontSize: 'calc(100vw / 30 * 0.33)' }}><span>009</span></div>
-              <div className="list_img_cont" style={{ 
-                width: 'calc(100vw / 30 * 5.2)', 
-                height: 'calc(100vw / 30 * 3.0)', 
-                backgroundColor: 'transparent',
-                position: 'relative'
-              }}>
-                <img data-webgl-media src="/gallery/3.jpg" alt="" style={{ 
-                  width: '100%', 
-                  height: '100%', 
-                  objectFit: 'cover', 
-                  objectPosition: 'center', 
-                  opacity: 1, 
-                  zIndex: 1, 
-                  pointerEvents: 'none',
-                  transition: 'opacity 0.3s ease'
-                }} />
-                <video className="project_video" src="/gallery/3.mp4" loop muted style={{ 
-                  display: 'none', 
-                  position: 'absolute', 
-                  top: 0, 
-                  left: 0, 
-                  width: '100%', 
-                  height: '100%', 
-                  objectFit: 'cover', 
-                  objectPosition: 'center',
-                  zIndex: 2 
-                }}></video>
-              </div>
-              <h2 className="list_title dark:text-white" style={{ fontSize: 'calc(100vw / 30 * 0.45)' }}><span>Additional Project 5</span></h2>
-            </a>
-          </div>
-          <div className="project_container">
-            <a href="#" onClick={handleImageClick} style={{ textDecoration: 'none', color: 'black' }} className="dark:text-white">
-              <div className="list_num dark:text-white" style={{ fontSize: 'calc(100vw / 30 * 0.33)' }}><span>008</span></div>
-              <div className="list_img_cont" style={{ 
-                width: 'calc(100vw / 30 * 5.2)', 
-                height: 'calc(100vw / 30 * 3.0)', 
-                backgroundColor: 'transparent',
-                position: 'relative'
-              }}>
-                <img data-webgl-media src="/gallery/4.jpg" alt="" style={{ 
-                  width: '100%', 
-                  height: '100%', 
-                  objectFit: 'cover', 
-                  objectPosition: 'center', 
-                  opacity: 1, 
-                  zIndex: 1, 
-                  pointerEvents: 'none',
-                  transition: 'opacity 0.3s ease'
-                }} />
-                <video className="project_video" src="/gallery/4.mp4" loop muted style={{ 
-                  display: 'none', 
-                  position: 'absolute', 
-                  top: 0, 
-                  left: 0, 
-                  width: '100%', 
-                  height: '100%', 
-                  objectFit: 'cover', 
-                  objectPosition: 'center',
-                  zIndex: 2 
-                }}></video>
-              </div>
-              <h2 className="list_title dark:text-white" style={{ fontSize: 'calc(100vw / 30 * 0.45)' }}><span>Additional Project 6</span></h2>
-            </a>
-          </div>
+            </div>
+          ))}
         </div>
       </div>
+
+      {/* Modal for image viewing */}
+      {isModalOpen && (
+        <div 
+          className="modal-backdrop"
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'rgba(0, 0, 0, 0.9)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 9999,
+            opacity: 0,
+            animation: 'modalFadeIn 0.3s forwards'
+          }}
+          onClick={closeModal}
+        >
+          <div 
+            className="modal-content"
+            style={{
+              position: 'relative',
+              maxWidth: '90%',
+              maxHeight: '90%',
+              animation: 'modalSlideIn 0.3s forwards'
+            }}
+            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking on image
+          >
+            <button
+              onClick={closeModal}
+              style={{
+                position: 'absolute',
+                top: '-40px',
+                right: '0',
+                background: 'transparent',
+                border: 'none',
+                color: 'white',
+                fontSize: '2rem',
+                cursor: 'pointer',
+                zIndex: 10000
+              }}
+            >
+              ×
+            </button>
+            <img 
+              src={modalImage.src} 
+              alt={modalImage.alt}
+              style={{
+                maxWidth: '100%',
+                maxHeight: '80vh',
+                objectFit: 'contain',
+                borderRadius: '8px'
+              }}
+            />
+          </div>
+        </div>
+      )}
+      
+      {/* Media query for mobile responsiveness */}
+      <style jsx global>{`
+        @keyframes modalFadeIn {
+          to {
+            opacity: 1;
+          }
+        }
+        
+        @keyframes modalSlideIn {
+          from {
+            transform: scale(0.8);
+            opacity: 0;
+          }
+          to {
+            transform: scale(1);
+            opacity: 1;
+          }
+        }
+        
+        @media (max-width: 768px) {
+          .event-images-grid {
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)) !important;
+            gap: calc(100vw / 30 * 0.8) !important;
+          }
+          
+          .gallery-header {
+            padding: 20px 0 10px 0 !important; /* Minimal padding for mobile */
+          }
+          
+          .event-header {
+            margin-bottom: 30px !important;
+          }
+          
+          .events {
+            padding: 0 0 80px 0 !important; /* Minimal padding for mobile */
+          }
+          
+          /* Add more margin to first event section on mobile */
+          .event-section:first-child {
+            margin-top: 60px !important;
+          }
+          
+          /* Disable hover effects on mobile */
+          .image-container {
+            transform: none !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+          }
+          
+          .image-overlay {
+            display: none !important;
+          }
+          
+          .modal-content {
+            maxWidth: 95% !important;
+            maxHeight: 85vh !important;
+          }
+        }
+        
+        @media (max-width: 480px) {
+          .event-images-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+          }
+          
+          .modal-content img {
+            maxHeight: 70vh !important;
+          }
+        }
+        
+        /* Ensure proper cursor on desktop */
+        @media (min-width: 769px) {
+          .image-container {
+            cursor: pointer;
+          }
+        }
+      `}</style>
     </main>
   );
 };
