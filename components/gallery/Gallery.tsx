@@ -81,7 +81,7 @@ const Gallery: React.FC = () => {
     lenis.on('scroll', ScrollTrigger.update);
     
     ScrollTrigger.scrollerProxy(document.documentElement, {
-      scrollTop: (value?: number) => {
+      scrollTop: function(value?: number) {
         if (arguments.length && value !== undefined) {
           lenis.scrollTo(value as number);
           return value as number;
