@@ -248,7 +248,7 @@ const Gallery: React.FC = () => {
 
   if (!isClient) {
     return (
-      <main className="w-full min-h-screen bg-white dark:bg-gray-900">
+      <main className="w-full min-h-screen bg-gray-50 dark:bg-gray-900 md:hidden">
         <div className="gallery-header dark:text-white text-center py-8">
           <div className="max-w-7xl mx-auto px-6">
             <div className="animate-pulse">Loading...</div>
@@ -259,31 +259,24 @@ const Gallery: React.FC = () => {
   }
 
   return (
-    <main ref={galleryRef} className="w-full min-h-screen bg-white dark:bg-gray-900">
-      {/* Enhanced Gallery Header with Magazine Style */}
-      <div className="gallery-header relative overflow-hidden py-12 md:py-16 bg-gradient-to-br from-white via-gray-50 to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-        {/* Hero Background Video */}
+    <main ref={galleryRef} className="w-full min-h-screen bg-gray-50 dark:bg-gray-900">
+      {/* Enhanced Gallery Header with Magazine Style - Hidden on desktop, visible only on mobile */}
+      <div className="gallery-header relative overflow-hidden py-12 md:py-16 bg-gradient-to-br from-white via-gray-50 to-white md:hidden">
+        {/* Hero Background Image */}
         <div className="absolute inset-0">
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="w-full h-full object-cover"
-          >
-            <source src="https://player.vimeo.com/external/435032397.sd.mp4?s=eb5606704b7c8c816f6cc9a9e6947b04e6cbdd8f&profile_id=139&oauth2_token_id=57447761" type="video/mp4" />
-            <source src="https://assets.mixkit.co/videos/preview/mixkit-spinning-around-the-earth-29351-large.mp4" type="video/mp4" />
-            <source src="https://assets.mixkit.co/videos/preview/mixkit-waves-in-the-water-1164-large.mp4" type="video/mp4" />
-          </video>
+          <div 
+            className="w-full h-full object-cover bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: "url('/images/hero-image.jpg')" }}
+          />
           
-          {/* Video overlay for text readability - Reduced opacity */}
+          {/* Overlay for text readability - Reduced opacity */}
           <div className="absolute inset-0 bg-black/25 backdrop-blur-[0.5px]"></div>
           
           {/* Gradient overlay for enhanced contrast - Lighter */}
           <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/20"></div>
         </div>
         
-        {/* Decorative Background Pattern - Reduced opacity since we have video */}
+        {/* Decorative Background Pattern - Reduced opacity since we have image */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-0 left-0 w-72 h-72 bg-red-100 dark:bg-red-900/20 rounded-full blur-3xl transform -translate-x-1/2 -translate-y-1/2"></div>
           <div className="absolute bottom-0 right-0 w-96 h-96 bg-red-50 dark:bg-red-800/10 rounded-full blur-3xl transform translate-x-1/2 translate-y-1/2"></div>
@@ -309,7 +302,7 @@ const Gallery: React.FC = () => {
       </div>
 
       {/* Enhanced Events Section */}
-      <div className="events py-12 md:py-16 bg-white dark:bg-gray-900">
+      <div className="events py-12 md:py-16 bg-gray-50 dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 md:px-6">
           {events.map((event, index) => (
             <div key={event.id} className="event-section mb-16 md:mb-24 last:mb-12">
@@ -776,6 +769,16 @@ const Gallery: React.FC = () => {
             transform: scale(1) translateY(0);
             opacity: 1;
           }
+        }
+        
+        /* Custom dark mode styles */
+        .dark main,
+        .dark .events {
+          background-color: #101010 !important;
+        }
+        
+        .dark .gallery-header {
+          background: linear-gradient(to bottom right, #101010, #101010, #101010) !important;
         }
         
         @media (max-width: 768px) {
