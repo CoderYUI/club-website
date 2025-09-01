@@ -141,95 +141,123 @@ const Gallery: React.FC = () => {
   const events: Event[] = [
     {
       id: 1,
-      title: "Tech Innovation Summit",
-      subtitle: "Pioneering the Future of Technology",
-      date: "March 15, 2024",
-      location: "VIT University Auditorium",
-      category: "Innovation",
-      description: "Our flagship annual summit brought together visionary technologists, innovative startups, and industry leaders to showcase cutting-edge advancements in artificial intelligence, machine learning, and emerging technologies. This comprehensive event featured keynote presentations from renowned experts, interactive workshops, and live demonstrations of breakthrough innovations that are shaping the future of technology.",
+      title: "VITB Got Latent Season 2",
+      subtitle: "The Ultimate Fun Experience",
+      date: "February 22, 2025",
+      location: "VIT University Campus",
+      category: "Entertainment",
+      description: "Join us for an unforgettable experience with exciting activities and surprises that will make this event the highlight of your semester. This special gathering features engaging entertainment options including mystery challenges, creative competitions, and interactive fun activities designed to build community connections. Participants enjoy a variety of themed experiences that encourage teamwork, creativity, and memorable moments with fellow students.",
       highlights: [
-        "Keynote by leading AI researchers",
-        "Live startup pitch competitions",
-        "Interactive technology demonstrations",
-        "Networking sessions with industry experts",
-        "Panel discussions on future tech trends"
+        "Murder Mystery event",
+        "Lip Sync Battle competition",
+        "Face Painting activities",
+        "Ice Cream Fight fun",
+        "Community building experiences"
       ],
       images: [
-        { src: "/gallery/1.jpg", alt: "Tech Summit Opening Ceremony" },
-        { src: "/gallery/2.jpg", alt: "AI Workshop Session" },
-        { src: "/gallery/3.jpg", alt: "Startup Pitch Competition" },
-        { src: "/gallery/4.jpg", alt: "Technology Exhibition" },
-        { src: "/gallery/5.jpg", alt: "Networking Session" },
-        { src: "/gallery/6.jpg", alt: "Panel Discussion" },
+        { src: "/gallery/1.jpg", alt: "VITB Got Latent Opening" },
+        { src: "/gallery/2.jpg", alt: "Murder Mystery Scene" },
+        { src: "/gallery/3.jpg", alt: "Lip Sync Battle" },
+        { src: "/gallery/4.jpg", alt: "Face Painting Activity" },
+        { src: "/gallery/5.jpg", alt: "Ice Cream Fight" },
+        { src: "/gallery/6.jpg", alt: "Group Photo Session" },
         { src: "/gallery/7.jpg", alt: "Awards Ceremony" },
         { src: "/gallery/8.jpg", alt: "Closing Celebration" }
       ],
       stats: {
-        participants: 500,
-        duration: "2 Days",
-        projects: 25
+        participants: 400,
+        duration: "1 Day"
       }
     },
     {
       id: 2,
-      title: "Research Symposium",
-      subtitle: "Advancing Scientific Knowledge Through Innovation",
-      date: "April 22, 2024",
-      location: "Research Complex, VIT",
-      category: "Research",
-      description: "A prestigious academic gathering that celebrated student-led research excellence across diverse scientific disciplines. Our symposium provided a platform for emerging researchers to present groundbreaking work spanning artificial intelligence, biotechnology, sustainable engineering, and computational sciences. The event fostered collaborative discussions between students, faculty, and industry professionals, creating meaningful connections that drive future innovations.",
+      title: "MatlabVerse A NextWave Hackathon",
+      subtitle: "Innovating with MATLAB",
+      date: "Date Not Specified",
+      location: "VIT University Campus",
+      category: "Competition",
+      description: "The Linpack Club hosted a hackathon titled 'MATLABVerse: A NextWave Hackathon,' which was open to all students. The event aimed to provide students with a platform to showcase their skills and creativity in MATLAB programming. Participants were required to submit their projects, which were evaluated by a panel of judges. The hackathon featured a range of projects, including image processing, data analysis, and machine learning applications. This competitive event encouraged innovation and technical excellence among student participants.",
       highlights: [
-        "Multi-disciplinary research presentations",
-        "Peer review sessions and feedback",
-        "Faculty mentorship opportunities",
-        "Research methodology workshops",
-        "Collaborative research projects"
+        "Open to all students",
+        "Image processing projects",
+        "Data analysis applications",
+        "Machine learning solutions",
+        "Expert judging panel"
       ],
       images: [
-        { src: "/gallery/1.jpg", alt: "Research Presentation Hall" },
-        { src: "/gallery/2.jpg", alt: "Student Researcher Presenting" },
-        { src: "/gallery/3.jpg", alt: "Faculty Panel Discussion" },
-        { src: "/gallery/4.jpg", alt: "Poster Session" },
-        { src: "/gallery/5.jpg", alt: "Research Collaboration Meeting" },
-        { src: "/gallery/6.jpg", alt: "Award Recognition Ceremony" },
-        { src: "/gallery/7.jpg", alt: "Networking Break" },
-        { src: "/gallery/8.jpg", alt: "Closing Symposium Address" }
+        { src: "/gallery/1.jpg", alt: "Hackathon Opening" },
+        { src: "/gallery/2.jpg", alt: "Coding Session" },
+        { src: "/gallery/3.jpg", alt: "Project Development" },
+        { src: "/gallery/4.jpg", alt: "Team Collaboration" },
+        { src: "/gallery/5.jpg", alt: "Project Presentation" },
+        { src: "/gallery/6.jpg", alt: "Judging Panel" },
+        { src: "/gallery/7.jpg", alt: "Winner Announcement" },
+        { src: "/gallery/8.jpg", alt: "Prize Distribution" }
       ],
       stats: {
-        participants: 300,
-        duration: "1 Day",
-        projects: 45
+        participants: 120,
+        duration: "2 Days",
+        projects: 35
       }
     },
     {
       id: 3,
-      title: "Hackathon Challenge",
-      subtitle: "Building Tomorrow's Solutions Today",
-      date: "May 10-12, 2024",
-      location: "Innovation Lab, VIT",
-      category: "Competition",
-      description: "An intensive 48-hour coding marathon that brought together passionate developers, designers, and innovators to tackle real-world challenges through technology. Participants worked in diverse teams to develop innovative solutions addressing social issues, environmental concerns, and technological gaps. The event featured mentorship from industry experts, technical workshops, and a comprehensive judging process that evaluated creativity, technical excellence, and social impact.",
+      title: "VIT Got Talent - I",
+      subtitle: "Showcasing Student Talents",
+      date: "Date Not Specified",
+      location: "VIT University Campus",
+      category: "Entertainment",
+      description: "An exciting talent show event that featured multiple rounds of entertainment competitions. The event began with each participant receiving unique hashed code tickets through their mail IDs. Music systems were installed, and all participants were provided with event details. The competition included various rounds such as Blind Fold Race, Pop the Balloons, Karaoke Battle, Lip Sync Battle, and Face Painting. Each round was designed to showcase different talents and provide an engaging experience for both participants and spectators.",
       highlights: [
-        "48-hour intensive development period",
-        "Industry mentor guidance",
-        "Real-world problem statements",
-        "Cross-functional team collaboration",
-        "Prize pool worth ₹50,000"
+        "Blind Fold Race competition",
+        "Pop the Balloons challenge",
+        "Karaoke Battle performances",
+        "Lip Sync Battle round",
+        "Face Painting creativity contest"
       ],
       images: [
-        { src: "/gallery/1.jpg", alt: "Hackathon Opening Ceremony" },
-        { src: "/gallery/2.jpg", alt: "Teams Brainstorming" },
-        { src: "/gallery/3.jpg", alt: "Late Night Coding Session" },
-        { src: "/gallery/4.jpg", alt: "Mentor Guidance Session" },
-        { src: "/gallery/5.jpg", alt: "Final Presentations" },
-        { src: "/gallery/6.jpg", alt: "Judging Panel" },
-        { src: "/gallery/7.jpg", alt: "Winner Announcement" },
-        { src: "/gallery/8.jpg", alt: "Team Celebration" }
+        { src: "/gallery/1.jpg", alt: "VIT Got Talent Opening" },
+        { src: "/gallery/2.jpg", alt: "Blind Fold Race" },
+        { src: "/gallery/3.jpg", alt: "Pop the Balloons" },
+        { src: "/gallery/4.jpg", alt: "Karaoke Battle" },
+        { src: "/gallery/5.jpg", alt: "Lip Sync Battle" },
+        { src: "/gallery/6.jpg", alt: "Face Painting" },
+        { src: "/gallery/7.jpg", alt: "Talent Show Performances" },
+        { src: "/gallery/8.jpg", alt: "Event Winners" }
       ],
       stats: {
         participants: 200,
-        duration: "48 Hours",
-        projects: 35
+        duration: "1 Day"
+      }
+    },
+    {
+      id: 4,
+      title: "Inaugural Event",
+      subtitle: "Embarking on the Basics of MATLAB",
+      date: "Date Not Specified",
+      location: "VIT University Campus",
+      category: "Educational",
+      description: "The Linpack Club hosted its inaugural event titled 'Embarking on the Basics of MATLAB: A Primer to Unlocking Its Potential.' The event started with distribution of unique hashed event tickets through college mail IDs to registered students. It featured an engaging workshop on MATLAB, designed to provide participants with a comprehensive understanding of the software. The workshop included hands-on sessions and quizzes to explore new technologies and enhance participants' skills. The event concluded with prize distribution and unique participation certificates for all attendees.",
+      highlights: [
+        "MATLAB basics workshop",
+        "Hands-on learning sessions",
+        "Interactive quizzes",
+        "Prize distribution ceremony",
+        "Participation certificates for all"
+      ],
+      images: [
+        { src: "/gallery/1.jpg", alt: "Inaugural Event Opening" },
+        { src: "/gallery/2.jpg", alt: "MATLAB Workshop Session" },
+        { src: "/gallery/3.jpg", alt: "Hands-on Learning" },
+        { src: "/gallery/4.jpg", alt: "Interactive Quiz" },
+        { src: "/gallery/5.jpg", alt: "Prize Distribution" },
+        { src: "/gallery/6.jpg", alt: "Certificate Distribution" },
+        { src: "/gallery/7.jpg", alt: "Group Photo" },
+        { src: "/gallery/8.jpg", alt: "Event Closing" }
+      ],
+      stats: {
+        participants: 150,
+        duration: "1 Day"
       }
     }
   ];
