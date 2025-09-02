@@ -10,7 +10,6 @@ import gsap from "gsap";
 
 const Navbar2: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
   const router = useRouter();
   const [isLinksHovered, setIsLinksHovered] = useState(false);
   const [isNavbarHovered, setIsNavbarHovered] = useState(false);
@@ -27,14 +26,10 @@ const Navbar2: React.FC = () => {
   const burgerRef = useRef<HTMLButtonElement>(null);
   const isOpenRef = useRef(isOpen);
 
-  // Update ref when isOpen changes and handle mounting
+  // Update ref when isOpen changes
   useEffect(() => {
     isOpenRef.current = isOpen;
   }, [isOpen]);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
 
   // GSAP animations
   useGSAP(() => {
@@ -318,12 +313,10 @@ const Navbar2: React.FC = () => {
       </nav>
 
       {/* Mobile Menu with Sliding Animation */}
-      {isMounted && (
-        <nav
-          ref={navRef}
-          className="fixed z-50 flex flex-col justify-between w-[105vw] h-[100vh] px-5 sm:px-10 uppercase py-20 gap-y-10 md:w-1/2 md:left-1/2 md:hidden shadow-2xl border-l-2 border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200"
-          style={{ display: 'none' }}
-        >
+      <nav
+        ref={navRef}
+        className="fixed z-50 flex flex-col justify-between w-[105vw] h-[100vh] px-5 sm:px-10 uppercase py-20 gap-y-10 md:w-1/2 md:left-1/2 md:hidden shadow-2xl border-l-2 border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200"
+      >
         {/* Add margin top to avoid navbar overlap */}
         <div className="mt-20"></div>
         
@@ -398,8 +391,7 @@ const Navbar2: React.FC = () => {
             </div>
           </div>
         </div>
-        </nav>
-      )}
+      </nav>
     </>
   );
 };
