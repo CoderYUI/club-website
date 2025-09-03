@@ -46,9 +46,9 @@ export default function ImageSlider() {
 
           {/* Main heading with magazine-style typography */}
           <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extralight tracking-[-0.02em] text-black dark:text-white mb-6 leading-[0.9] font-serif max-w-5xl mx-auto">
-            <span className="block lg:inline">VITB Got Latent</span>
+            <span className="block lg:inline">Dataverse</span>
             <span className="block lg:inline font-thin italic bg-gradient-to-r from-red-400 via-red-500 to-red-600 bg-clip-text text-transparent mt-2 lg:mt-0 lg:ml-4 dark:bg-gradient-to-r dark:from-red-400 dark:via-red-500 dark:to-red-600">
-              Season 2
+              '25
             </span>
           </h1>
         </motion.div>
@@ -56,10 +56,10 @@ export default function ImageSlider() {
         {/* Editorial Layout Event Card */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
           {/* Visual Storytelling */}
-          <div className="relative h-[500px] rounded-2xl overflow-hidden">
+          <div className="relative h-[600px] md:h-[650px] lg:h-[700px] rounded-2xl overflow-hidden">
             <Image
-              src="/images/vitbgotlatent2.jpg"
-              alt="VITB Got Latent Season 2"
+              src="/images/Dataverse.jpg"
+              alt="Dataverse' 25"
               fill
               className="object-cover"
               priority
@@ -69,16 +69,16 @@ export default function ImageSlider() {
             {/* Editorial Date Stamp */}
             <div className="absolute top-6 left-6 bg-white dark:bg-black px-4 py-2 rounded-lg shadow-lg">
               <div className="text-center">
-                <div className="text-2xl font-serif font-bold text-black dark:text-white">22</div>
-                <div className="text-xs uppercase tracking-widest text-gray-600 dark:text-gray-400">FEB 2025</div>
+                <div className="text-2xl font-serif font-bold text-black dark:text-white">18</div>
+                <div className="text-xs uppercase tracking-widest text-gray-600 dark:text-gray-400">SEPT 2025</div>
               </div>
             </div>
             
             {/* Editorial Caption */}
             <div className="absolute bottom-6 left-6 right-6">
               <div className="text-white">
-                <h3 className="text-2xl font-light">VITB Got Latent Season 2</h3>
-                <p className="text-sm text-gray-200 mt-1">The Ultimate Fun Experience</p>
+                <h3 className="text-2xl font-light">Dataverse' 25</h3>
+                <p className="text-sm text-gray-200 mt-1">Where Creativity Meets Technology</p>
               </div>
             </div>
           </div>
@@ -92,11 +92,11 @@ export default function ImageSlider() {
                 </span>
                 
                 <h3 className="text-3xl font-extralight text-black dark:text-white mb-6 leading-tight tracking-[-0.02em]">
-                  Don&apos;t Miss Out on the Fun
+                  A vibrant fusion of art, memes, pop culture & tech
                 </h3>
                 
                 <p className="text-gray-600 dark:text-gray-400 mb-8 text-lg leading-relaxed">
-                  Join us for an unforgettable experience with exciting activities and surprises that will make this event the highlight of your semester.
+                  Spark innovation and fun with exciting activities that blend creativity and technology in unique ways.
                 </p>
               </div>
 
@@ -109,8 +109,8 @@ export default function ImageSlider() {
                   </h4>
                   <ul className="space-y-3">
                     {[
-                      "Murder Mystery",
-                      "Lip Sync Battle"
+                      "Techie's Got Talent",
+                      "GIF Battle"
                     ].map((event, index) => (
                       <li key={index} className="flex items-start">
                         <span className="text-red-500 mr-2 mt-1.5">•</span>
@@ -127,8 +127,8 @@ export default function ImageSlider() {
                   </h4>
                   <ul className="space-y-3">
                     {[
-                      "Face Painting",
-                      "Ice Cream Fight"
+                      "AI Meme Madness",
+                      "Pop Culture x Data"
                     ].map((event, index) => (
                       <li key={index} className="flex items-start">
                         <span className="text-red-500 mr-2 mt-1.5">•</span>
@@ -138,12 +138,41 @@ export default function ImageSlider() {
                   </ul>
                 </div>
               </div>
+              
+              {/* Event Details */}
+              <div className="bg-gray-50 dark:bg-gray-800/50 p-6 rounded-xl border border-gray-100 dark:border-gray-800 mb-8">
+                <h4 className="text-lg font-medium text-black dark:text-white mb-4 flex items-center">
+                  <span className="w-2 h-2 bg-red-500 rounded-full mr-3"></span>
+                  Event Information
+                </h4>
+                <div className="space-y-3 text-gray-700 dark:text-gray-300">
+                  <div className="flex items-center">
+                    <svg className="w-5 h-5 mr-3 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span>Date: 18th Sept 2025 | Time: 1:15 – 4:20 PM</span>
+                  </div>
+                  <div className="flex items-center">
+                    <svg className="w-5 h-5 mr-3 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <span>Venue: Mini Auditorium, Academic Block 1</span>
+                  </div>
+                  <div className="flex items-center">
+                    <svg className="w-5 h-5 mr-3 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                    <span>Presented by: Linpack Club, VIT Bhopal</span>
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* Editorial CTA */}
             <div className="border-t border-gray-200 dark:border-gray-800 pt-8">
               <a
-                href="https://forms.gle/8xwWsK2W7vPkPR3w8"
+                href="https://forms.gle/LF5wK45u8qL9dxuk9"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center group"
@@ -159,6 +188,40 @@ export default function ImageSlider() {
               <p className="text-sm text-gray-500 dark:text-gray-400 mt-3 text-center">
                 Limited slots available • First come, first served
               </p>
+              
+              {/* Student Coordinators */}
+              <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-800">
+                <h4 className="text-lg font-medium text-black dark:text-white mb-4">Student Coordinators</h4>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-lg border border-gray-100 dark:border-gray-800">
+                    <div className="font-medium text-black dark:text-white">Naman Gurjar</div>
+                    <div className="text-gray-600 dark:text-gray-400 text-sm">87190 74752</div>
+                  </div>
+                  <div className="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-lg border border-gray-100 dark:border-gray-800">
+                    <div className="font-medium text-black dark:text-white">Mohan Prasad</div>
+                    <div className="text-gray-600 dark:text-gray-400 text-sm">7305398374</div>
+                  </div>
+                  <div className="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-lg border border-gray-100 dark:border-gray-800">
+                    <div className="font-medium text-black dark:text-white">Simran Ahirwar</div>
+                    <div className="text-gray-600 dark:text-gray-400 text-sm">9370157060</div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Community Link */}
+              <div className="mt-6 text-center">
+                <a 
+                  href="https://chat.whatsapp.com/CcaehnEJhJJE5IUzSPsm8p?mode=ac_t" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-red-500 hover:text-red-600 dark:hover:text-red-400 font-medium inline-flex items-center"
+                >
+                  <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                  </svg>
+                  Join our WhatsApp Community
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -166,7 +229,7 @@ export default function ImageSlider() {
         {/* Editorial Tags */}
         <div className="mt-16 pt-8 border-t border-gray-200 dark:border-gray-800">
           <div className="flex flex-wrap gap-3">
-            {["#VITBGotLatent", "#UnleashTheFun", "#MysteryMadness", "#LatentShow"].map((tag) => (
+            {["#Dataverse25", "#CreativityMeetsTech", "#LinpackClub", "#VITBhopal"].map((tag) => (
               <span
                 key={tag}
                 className="text-sm font-medium text-red-500 hover:text-red-600 dark:hover:text-red-400 transition-colors cursor-pointer"
