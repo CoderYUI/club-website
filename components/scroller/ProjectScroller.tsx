@@ -35,7 +35,7 @@ const ProjectScroller: React.FC = () => {
     },
     {
       brand: "President",
-      title: "Abhyanand Sharma\n[23BAI11047]",
+      title: "Abhyanand Sharma",
       tags: "Leading the club with passion and dedication, driving initiatives and community growth",
       contact: {
         email: "abhyanand.sharma2023@vitbhopal.ac.in",
@@ -53,7 +53,7 @@ const ProjectScroller: React.FC = () => {
     },
     {
       brand: "Vice President",
-      title: "Amit Bankey\n[23BCG10132]",
+      title: "Amit Bankey",
       tags: "Supporting leadership and driving initiatives, ensuring smooth operations and execution",
       contact: {
         email: "amit.bankey2023@vitbhopal.ac.in",
@@ -71,7 +71,7 @@ const ProjectScroller: React.FC = () => {
     },
     {
       brand: "General Secretary",
-      title: "Aastha Patel\n[23BCE10398]",
+      title: "Aastha Patel",
       tags: "Managing operations and communications, coordinating events and member engagement",
       contact: {
         email: "aastha.patel2023@vitbhopal.ac.in",
@@ -89,7 +89,7 @@ const ProjectScroller: React.FC = () => {
     },
     {
       brand: "Joint Secretary",
-      title: "Om Kumar Singh\n[23BAI10076]",
+      title: "Om Kumar Singh",
       tags: "Assisting in coordination and event planning, supporting administrative functions",
       contact: {
         email: "om.singh2023@vitbhopal.ac.in",
