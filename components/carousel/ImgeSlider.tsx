@@ -54,13 +54,13 @@ export default function ImageSlider() {
           
           {/* Event Taglines */}
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-light text-gray-700 dark:text-gray-300 mb-3 font-serif">
-            Unleash Your Digital Vibe
+            
           </h2>
           <p className="text-lg md:text-xl text-blue-600 dark:text-blue-400 font-medium mb-4">
-            Beyond the Data Horizon
+            
           </p>
           <p className="text-base md:text-lg text-gray-600 dark:text-gray-400 font-light">
-            Transforming raw information into creative expression
+            
           </p>
         </motion.div>
 
