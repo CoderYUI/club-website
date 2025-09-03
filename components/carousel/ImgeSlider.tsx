@@ -101,7 +101,7 @@ export default function ImageSlider() {
             <div>
               <div className="mb-8">
                 <span className="inline-block px-3 py-1.5 text-xs font-semibold text-red-600 bg-red-50 dark:bg-red-900/20 rounded-full mb-6">
-                  Registration Now Open
+                  Coming Soon..
                 </span>
                 
                 <h3 className="text-3xl font-extralight text-black dark:text-white mb-4 leading-tight tracking-[-0.02em]">
@@ -120,8 +120,29 @@ export default function ImageSlider() {
                   <span className="w-2 h-2 bg-red-500 rounded-full mr-3"></span>
                   Event Information
                 </h4>
-                <div className="space-y-3 text-gray-700 dark:text-gray-300">
-                  <div className="flex items-center">
+                <div className="text-gray-700 dark:text-gray-300">
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full bg-gradient-to-r from-red-500 to-red-600 text-white font-semibold animate-pulse">
+                      Coming Soon
+                    </span>
+                    <span className="text-sm text-gray-500 dark:text-gray-400">Planning in progress — stay tuned</span>
+                  </div>
+
+                  {/* subtle skeleton placeholders to indicate upcoming details */}
+                  <div className="space-y-2">
+                    <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded-md w-3/4 animate-pulse" />
+                    <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded-md w-1/2 animate-pulse" />
+                    <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded-md w-5/6 animate-pulse" />
+                  </div>
+
+                  <div className="mt-4 text-sm text-gray-500 dark:text-gray-400">
+                    <p>Full event details and registration will be published here soon. Follow our socials for updates.</p>
+                  </div>
+
+                  {/* 
+                    Preserve old event information below for later use:
+                    <div className="space-y-3 text-gray-700 dark:text-gray-300">
+                    <div className="flex items-center">
                     <svg className="w-5 h-5 mr-3 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
@@ -164,27 +185,39 @@ export default function ImageSlider() {
                     <span><strong>Certificate:</strong> Participation certificates for all</span>
                   </div>
                 </div>
+                      ...original detailed event items (date, venue, presented by, etc.)...
+                    </div> 
+                  */}
+                </div>
               </div>
             </div>
 
             {/* Editorial CTA */}
             <div className="border-t border-gray-200 dark:border-gray-800 pt-6">
-              <a
-                href="https://forms.gle/LF5wK45u8qL9dxuk9"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center group"
-              >
+              <div className="inline-flex items-center justify-center w-full">
                 <button
                   type="button"
-                  className="px-8 py-4 rounded-full bg-gradient-to-r from-red-500 to-red-600 dark:from-red-600 dark:to-red-700 font-serif font-bold text-base sm:text-lg md:text-xl text-white shadow-lg hover:shadow-xl hover:from-red-600 hover:to-red-700 dark:hover:from-red-700 dark:hover:to-red-800 transition-all duration-300 transform hover:scale-105 tracking-wide"
+                  disabled
+                  aria-disabled="true"
+                  title="Details will be announced soon"
+                  className="px-8 py-4 rounded-full bg-gradient-to-r from-gray-300 to-gray-350 dark:from-gray-700 dark:to-gray-600 font-serif font-bold text-base sm:text-lg md:text-xl text-gray-800 dark:text-gray-100 shadow-inner cursor-not-allowed opacity-95 tracking-wide flex items-center gap-3"
                 >
-                  Register for Event
+                  {/* simple lock icon using SVG to indicate disabled state */}
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-600 dark:text-gray-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0110 0v4"></path>
+                  </svg>
+                  Details Coming Soon
                 </button>
-                <span className="ml-3 text-red-500 group-hover:translate-x-1 transition-transform text-xl">→</span>
-              </a>
+                {/* 
+                  Original CTA preserved for later:
+                  <a href="https://forms.gle/LF5wK45u8qL9dxuk9" target="_blank" rel="noopener noreferrer" className="inline-flex items-center group">
+                    <button className="px-8 py-4 rounded-full bg-gradient-to-r from-red-500 to-red-600 ...">Register for Event</button>
+                  </a>
+                */}
+              </div>
               <p className="text-sm text-gray-500 dark:text-gray-400 mt-3 text-center">
-                Limited slots available • First come, first served
+                We'll announce date and registration details soon.
               </p>
             </div>
           </div>

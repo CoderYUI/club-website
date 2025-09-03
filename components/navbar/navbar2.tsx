@@ -192,13 +192,13 @@ const Navbar2: React.FC = () => {
     { name: "Gallery", href: "/gallery" },
   ];
 
-  // Create a separate array for desktop nav items excluding Expense
-  const desktopNavItems = navItems.filter(item => item.name !== "Expense");
-
+  // Use same nav items for desktop (include Expense)
+  const desktopNavItems = navItems;
+  
   const getItemStyle = (itemName: string) => {
     return "hover:text-yellow-500 transition-all duration-300 ease-in-out bg-transparent shadow-none font-extralight tracking-wide bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 dark:from-white dark:via-gray-200 dark:to-white bg-clip-text text-transparent drop-shadow-sm";
   };
-
+  
   return (
     <>
       <nav
@@ -235,7 +235,7 @@ const Navbar2: React.FC = () => {
                 className="rounded-full shadow-md"
               />
               <span className="whitespace-nowrap font-bold tracking-wide bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 dark:from-white dark:via-gray-200 dark:to-white bg-clip-text text-transparent drop-shadow-sm text-lg md:text-xl dark:bg-gradient-to-r dark:from-white dark:via-gray-200 dark:to-white">
-                MATLAB & LaTeX Club
+                LINPACK Club
               </span>
             </div>
           </Link>
@@ -248,7 +248,7 @@ const Navbar2: React.FC = () => {
           style={{
             minWidth: 350,
             maxWidth: isNavbarHovered ? 800 : 700,
-            width: '100%',
+            flex: 1,
             justifyContent: 'center',
           }}
         >
@@ -285,7 +285,10 @@ const Navbar2: React.FC = () => {
               )}
             </div>
           ))}
-          <span className="ml-4 flex items-center"><ThemeSwitch /></span>
+        </div>
+        {/* Theme switch for desktop (kept inside navbar on the right) */}
+        <div className="hidden md:flex items-center ml-4">
+          <ThemeSwitch />
         </div>
         {/* Mobile Menu Button */}
         <div className="md:hidden flex items-center">
