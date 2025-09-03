@@ -221,7 +221,7 @@ const ProjectScroller: React.FC = () => {
                 <h1 className="text-4xl mb-4 leading-[3.5rem] font-light tracking-[-0.02em] text-gray-900 dark:text-white whitespace-pre-line">
                   {project.title}
                 </h1>
-                <p className="text-lg mb-4 text-gray-600 dark:text-gray-300 font-light leading-relaxed max-w-md">
+                <p className="text-base md:text-xl mb-4 text-gray-600 dark:text-gray-300 font-light leading-relaxed max-w-md">
                   {project.tags}
                 </p>
                 {/* Contact Details */}
@@ -334,7 +334,7 @@ const ProjectScroller: React.FC = () => {
                 <h2 className="text-2xl font-light tracking-[-0.02em] leading-tight whitespace-pre-line text-gray-900 dark:text-white">
                   {project.title}
                 </h2>
-                <p className="text-lg text-gray-600 dark:text-gray-300 font-light leading-relaxed">
+                <p className="text-sm md:text-lg text-gray-600 dark:text-gray-300 font-light leading-relaxed">
                   {project.tags}
                 </p>
                 {/* Contact Details */}
