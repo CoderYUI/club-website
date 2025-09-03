@@ -48,7 +48,7 @@ export default function ImageSlider() {
           <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extralight tracking-[-0.02em] text-black dark:text-white mb-4 leading-[0.9] font-serif max-w-5xl mx-auto">
             <span className="inline bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent font-bold">DATAVERSE</span>
             <span className="inline font-thin italic bg-gradient-to-r from-red-400 via-red-500 to-red-600 bg-clip-text text-transparent ml-4 dark:bg-gradient-to-r dark:from-red-400 dark:via-red-500 dark:to-red-600">
-              '25
+              &#39;25
             </span>
           </h1>
           
@@ -90,7 +90,7 @@ export default function ImageSlider() {
               {/* Editorial Caption */}
               <div className="absolute bottom-6 left-6 right-6">
                 <div className="text-white">
-                  <h3 className="text-2xl font-light">Dataverse' 25</h3>
+                  <h3 className="text-2xl font-light">Dataverse&#39; 25</h3>
                   <p className="text-sm text-gray-200 mt-1">Where Creativity Meets Technology</p>
                 </div>
               </div>
@@ -129,8 +129,7 @@ export default function ImageSlider() {
                   </div>
                   <div className="flex items-center">
                     <svg className="w-5 h-5 mr-3 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 715.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                     </svg>
                     <span><strong>Venue:</strong> Mini Auditorium, Academic Block 1</span>
                   </div>
@@ -162,108 +161,6 @@ export default function ImageSlider() {
               </a>
               <p className="text-sm text-gray-500 dark:text-gray-400 mt-3 text-center">
                 Limited slots available • First come, first served
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Sub Events Section - Full Width */}
-        <div className="mb-12">
-          <h4 className="text-2xl md:text-3xl font-semibold text-black dark:text-white mb-8 text-center flex items-center justify-center">
-            🔥 <span className="ml-3 bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">Exciting Sub-events</span>
-          </h4>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              { name: "Techie's Got Talent", desc: "Show off your unique skills with a tech twist!", emoji: "🎭" },
-              { name: "GIF Battle", desc: "Quick, fun & interactive GIF-making challenge", emoji: "⚡" },
-              { name: "AI Meme Madness", desc: "Make the funniest tech memes using AI", emoji: "🤖" },
-              { name: "Pop Culture x Data", desc: "A quirky mashup of pop culture & data quiz", emoji: "🎯" }
-            ].map((event, index) => (
-              <div key={index} className="bg-gray-50 dark:bg-gray-800/50 p-6 rounded-xl border border-gray-100 dark:border-gray-800 hover:border-blue-300 dark:hover:border-blue-700 transition-all duration-300 text-center">
-                <div className="text-4xl mb-4">{event.emoji}</div>
-                <h5 className="font-semibold text-black dark:text-white mb-3 text-lg">{event.name}</h5>
-                <p className="text-sm text-gray-600 dark:text-gray-400">{event.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Schedule and Details - Three Column Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
-          {/* Event Schedule */}
-          <div className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-950/30 dark:to-purple-950/30 p-6 rounded-xl border border-blue-200 dark:border-blue-800">
-            <h4 className="text-lg font-medium text-black dark:text-white mb-4 flex items-center">
-              🗓 <span className="ml-2">Event Schedule</span>
-            </h4>
-            <div className="space-y-2 text-sm">
-              {[
-                { time: "01:30 PM - 01:45 PM", event: "Introduction & Overview" },
-                { time: "01:45 PM - 02:15 PM", event: "Techie's Got Talent (Round 1)" },
-                { time: "02:20 PM - 02:40 PM", event: "GIF Battle (Round 2)" },
-                { time: "02:45 PM - 03:30 PM", event: "AI Meme Madness (Round 3)" },
-                { time: "03:30 PM - 03:50 PM", event: "Pop Culture x Data (Round 4)" },
-                { time: "04:00 PM - 04:20 PM", event: "Prize Distribution" }
-              ].map((item, index) => (
-                <div key={index} className="flex flex-col py-2 px-3 bg-white/60 dark:bg-black/20 rounded-lg">
-                  <span className="font-medium text-blue-600 dark:text-blue-400 text-xs">{item.time}</span>
-                  <span className="text-gray-700 dark:text-gray-300 text-xs">{item.event}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Registration Fees */}
-          <div className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950/30 dark:to-emerald-950/30 p-6 rounded-xl border border-green-200 dark:border-green-800">
-            <h4 className="text-lg font-medium text-black dark:text-white mb-4 flex items-center">
-              💰 <span className="ml-2">Registration Fees</span>
-            </h4>
-            <div className="space-y-3 mb-4">
-              {[
-                { type: "Solo", price: "₹70", desc: "Individual participation" },
-                { type: "Duo", price: "₹120", desc: "Group of 2" },
-                { type: "Squad", price: "₹170", desc: "Group of 4" }
-              ].map((option, index) => (
-                <div key={index} className="bg-white/60 dark:bg-black/20 p-4 rounded-lg text-center">
-                  <div className="font-bold text-green-600 dark:text-green-400 text-lg">{option.price}</div>
-                  <div className="font-semibold text-gray-900 dark:text-white">{option.type}</div>
-                  <div className="text-xs text-gray-600 dark:text-gray-400">{option.desc}</div>
-                </div>
-              ))}
-            </div>
-            <div className="bg-white/60 dark:bg-black/20 p-4 rounded-lg">
-              <h5 className="font-semibold text-gray-900 dark:text-white mb-2">Bank Details:</h5>
-              <div className="text-sm space-y-1">
-                <p><strong>Account:</strong> 7677250359</p>
-                <p><strong>IFSC:</strong> IDIB000V143</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Benefits */}
-          <div className="bg-gradient-to-br from-orange-50 to-pink-50 dark:from-orange-950/30 dark:to-pink-950/30 p-6 rounded-xl border border-orange-200 dark:border-orange-800">
-            <h4 className="text-lg font-medium text-black dark:text-white mb-4 flex items-center">
-              ⚡ <span className="ml-2">Why Join</span>
-            </h4>
-            <div className="space-y-4">
-              {[
-                { icon: "✨", title: "Fun & Creativity", desc: "Tech meets creativity on one stage" },
-                { icon: "🎭", title: "Perform & Create", desc: "Showcase talents & vibe with community" },
-                { icon: "🎁", title: "Rewards", desc: "Certificates & goodies for participants" }
-              ].map((benefit, index) => (
-                <div key={index} className="bg-white/60 dark:bg-black/20 p-4 rounded-lg">
-                  <div className="flex items-center space-x-3">
-                    <div className="text-2xl">{benefit.icon}</div>
-                    <div>
-                      <div className="font-semibold text-gray-900 dark:text-white text-sm">{benefit.title}</div>
-                      <div className="text-xs text-gray-600 dark:text-gray-400">{benefit.desc}</div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="mt-4 pt-4 border-t border-orange-200 dark:border-orange-700 text-center">
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                🏆 E-Participation certificates for all • Physical winning certificates for winners
               </p>
             </div>
           </div>
