@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   authors: [{ name: "Linpack Club" }],
   creator: "Linpack Club",
   publisher: "Linpack Club",
-  metadataBase: new URL('https://linpack-club.vercel.app'),
+  metadataBase: new URL('https://linpack.vercel.app'),
   openGraph: {
     title: "MATLAB & Overleaf Club - VIT Bhopal University",
     description: "Official website of the MATLAB & Overleaf Club at VIT Bhopal University. Access exclusive resources, register for events, generate certificates, and explore interactive learning materials.",
