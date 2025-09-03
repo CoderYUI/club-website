@@ -4,6 +4,9 @@ const nextConfig = {
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
   },
   // Allow all hosts for Replit proxy
+  experimental: {
+    allowedRevalidateHeaderKeys: [],
+  },
   typescript: {
     ignoreBuildErrors: false,
   },
