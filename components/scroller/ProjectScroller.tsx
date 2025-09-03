@@ -108,7 +108,7 @@ const ProjectScroller: React.FC = () => {
   ]
 
   const bgColors = ["#D3D6F0", "#FAE1ED", "#FFEDE0", "#E0F0FF", "#FFEAE1"]
-  const bgColorsDark = ["#080808", "#3F2A37", "#3F362A", "#2A3A3F", "#080808"]
+  const bgColorsDark = ["#181818", "#3F2A37", "#3F362A", "#2A3A3F", "#080808"]
 
   useEffect(() => {
     const gallery = galleryRef.current
