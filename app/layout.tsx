@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     follow: true,
   },
   alternates: {
-    canonical: "https://linpack-club.vercel.app",
+    canonical: "https://linpack.vercel.app",
   },
 };
 
