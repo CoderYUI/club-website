@@ -21,7 +21,8 @@ const ProjectScroller: React.FC = () => {
       tags: "Guiding our club with expertise and vision, fostering innovation and academic excellence",
       contact: {
         email: "benevatho.jaison@vitbhopal.ac.in",
-        phone: "+91 98765 43210"
+        phone: "+91 98765 43210",
+        registration: "FC-001"
       },
       image: "/images/scroller1.webp",
       color: "#7781D9",
@@ -38,7 +39,8 @@ const ProjectScroller: React.FC = () => {
       tags: "Leading the club with passion and dedication, driving initiatives and community growth",
       contact: {
         email: "abhyanand.sharma2023@vitbhopal.ac.in",
-        phone: "+91 98765 43211"
+        phone: "+91 98765 43211",
+        registration: "23BAI11047"
       },
       image: "/images/scroller2.webp",
       color: "#E67FB4",
@@ -55,7 +57,8 @@ const ProjectScroller: React.FC = () => {
       tags: "Supporting leadership and driving initiatives, ensuring smooth operations and execution",
       contact: {
         email: "amit.bankey2023@vitbhopal.ac.in",
-        phone: "+91 98765 43212"
+        phone: "+91 98765 43212",
+        registration: "23BCG10132"
       },
       image: "/images/scroller3.webp",
       color: "#F1AB79",
@@ -72,7 +75,8 @@ const ProjectScroller: React.FC = () => {
       tags: "Managing operations and communications, coordinating events and member engagement",
       contact: {
         email: "aastha.patel2023@vitbhopal.ac.in",
-        phone: "+91 98765 43213"
+        phone: "+91 98765 43213",
+        registration: "23BCE10398"
       },
       image: "/images/scroller4.webp",
       color: "#77A9D9",
@@ -89,7 +93,8 @@ const ProjectScroller: React.FC = () => {
       tags: "Assisting in coordination and event planning, supporting administrative functions",
       contact: {
         email: "om.singh2023@vitbhopal.ac.in",
-        phone: "+91 98765 43214"
+        phone: "+91 98765 43214",
+        registration: "23BAI10076"
       },
       image: "/images/scroller5.webp",
       color: "#FFB08C",
@@ -216,23 +221,29 @@ const ProjectScroller: React.FC = () => {
                 <h1 className="text-4xl mb-4 leading-[3.5rem] font-light tracking-[-0.02em] text-gray-900 dark:text-white whitespace-pre-line">
                   {project.title}
                 </h1>
-                <p className="text-base mb-4 text-gray-600 dark:text-gray-300 font-light leading-relaxed max-w-md">
+                <p className="text-lg mb-4 text-gray-600 dark:text-gray-300 font-light leading-relaxed max-w-md">
                   {project.tags}
                 </p>
                 {/* Contact Details */}
-                <div className="flex flex-col space-y-2 mb-6">
-                  <div className="flex items-center text-gray-700 dark:text-gray-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <div className="flex flex-col space-y-3 mb-6">
+                  <div className="flex items-center text-gray-700 dark:text-gray-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-3" viewBox="0 0 20 20" fill="currentColor">
                       <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
                       <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                     </svg>
-                    <span className="text-sm">{project.contact.email}</span>
+                    <span className="text-base font-medium">{project.contact.email}</span>
                   </div>
-                  <div className="flex items-center text-gray-700 dark:text-gray-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                  <div className="flex items-center text-gray-700 dark:text-gray-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-3" viewBox="0 0 20 20" fill="currentColor">
                       <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
                     </svg>
-                    <span className="text-sm">{project.contact.phone}</span>
+                    <span className="text-base font-medium">{project.contact.phone}</span>
+                  </div>
+                  <div className="flex items-center text-gray-700 dark:text-gray-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-3" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-base font-medium">Reg: {project.contact.registration}</span>
                   </div>
                 </div>
                 {/* Social Media Icons */}
@@ -323,23 +334,29 @@ const ProjectScroller: React.FC = () => {
                 <h2 className="text-2xl font-light tracking-[-0.02em] leading-tight whitespace-pre-line text-gray-900 dark:text-white">
                   {project.title}
                 </h2>
-                <p className="text-base text-gray-600 dark:text-gray-300 font-light leading-relaxed">
+                <p className="text-lg text-gray-600 dark:text-gray-300 font-light leading-relaxed">
                   {project.tags}
                 </p>
                 {/* Contact Details */}
-                <div className="flex flex-col space-y-2 mt-2">
-                  <div className="flex items-center text-gray-700 dark:text-gray-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <div className="flex flex-col space-y-3 mt-4">
+                  <div className="flex items-center text-gray-700 dark:text-gray-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-3" viewBox="0 0 20 20" fill="currentColor">
                       <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
                       <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                     </svg>
-                    <span className="text-sm">{project.contact.email}</span>
+                    <span className="text-base font-medium">{project.contact.email}</span>
                   </div>
-                  <div className="flex items-center text-gray-700 dark:text-gray-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                  <div className="flex items-center text-gray-700 dark:text-gray-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-3" viewBox="0 0 20 20" fill="currentColor">
                       <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
                     </svg>
-                    <span className="text-sm">{project.contact.phone}</span>
+                    <span className="text-base font-medium">{project.contact.phone}</span>
+                  </div>
+                  <div className="flex items-center text-gray-700 dark:text-gray-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-3" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-base font-medium">Reg: {project.contact.registration}</span>
                   </div>
                 </div>
                 {/* Social Media Icons */}
