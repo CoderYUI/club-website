@@ -46,8 +46,8 @@ export default function ImageSlider() {
 
           {/* Main heading with magazine-style typography */}
           <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extralight tracking-[-0.02em] text-black dark:text-white mb-6 leading-[0.9] font-serif max-w-5xl mx-auto">
-            <span className="block lg:inline">Dataverse</span>
-            <span className="block lg:inline font-thin italic bg-gradient-to-r from-red-400 via-red-500 to-red-600 bg-clip-text text-transparent mt-2 lg:mt-0 lg:ml-4 dark:bg-gradient-to-r dark:from-red-400 dark:via-red-500 dark:to-red-600">
+            <span className="inline">Dataverse</span>
+            <span className="inline font-thin italic bg-gradient-to-r from-red-400 via-red-500 to-red-600 bg-clip-text text-transparent ml-4 dark:bg-gradient-to-r dark:from-red-400 dark:via-red-500 dark:to-red-600">
               '25
             </span>
           </h1>
@@ -264,8 +264,8 @@ export default function ImageSlider() {
 
         {/* Enhanced main heading with magazine-style typography */}
         <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extralight tracking-[-0.03em] text-black dark:text-white mb-6 leading-[0.9] font-serif max-w-5xl mx-auto">
-          <span className="block lg:inline">Our</span>
-          <span className="block lg:inline font-thin italic bg-gradient-to-r from-red-400 via-red-500 to-red-600 bg-clip-text text-transparent mt-2 lg:mt-0 lg:ml-4">
+          <span className="inline">Our</span>
+          <span className="inline font-thin italic bg-gradient-to-r from-red-400 via-red-500 to-red-600 bg-clip-text text-transparent ml-4">
             Events
           </span>
         </h1>
