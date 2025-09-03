@@ -217,7 +217,7 @@ export default function ImageSlider() {
                 */}
               </div>
               <p className="text-sm text-gray-500 dark:text-gray-400 mt-3 text-center">
-                We'll announce date and registration details soon.
+                We&#39;ll announce date and registration details soon.
               </p>
             </div>
           </div>
