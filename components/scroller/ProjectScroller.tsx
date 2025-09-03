@@ -460,7 +460,7 @@ const ProjectScroller: React.FC = () => {
       <div className="md:hidden bg-[#f8f8f8] dark:bg-[#181818] py-8 px-4">
         <div className="max-w-sm mx-auto space-y-8">
           {projects.map((project, index) => (
-            <div key={index} className="mobile-project-card bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg dark:shadow-gray-900/50">
+            <div key={index} className="mobile-project-card bg-white dark:bg-[#181818] rounded-2xl p-6 shadow-lg dark:shadow-gray-900/50">
               {/* Member Image */}
               <div className="w-full h-48 relative rounded-xl overflow-hidden mb-4">
                 <Image
