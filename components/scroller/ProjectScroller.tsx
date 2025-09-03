@@ -13,39 +13,40 @@ const ProjectScroller: React.FC = () => {
   const rightRef = useRef<HTMLDivElement>(null)
   const photosRef = useRef<HTMLDivElement[]>([])
 
+  // Updated with club members and faculty coordinator details
   const projects = [
     {
-      brand: "MATLAB Research",
-      title: "Signal Processing &\nMachine Learning",
-      tags: "Research, Analysis, Algorithm Development",
+      brand: "Faculty Coordinator",
+      title: "DR. BENEVATHO JAISON",
+      tags: "Guiding our club with expertise and vision, fostering innovation and academic excellence",
       image: "/images/scroller1.webp",
       color: "#7781D9"
     },
     {
-      brand: "Overleaf Projects",
-      title: "Academic\nPublications &\nThesis Writing",
-      tags: "Documentation, LaTeX, Academic Writing",
+      brand: "President",
+      title: "Abhyanand Sharma\n[23BAI11047]",
+      tags: "Leading the club with passion and dedication, driving initiatives and community growth",
       image: "/images/scroller2.webp",
       color: "#E67FB4"
     },
     {
-      brand: "Tech Innovation",
-      title: "IoT Solutions &\nEmbedded Systems",
-      tags: "Hardware, Software, Integration",
+      brand: "Vice President",
+      title: "Amit Bankey\n[23BCG10132]",
+      tags: "Supporting leadership and driving initiatives, ensuring smooth operations and execution",
       image: "/images/scroller3.webp",
       color: "#F1AB79"
     },
     {
-      brand: "Data Science",
-      title: "Analytics &\nVisualization Platform",
-      tags: "Data Mining, Visualization, Insights",
+      brand: "General Secretary",
+      title: "Aastha Patel\n[23BCE10398]",
+      tags: "Managing operations and communications, coordinating events and member engagement",
       image: "/images/scroller4.webp",
       color: "#77A9D9"
     },
     {
-      brand: "Robotics Lab",
-      title: "Autonomous\nSystems &\nControl",
-      tags: "Robotics, Automation, Control Systems",
+      brand: "Joint Secretary",
+      title: "Om Kumar Singh\n[23BAI10076]",
+      tags: "Assisting in coordination and event planning, supporting administrative functions",
       image: "/images/scroller5.webp",
       color: "#FFB08C"
     }
@@ -151,30 +152,51 @@ const ProjectScroller: React.FC = () => {
         ref={galleryRef}
         className="gallery hidden md:flex justify-center bg-[#f8f8f8] dark:bg-[#080808] min-w-full transition-colors duration-500"
       >
-        {/* Left Section - Project Details */}
+        {/* Left Section - Member Details */}
         <div className="left w-[30%] overflow-y-auto">
           <div className="detailsWrapper pl-8">
             {projects.map((project, index) => (
               <div key={index} className="details h-screen flex flex-col justify-center items-start w-full">
                 <p 
-                  className="text-sm mb-3 font-medium"
+                  className="text-sm mb-3 font-medium tracking-widest uppercase"
                   style={{ color: project.color }}
                 >
                   {project.brand}
                 </p>
-                <h1 className="text-4xl mb-4 leading-[3.5rem] font-bold whitespace-pre-line text-gray-900 dark:text-white">
+                <h1 className="text-4xl mb-4 leading-[3.5rem] font-light tracking-[-0.02em] text-gray-900 dark:text-white whitespace-pre-line">
                   {project.title}
                 </h1>
-                <p className="text-xs mb-3 text-gray-600 dark:text-gray-400">
+                <p className="text-base mb-6 text-gray-600 dark:text-gray-300 font-light leading-relaxed max-w-md">
                   {project.tags}
                 </p>
-                <button
-                  className="project-button text-center tracking-tight mt-5 border px-4 py-2 rounded-full transition-all duration-300 hover:scale-105 text-gray-900 dark:text-white"
-                  style={{ borderColor: project.color }}
-                  data-index={index}
-                >
-                  View More
-                </button>
+                {/* Replaced "View More" button with social media icons */}
+                <div className="flex space-x-4 mt-5">
+                  <a href="#" className="w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300 hover:scale-110" style={{ borderColor: project.color, color: project.color }}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                      <rect width="4" height="12" x="2" y="9"></rect>
+                      <circle cx="4" cy="4" r="2"></circle>
+                    </svg>
+                  </a>
+                  <a href="#" className="w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300 hover:scale-110" style={{ borderColor: project.color, color: project.color }}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
+                    </svg>
+                  </a>
+                  <a href="#" className="w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300 hover:scale-110" style={{ borderColor: project.color, color: project.color }}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
+                      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                      <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line>
+                    </svg>
+                  </a>
+                  <a href="#" className="w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300 hover:scale-110" style={{ borderColor: project.color, color: project.color }}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
+                      <path d="M9 18c-4.51 2-5-2-7-2"></path>
+                    </svg>
+                  </a>
+                </div>
               </div>
             ))}
           </div>
@@ -213,7 +235,7 @@ const ProjectScroller: React.FC = () => {
         <div className="max-w-sm mx-auto space-y-8">
           {projects.map((project, index) => (
             <div key={index} className="mobile-project-card bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg dark:shadow-gray-900/50">
-              {/* Project Image */}
+              {/* Member Image */}
               <div className="w-full h-48 relative rounded-xl overflow-hidden mb-4">
                 <Image
                   src={project.image}
@@ -224,27 +246,48 @@ const ProjectScroller: React.FC = () => {
                 />
               </div>
               
-              {/* Project Details */}
+              {/* Member Details */}
               <div className="space-y-3">
                 <p 
-                  className="text-sm font-medium"
+                  className="text-sm font-medium tracking-widest uppercase"
                   style={{ color: project.color }}
                 >
                   {project.brand}
                 </p>
-                <h2 className="text-2xl font-bold leading-tight whitespace-pre-line text-gray-900 dark:text-white">
+                <h2 className="text-2xl font-light tracking-[-0.02em] leading-tight whitespace-pre-line text-gray-900 dark:text-white">
                   {project.title}
                 </h2>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
+                <p className="text-base text-gray-600 dark:text-gray-300 font-light leading-relaxed">
                   {project.tags}
                 </p>
-                <button
-                  className="project-button w-full text-center tracking-tight mt-4 border px-4 py-3 rounded-full transition-all duration-300 active:scale-95 text-gray-900 dark:text-white"
-                  style={{ borderColor: project.color }}
-                  data-index={index}
-                >
-                  View More
-                </button>
+                {/* Replaced "View More" button with social media icons for mobile */}
+                <div className="flex space-x-4 mt-4">
+                  <a href="#" className="w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300 active:scale-95" style={{ borderColor: project.color, color: project.color }}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                      <rect width="4" height="12" x="2" y="9"></rect>
+                      <circle cx="4" cy="4" r="2"></circle>
+                    </svg>
+                  </a>
+                  <a href="#" className="w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300 active:scale-95" style={{ borderColor: project.color, color: project.color }}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
+                    </svg>
+                  </a>
+                  <a href="#" className="w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300 active:scale-95" style={{ borderColor: project.color, color: project.color }}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
+                      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                      <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line>
+                    </svg>
+                  </a>
+                  <a href="#" className="w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300 active:scale-95" style={{ borderColor: project.color, color: project.color }}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
+                      <path d="M9 18c-4.51 2-5-2-7-2"></path>
+                    </svg>
+                  </a>
+                </div>
               </div>
             </div>
           ))}
