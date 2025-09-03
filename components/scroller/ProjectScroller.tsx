@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Image from 'next/image'
@@ -12,6 +12,10 @@ const ProjectScroller: React.FC = () => {
   const galleryRef = useRef<HTMLDivElement>(null)
   const rightRef = useRef<HTMLDivElement>(null)
   const photosRef = useRef<HTMLDivElement[]>([])
+  const [isDarkMode, setIsDarkMode] = useState(false)
+  const scrollTriggerRef = useRef<any>(null)
+  const isDesktopRef = useRef(false)
+  const initRef = useRef(false)
 
   // Updated with club members and faculty coordinator details
   const projects = [
@@ -110,72 +114,199 @@ const ProjectScroller: React.FC = () => {
   const bgColors = ["#D3D6F0", "#FAE1ED", "#FFEDE0", "#E0F0FF", "#FFEAE1"]
   const bgColorsDark = ["#181818", "#3F2A37", "#3F362A", "#2A3A3F", "#181818"]
 
+  // Check for theme changes
+  useEffect(() => {
+    const checkTheme = () => {
+      const isDark = document.documentElement.classList.contains('dark')
+      setIsDarkMode(isDark)
+    }
+
+    // Check theme on mount
+    checkTheme()
+
+    // Listen for theme changes
+    const observer = new MutationObserver(checkTheme)
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class']
+    })
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [])
+
+  // Handle scroll trigger refresh on theme change
+  useEffect(() => {
+    if (!initRef.current) return;
+    
+    // Refresh ScrollTrigger when theme changes to prevent distortion
+    if (ScrollTrigger && isDesktopRef.current) {
+      // Kill existing scroll trigger to prevent conflicts
+      if (scrollTriggerRef.current) {
+        scrollTriggerRef.current.kill()
+        scrollTriggerRef.current = null
+      }
+      
+      // Reinitialize desktop animations after a short delay
+      setTimeout(() => {
+        initDesktopAnimations()
+        ScrollTrigger.refresh()
+      }, 100)
+    }
+  }, [isDarkMode])
+
+  // Initialize desktop animations
+  const initDesktopAnimations = () => {
+    const gallery = galleryRef.current
+    const rightSection = rightRef.current
+    
+    if (!gallery || !rightSection) return
+
+    // Kill existing scroll trigger to prevent conflicts
+    if (scrollTriggerRef.current) {
+      scrollTriggerRef.current.kill()
+      scrollTriggerRef.current = null
+    }
+
+    // Set initial positions for all images except the first one
+    const photos = photosRef.current.slice(1)
+    gsap.set(photos, { yPercent: 101 })
+
+    // Ensure first image is visible
+    if (photosRef.current[0]) {
+      gsap.set(photosRef.current[0], { yPercent: 0, opacity: 1 })
+    }
+
+    // Create scroll-triggered animation for desktop
+    scrollTriggerRef.current = gsap.to(photos, {
+      yPercent: 0,
+      stagger: 1,
+      duration: 1,
+      ease: "linear.inOut",
+      scrollTrigger: {
+        trigger: gallery,
+        start: "top top",
+        end: "bottom bottom",
+        scrub: true,
+        pin: rightSection,
+        anticipatePin: 1,
+        onUpdate: (self) => {
+          // Calculate the index of the current image and update background color
+          let index = Math.floor(self.progress * (bgColors.length))
+          if (gallery) {
+            const colors = isDarkMode ? bgColorsDark : bgColors
+            gallery.style.backgroundColor = colors[index] || colors[colors.length - 1]
+          }
+        }
+      }
+    })
+
+    // Button hover animations for desktop
+    const buttons = gallery.querySelectorAll('.project-button')
+    buttons.forEach((btn) => {
+      const button = btn as HTMLElement
+      const projectIndex = parseInt(button.dataset.index || '0')
+      const borderColor = projects[projectIndex].color
+
+      const handleMouseEnter = () => {
+        gsap.to(button, {
+          background: borderColor,
+          color: "#ffffff",
+          duration: 0.3,
+        })
+      }
+
+      const handleMouseLeave = () => {
+        gsap.to(button, {
+          background: "transparent",
+          color: isDarkMode ? "#ffffff" : "#000000",
+          duration: 0.3,
+        })
+      }
+
+      button.addEventListener('mouseenter', handleMouseEnter)
+      button.addEventListener('mouseleave', handleMouseLeave)
+
+      // Store event listeners for cleanup
+      (button as any)._listeners = { handleMouseEnter, handleMouseLeave }
+    })
+
+    return () => {
+      // Clean up event listeners
+      buttons.forEach((btn) => {
+        const button = btn as HTMLElement
+        const listeners = (button as any)._listeners
+        if (listeners) {
+          button.removeEventListener('mouseenter', listeners.handleMouseEnter)
+          button.removeEventListener('mouseleave', listeners.handleMouseLeave)
+        }
+      })
+    }
+  }
+
+  // Cleanup function for desktop animations
+  const cleanupDesktopAnimations = () => {
+    // Clean up event listeners
+    if (galleryRef.current) {
+      const buttons = galleryRef.current.querySelectorAll('.project-button')
+      buttons.forEach((btn) => {
+        const button = btn as HTMLElement
+        const listeners = (button as any)._listeners
+        if (listeners) {
+          button.removeEventListener('mouseenter', listeners.handleMouseEnter)
+          button.removeEventListener('mouseleave', listeners.handleMouseLeave)
+        }
+      })
+    }
+
+    // Kill scroll trigger
+    if (scrollTriggerRef.current) {
+      scrollTriggerRef.current.kill()
+      scrollTriggerRef.current = null
+    }
+  }
+
   useEffect(() => {
     const gallery = galleryRef.current
     const rightSection = rightRef.current
     
     if (!gallery || !rightSection) return
 
-    // Only apply complex animations on desktop (768px and above)
-    const isDesktop = window.innerWidth >= 768
+    // Check if we're on desktop
+    isDesktopRef.current = window.innerWidth >= 768
     
-    if (isDesktop) {
-      // Set initial positions for all images except the first one
-      const photos = photosRef.current.slice(1)
-      gsap.set(photos, { yPercent: 101 })
-
-      // Create scroll-triggered animation for desktop
-      const scrollTrigger = gsap.to(photos, {
-        yPercent: 0,
-        stagger: 1,
-        duration: 1,
-        ease: "linear.inOut",
-        scrollTrigger: {
-          trigger: gallery,
-          start: "top top",
-          end: "bottom bottom",
-          scrub: true,
-          pin: rightSection,
-          anticipatePin: 1,
-          onUpdate: (self) => {
-            // Calculate the index of the current image and update background color
-            let index = Math.floor(self.progress * (bgColors.length))
-            if (gallery) {
-              const isDarkMode = document.documentElement.classList.contains('dark')
-              const colors = isDarkMode ? bgColorsDark : bgColors
-              gallery.style.backgroundColor = colors[index] || colors[colors.length - 1]
-            }
+    if (isDesktopRef.current) {
+      // Initialize desktop animations
+      const cleanup = initDesktopAnimations()
+      initRef.current = true
+      
+      // Handle window resize
+      const handleResize = () => {
+        const isNowDesktop = window.innerWidth >= 768
+        if (isNowDesktop !== isDesktopRef.current) {
+          isDesktopRef.current = isNowDesktop
+          
+          if (!isNowDesktop) {
+            // Switching to mobile, cleanup desktop animations
+            cleanupDesktopAnimations()
+            initRef.current = false
+          } else {
+            // Switching to desktop, initialize animations
+            initDesktopAnimations()
+            initRef.current = true
           }
         }
-      })
-
-      // Button hover animations for desktop
-      const buttons = gallery.querySelectorAll('.project-button')
-      buttons.forEach((btn) => {
-        const button = btn as HTMLElement
-        const projectIndex = parseInt(button.dataset.index || '0')
-        const borderColor = projects[projectIndex].color
-
-        button.addEventListener('mouseenter', () => {
-          gsap.to(button, {
-            background: borderColor,
-            color: "#ffffff",
-            duration: 0.3,
-          })
-        })
-
-        button.addEventListener('mouseleave', () => {
-          gsap.to(button, {
-            background: "transparent",
-            color: "#000000",
-            duration: 0.3,
-          })
-        })
-      })
-
+      }
+      
+      window.addEventListener('resize', handleResize)
+      
       return () => {
-        scrollTrigger.kill()
+        window.removeEventListener('resize', handleResize)
+        if (cleanup) cleanup()
+        cleanupDesktopAnimations()
         ScrollTrigger.getAll().forEach(st => st.kill())
+        initRef.current = false
       }
     } else {
       // Simple mobile interactions - just basic button hover effects
@@ -185,27 +316,45 @@ const ProjectScroller: React.FC = () => {
         const projectIndex = parseInt(button.dataset.index || '0')
         const borderColor = projects[projectIndex].color
 
-        button.addEventListener('touchstart', () => {
+        const handleTouchStart = () => {
           button.style.background = borderColor
           button.style.color = "#ffffff"
-        })
+        }
 
-        button.addEventListener('touchend', () => {
+        const handleTouchEnd = () => {
           setTimeout(() => {
             button.style.background = "transparent"
-            button.style.color = "#000000"
+            button.style.color = isDarkMode ? "#ffffff" : "#000000"
           }, 150)
-        })
+        }
+
+        button.addEventListener('touchstart', handleTouchStart)
+        button.addEventListener('touchend', handleTouchEnd)
+
+        // Store event listeners for cleanup
+        (button as any)._mobileListeners = { handleTouchStart, handleTouchEnd }
       })
+
+      return () => {
+        // Clean up event listeners
+        buttons.forEach((btn) => {
+          const button = btn as HTMLElement
+          const listeners = (button as any)._mobileListeners
+          if (listeners) {
+            button.removeEventListener('touchstart', listeners.handleTouchStart)
+            button.removeEventListener('touchend', listeners.handleTouchEnd)
+          }
+        })
+      }
     }
-  }, [bgColors, bgColorsDark, projects])
+  }, [bgColors, bgColorsDark, projects, isDarkMode])
 
   return (
     <>
       {/* Desktop Version */}
       <div 
         ref={galleryRef}
-        className="gallery hidden md:flex justify-center bg-[#f8f8f8] dark:bg-[#080808] min-w-full transition-colors duration-500"
+        className="gallery hidden md:flex justify-center bg-[#f8f8f8] dark:bg-[#181818] min-w-full transition-colors duration-500"
       >
         {/* Left Section - Member Details */}
         <div className="left w-[30%] overflow-y-auto">
@@ -308,7 +457,7 @@ const ProjectScroller: React.FC = () => {
       </div>
 
       {/* Mobile Version - Simple Stack Layout */}
-      <div className="md:hidden bg-[#f8f8f8] dark:bg-[#080808] py-8 px-4">
+      <div className="md:hidden bg-[#f8f8f8] dark:bg-[#181818] py-8 px-4">
         <div className="max-w-sm mx-auto space-y-8">
           {projects.map((project, index) => (
             <div key={index} className="mobile-project-card bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg dark:shadow-gray-900/50">
