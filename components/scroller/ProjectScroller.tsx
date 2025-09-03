@@ -225,11 +225,19 @@ const ProjectScroller: React.FC = () => {
         })
       }
 
-      button.addEventListener('mouseenter', handleMouseEnter)
-      button.addEventListener('mouseleave', handleMouseLeave)
+      // Create properly typed event listeners
+      const createMouseListener = (handler: () => void) => {
+        return (e: Event) => handler();
+      };
+      
+      const mouseEnterListener = createMouseListener(handleMouseEnter);
+      const mouseLeaveListener = createMouseListener(handleMouseLeave);
+      
+      button.addEventListener('mouseenter', mouseEnterListener);
+      button.addEventListener('mouseleave', mouseLeaveListener);
 
       // Store event listeners for cleanup
-      (button as any)._listeners = { handleMouseEnter, handleMouseLeave }
+      (button as any)._listeners = { mouseEnterListener, mouseLeaveListener }
     })
 
     return () => {
@@ -238,8 +246,8 @@ const ProjectScroller: React.FC = () => {
         const button = btn as HTMLElement
         const listeners = (button as any)._listeners
         if (listeners) {
-          button.removeEventListener('mouseenter', listeners.handleMouseEnter)
-          button.removeEventListener('mouseleave', listeners.handleMouseLeave)
+          button.removeEventListener('mouseenter', listeners.mouseEnterListener)
+          button.removeEventListener('mouseleave', listeners.mouseLeaveListener)
         }
       })
     }
@@ -254,8 +262,8 @@ const ProjectScroller: React.FC = () => {
         const button = btn as HTMLElement
         const listeners = (button as any)._listeners
         if (listeners) {
-          button.removeEventListener('mouseenter', listeners.handleMouseEnter)
-          button.removeEventListener('mouseleave', listeners.handleMouseLeave)
+          button.removeEventListener('mouseenter', listeners.mouseEnterListener)
+          button.removeEventListener('mouseleave', listeners.mouseLeaveListener)
         }
       })
     }
@@ -328,11 +336,19 @@ const ProjectScroller: React.FC = () => {
           }, 150)
         }
 
-        button.addEventListener('touchstart', handleTouchStart)
-        button.addEventListener('touchend', handleTouchEnd)
+        // Create properly typed event listeners
+        const createTouchListener = (handler: () => void) => {
+          return (e: Event) => handler();
+        };
+        
+        const touchStartListener = createTouchListener(handleTouchStart);
+        const touchEndListener = createTouchListener(handleTouchEnd);
+        
+        button.addEventListener('touchstart', touchStartListener);
+        button.addEventListener('touchend', touchEndListener);
 
         // Store event listeners for cleanup
-        (button as any)._mobileListeners = { handleTouchStart, handleTouchEnd }
+        (button as any)._mobileListeners = { touchStartListener, touchEndListener }
       })
 
       return () => {
@@ -341,8 +357,8 @@ const ProjectScroller: React.FC = () => {
           const button = btn as HTMLElement
           const listeners = (button as any)._mobileListeners
           if (listeners) {
-            button.removeEventListener('touchstart', listeners.handleTouchStart)
-            button.removeEventListener('touchend', listeners.handleTouchEnd)
+            button.removeEventListener('touchstart', listeners.touchStartListener)
+            button.removeEventListener('touchend', listeners.touchEndListener)
           }
         })
       }
