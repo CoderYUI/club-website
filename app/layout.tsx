@@ -16,14 +16,15 @@ export const metadata: Metadata = {
   authors: [{ name: "Linpack Club" }],
   creator: "Linpack Club",
   publisher: "Linpack Club",
+  metadataBase: new URL('https://linpack-club.vercel.app'),
   openGraph: {
     title: "MATLAB & Overleaf Club - VIT Bhopal University",
     description: "Official website of the MATLAB & Overleaf Club at VIT Bhopal University. Access exclusive resources, register for events, generate certificates, and explore interactive learning materials.",
-    url: "https://linpack-club.vercel.app", // Update with your actual domain
+    url: "https://linpack-club.vercel.app",
     siteName: "MATLAB & Overleaf Club",
     images: [
       {
-        url: "/preview.png",
+        url: "https://linpack-club.vercel.app/preview.png", // Use absolute URL
         width: 1200,
         height: 630,
         alt: "MATLAB & Overleaf Club - VIT Bhopal University"
@@ -36,12 +37,15 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "MATLAB & Overleaf Club - VIT Bhopal University",
     description: "Official website of the MATLAB & Overleaf Club at VIT Bhopal University. Access exclusive resources, register for events, and explore interactive learning materials.",
-    images: ["/preview.png"],
+    images: ["https://linpack-club.vercel.app/preview.png"], // Use absolute URL
     creator: "@LinpackClub"
   },
   robots: {
     index: true,
     follow: true,
+  },
+  alternates: {
+    canonical: "https://linpack-club.vercel.app",
   },
 };
 
