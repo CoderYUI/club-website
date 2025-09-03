@@ -10,7 +10,10 @@ import { Suspense } from "react";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "MATLAB & Overleaf Club - VIT Bhopal University",
+  title: {
+    default: "MATLAB & Overleaf Club - VIT Bhopal University",
+    template: "%s | MATLAB & Overleaf Club"
+  },
   description: "Official website of the MATLAB & Overleaf Club at VIT Bhopal University. Access exclusive resources, register for events, generate certificates, and explore interactive learning materials for MATLAB and Overleaf.",
   keywords: ["MATLAB", "Overleaf", "VIT Bhopal", "Club", "Technical Club", "Student Club", "Certificate Generation", "Event Registration", "Research", "Signal Processing", "AI", "Robotics"],
   authors: [{ name: "Linpack Club" }],
@@ -24,7 +27,7 @@ export const metadata: Metadata = {
     siteName: "MATLAB & Overleaf Club",
     images: [
       {
-        url: "https://linpack.vercel.app/preview.png", // Use absolute URL
+        url: "https://linpack.vercel.app/preview.png",
         width: 1200,
         height: 630,
         alt: "MATLAB & Overleaf Club - VIT Bhopal University"
@@ -37,7 +40,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "MATLAB & Overleaf Club - VIT Bhopal University",
     description: "Official website of the MATLAB & Overleaf Club at VIT Bhopal University. Access exclusive resources, register for events, and explore interactive learning materials.",
-    images: ["https://linpack.vercel.app/preview.png"], // Use absolute URL
+    images: ["https://linpack.vercel.app/preview.png"],
     creator: "@LinpackClub"
   },
   robots: {
@@ -46,6 +49,9 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: "https://linpack.vercel.app",
+  },
+  verification: {
+    google: "your-google-site-verification-code-here", // Add your verification code here
   },
 };
 

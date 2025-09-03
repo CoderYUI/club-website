@@ -8,7 +8,9 @@
     "lint": "next lint",
     "next-dev": "next dev -H 0.0.0.0 -p 5000 --turbo",
     "dev": "concurrently \"npm run fastapi-dev\" \"npm run next-dev\"",
-    "fastapi-dev": "python -m uvicorn api.index:app --host localhost --port 8000 --reload"
+    "fastapi-dev": "python -m uvicorn api.index:app --host localhost --port 8000 --reload",
+    "seo-verify": "node seo-verification.js",
+    "deploy": "echo 'Please deploy to Vercel using the Vercel CLI or Git integration. See DEPLOYMENT_GUIDE.md for instructions.'"
   },
   "dependencies": {
     "@google-cloud/local-auth": "^3.0.1",
@@ -47,6 +49,8 @@
     "@types/react": "^18.3.4",
     "@types/react-dom": "^18.3.0",
     "autoprefixer": "^10.4.20",
+    "axios": "^1.11.0",
+    "cheerio": "^1.1.2",
     "concurrently": "^9.2.1",
     "eslint": "^8.57.0",
     "eslint-config-next": "14.1.0",
