@@ -110,7 +110,7 @@ export default function ImageSlider() {
                 
                 <p className="text-gray-600 dark:text-gray-400 mb-6 text-lg leading-relaxed">
                   Can you meme, GIF, quiz, perform or create like no one else?<br />
-                  <span className="font-semibold text-blue-600 dark:text-blue-400">This is YOUR stage</span> – register now for an unforgettable digital experience!
+                  <span className="font-semibold text-blue-600 dark:text-blue-400">This is YOUR stage</span> &ndash; register now for an unforgettable digital experience!
                 </p>
               </div>
 

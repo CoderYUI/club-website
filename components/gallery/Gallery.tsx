@@ -1,10 +1,10 @@
-
 'use client';
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Lenis from '@studio-freight/lenis';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Image from 'next/image';
 
 // Register GSAP plugins
 if (typeof window !== 'undefined') {
@@ -365,9 +365,11 @@ const Gallery: React.FC = () => {
                           className="image-container-infinite"
                           onClick={(e) => handleImageClick(e, image)}
                         >
-                          <img 
+                          <Image 
                             src={image.src} 
-                            alt={image.alt} 
+                            alt={image.alt}
+                            width={500}
+                            height={300}
                             className="gallery-image"
                             loading="lazy"
                           />
@@ -390,9 +392,11 @@ const Gallery: React.FC = () => {
                         className="image-container"
                         onClick={(e) => handleImageClick(e, image)}
                       >
-                        <img 
+                        <Image 
                           src={image.src} 
-                          alt={image.alt} 
+                          alt={image.alt}
+                          width={500}
+                          height={300}
                           className="gallery-image"
                           loading="lazy"
                         />
@@ -556,10 +560,13 @@ const Gallery: React.FC = () => {
         <div className="modal-backdrop" onClick={closeModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <button onClick={closeModal} className="modal-close">×</button>
-            <img 
+            <Image 
               src={modalImage.src} 
               alt={modalImage.alt}
-              className="modal-image"
+              width={1200}
+              height={800}
+              className="max-w-full max-h-[85vh] object-contain"
+              priority
             />
             <div className="modal-caption">
               {modalImage.alt}
