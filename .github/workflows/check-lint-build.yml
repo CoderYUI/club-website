@@ -9,7 +9,6 @@ on:
       - main
       
 env:
-  DATABASE_URL: ${{ secrets.DATABASE_URL }}
   GOOGLE_PRIVATE_KEY: ${{ secrets.GOOGLE_PRIVATE_KEY }}
   GOOGLE_SERVICE_ACCOUNT_EMAIL: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_EMAIL }}
   GOOGLE_SHEETS_ID: ${{ secrets.GOOGLE_SHEETS_ID }}
