@@ -25,8 +25,8 @@ const ProjectScroller: React.FC = () => {
       tags: "Guiding our club with expertise and vision, fostering innovation and academic excellence",
       contact: {
         email: "benevatho.jaison@vitbhopal.ac.in",
-        phone: "+91 98765 43210",
-        registration: "FC-001"
+        phone: "",
+        registration:""
       },
       image: "/images/scroller1.webp",
       color: "#7781D9",
@@ -37,12 +37,13 @@ const ProjectScroller: React.FC = () => {
         whatsapp: "#"
       }
     },
+    
     {
       brand: "President",
       title: "Abhyanand Sharma",
       tags: "Leading the club with passion and dedication, driving initiatives and community growth",
       contact: {
-        email: "abhyanand.sharma2023@vitbhopal.ac.in",
+        email: "abhyanand.23bai11047@vitbhopal.ac.in",
         phone: "+91 98765 43211",
         registration: "23BAI11047"
       },
@@ -60,8 +61,8 @@ const ProjectScroller: React.FC = () => {
       title: "Amit Bankey",
       tags: "Supporting leadership and driving initiatives, ensuring smooth operations and execution",
       contact: {
-        email: "amit.bankey2023@vitbhopal.ac.in",
-        phone: "+91 98765 43212",
+        email: "amit.23bcg10132@vitbhopal.ac.in",
+        phone: "+91 93038 67773",
         registration: "23BCG10132"
       },
       image: "/images/scroller3.webp",
@@ -78,8 +79,8 @@ const ProjectScroller: React.FC = () => {
       title: "Aastha Patel",
       tags: "Managing operations and communications, coordinating events and member engagement",
       contact: {
-        email: "aastha.patel2023@vitbhopal.ac.in",
-        phone: "+91 98765 43213",
+        email: "aastha.23bce10398@vitbhopal.ac.in",
+        phone: "+91 78620 33991",
         registration: "23BCE10398"
       },
       image: "/images/scroller4.webp",
@@ -96,12 +97,30 @@ const ProjectScroller: React.FC = () => {
       title: "Om Kumar Singh",
       tags: "Assisting in coordination and event planning, supporting administrative functions",
       contact: {
-        email: "om.singh2023@vitbhopal.ac.in",
-        phone: "+91 98765 43214",
+        email: "kumar.23bai10076@vitbhopal.ac.in",
+        phone: "+91 70049 18026",
         registration: "23BAI10076"
       },
       image: "/images/scroller5.webp",
       color: "#FFB08C",
+      socialLinks: {
+        linkedin: "#",
+        github: "#",
+        instagram: "#",
+        whatsapp: "#"
+      }
+    },
+    {
+      brand: "Club Coordinator",
+      title: "Naman Gurjar",
+      tags: "Coordinating club activities and member engagement",
+      contact: {
+        email: "naman.24bcg10007@vitbhopal.ac.in",
+        phone: "+91 87190 74752",
+        registration: "24BCG10007"
+      },
+      image: "/images/scroller6.webp",
+      color: "#9BD3A8",
       socialLinks: {
         linkedin: "#",
         github: "#",
@@ -389,55 +408,72 @@ const ProjectScroller: React.FC = () => {
                 <p className="text-sm md:text-base md:text-xl mb-4 text-gray-600 dark:text-gray-300 font-light leading-relaxed max-w-md">
                   {project.tags}
                 </p>
-                {/* Contact Details */}
+                {/* Contact Details - render only when non-empty */}
                 <div className="flex flex-col space-y-3 mb-6">
-                  <div className="flex items-center text-gray-700 dark:text-gray-200">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 md:h-6 md:w-6 md:mr-3" viewBox="0 0 20 20" fill="currentColor">
-                      <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                      <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                    </svg>
-                    <span className="text-sm md:text-base font-medium">{project.contact.email}</span>
-                  </div>
-                  <div className="flex items-center text-gray-700 dark:text-gray-200">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 md:h-6 md:w-6 md:mr-3" viewBox="0 0 20 20" fill="currentColor">
-                      <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-                    </svg>
-                    <span className="text-sm md:text-base font-medium">{project.contact.phone}</span>
-                  </div>
-                  <div className="flex items-center text-gray-700 dark:text-gray-200">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 md:h-6 md:w-6 md:mr-3" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd" />
-                    </svg>
-                    <span className="text-sm md:text-base font-medium">Reg: {project.contact.registration}</span>
-                  </div>
+                  {project.contact?.email ? (
+                    <div className="flex items-center text-gray-700 dark:text-gray-200">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 md:h-6 md:w-6 md:mr-3" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                        <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                      </svg>
+                      <span className="text-sm md:text-base font-medium">{project.contact.email}</span>
+                    </div>
+                  ) : null}
+
+                  {project.contact?.phone ? (
+                    <div className="flex items-center text-gray-700 dark:text-gray-200">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 md:h-6 md:w-6 md:mr-3" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                      </svg>
+                      <span className="text-sm md:text-base font-medium">{project.contact.phone}</span>
+                    </div>
+                  ) : null}
+
+                  {project.contact?.registration ? (
+                    <div className="flex items-center text-gray-700 dark:text-gray-200">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 md:h-6 md:w-6 md:mr-3" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd" />
+                      </svg>
+                      <span className="text-sm md:text-base font-medium">Reg: {project.contact.registration}</span>
+                    </div>
+                  ) : null}
                 </div>
-                {/* Social Media Icons */}
+
+                {/* Social Media Icons - render only when link is non-empty */}
                 <div className="flex space-x-4">
-                  <a href={project.socialLinks.linkedin} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300 hover:scale-110" style={{ borderColor: project.color, color: project.color }}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                      <rect width="4" height="12" x="2" y="9"></rect>
-                      <circle cx="4" cy="4" r="2"></circle>
-                    </svg>
-                  </a>
-                  <a href={project.socialLinks.github} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300 hover:scale-110" style={{ borderColor: project.color, color: project.color }}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
-                    </svg>
-                  </a>
-                  <a href={project.socialLinks.instagram} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300 hover:scale-110" style={{ borderColor: project.color, color: project.color }}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
-                      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                      <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line>
-                    </svg>
-                  </a>
-                  <a href={project.socialLinks.whatsapp} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300 hover:scale-110" style={{ borderColor: project.color, color: project.color }}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
-                      <path d="M9 18c-4.51 2-5-2-7-2"></path>
-                    </svg>
-                  </a>
+                  {project.socialLinks?.linkedin ? (
+                    <a href={project.socialLinks.linkedin} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300 hover:scale-110" style={{ borderColor: project.color, color: project.color }}>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                        <rect width="4" height="12" x="2" y="9"></rect>
+                        <circle cx="4" cy="4" r="2"></circle>
+                      </svg>
+                    </a>
+                  ) : null}
+                  {project.socialLinks?.github ? (
+                    <a href={project.socialLinks.github} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300 hover:scale-110" style={{ borderColor: project.color, color: project.color }}>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
+                      </svg>
+                    </a>
+                  ) : null}
+                  {project.socialLinks?.instagram ? (
+                    <a href={project.socialLinks.instagram} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300 hover:scale-110" style={{ borderColor: project.color, color: project.color }}>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                        <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line>
+                      </svg>
+                    </a>
+                  ) : null}
+                  {project.socialLinks?.whatsapp ? (
+                    <a href={project.socialLinks.whatsapp} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300 hover:scale-110" style={{ borderColor: project.color, color: project.color }}>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
+                        <path d="M9 18c-4.51 2-5-2-7-2"></path>
+                      </svg>
+                    </a>
+                  ) : null}
                 </div>
               </div>
             ))}
@@ -504,57 +540,71 @@ const ProjectScroller: React.FC = () => {
                 </p>
                 {/* Contact Details */}
                 <div className="flex flex-col space-y-3 mt-4">
-                  <div className="flex items-center text-gray-700 dark:text-gray-200">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 md:h-6 md:w-6 md:mr-3" viewBox="0 0 20 20" fill="currentColor">
-                      <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                      <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                    </svg>
-                    <span className="text-sm md:text-base font-medium">{project.contact.email}</span>
-                  </div>
-                  <div className="flex items-center text-gray-700 dark:text-gray-200">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 md:h-6 md:w-6 md:mr-3" viewBox="0 0 20 20" fill="currentColor">
-                      <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-                    </svg>
-                    <span className="text-sm md:text-base font-medium">{project.contact.phone}</span>
-                  </div>
-                  <div className="flex items-center text-gray-700 dark:text-gray-200">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 md:h-6 md:w-6 md:mr-3" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd" />
-                    </svg>
-                    <span className="text-sm md:text-base font-medium">Reg: {project.contact.registration}</span>
-                  </div>
+                  {project.contact?.email ? (
+                    <div className="flex items-center text-gray-700 dark:text-gray-200">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 md:h-6 md:w-6 md:mr-3" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                        <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                      </svg>
+                      <span className="text-sm md:text-base font-medium">{project.contact.email}</span>
+                    </div>
+                  ) : null}
+                  {project.contact?.phone ? (
+                    <div className="flex items-center text-gray-700 dark:text-gray-200">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 md:h-6 md:w-6 md:mr-3" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                      </svg>
+                      <span className="text-sm md:text-base font-medium">{project.contact.phone}</span>
+                    </div>
+                  ) : null}
+                  {project.contact?.registration ? (
+                    <div className="flex items-center text-gray-700 dark:text-gray-200">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 md:h-6 md:w-6 md:mr-3" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd" />
+                      </svg>
+                      <span className="text-sm md:text-base font-medium">Reg: {project.contact.registration}</span>
+                    </div>
+                  ) : null}
                 </div>
                 {/* Social Media Icons */}
                 <div className="flex space-x-4 mt-4">
-                  <a href={project.socialLinks.linkedin} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300 active:scale-95" style={{ borderColor: project.color, color: project.color }}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                      <rect width="4" height="12" x="2" y="9"></rect>
-                      <circle cx="4" cy="4" r="2"></circle>
-                    </svg>
-                  </a>
-                  <a href={project.socialLinks.github} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300 active:scale-95" style={{ borderColor: project.color, color: project.color }}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
-                    </svg>
-                  </a>
-                  <a href={project.socialLinks.instagram} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300 active:scale-95" style={{ borderColor: project.color, color: project.color }}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
-                      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                      <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line>
-                    </svg>
-                  </a>
-                  <a href={project.socialLinks.whatsapp} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300 active:scale-95" style={{ borderColor: project.color, color: project.color }}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
-                      <path d="M9 18c-4.51 2-5-2-7-2"></path>
-                    </svg>
-                  </a>
+                  {project.socialLinks?.linkedin ? (
+                    <a href={project.socialLinks.linkedin} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300 active:scale-95" style={{ borderColor: project.color, color: project.color }}>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                        <rect width="4" height="12" x="2" y="9"></rect>
+                        <circle cx="4" cy="4" r="2"></circle>
+                      </svg>
+                    </a>
+                  ) : null}
+                  {project.socialLinks?.github ? (
+                    <a href={project.socialLinks.github} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300 active:scale-95" style={{ borderColor: project.color, color: project.color }}>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
+                      </svg>
+                    </a>
+                  ) : null}
+                  {project.socialLinks?.instagram ? (
+                    <a href={project.socialLinks.instagram} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300 active:scale-95" style={{ borderColor: project.color, color: project.color }}>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                        <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line>
+                      </svg>
+                    </a>
+                  ) : null}
+                  {project.socialLinks?.whatsapp ? (
+                    <a href={project.socialLinks.whatsapp} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300 active:scale-95" style={{ borderColor: project.color, color: project.color }}>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
+                        <path d="M9 18c-4.51 2-5-2-7-2"></path>
+                      </svg>
+                    </a>
+                  ) : null}
                 </div>
               </div>
             </div>
-          ))}
+          ))} 
         </div>
       </div>
     </>
