@@ -55,7 +55,7 @@ export default function Section4() {
     },
     {
       id: 5,
-      name: "Priya Sharma",
+      name: "Ayush Pandey",
       role: "Data Science Student",
       department: "Computer Applications",
       image: "/images/Ayush.jpeg", // Using existing image as placeholder
@@ -63,43 +63,13 @@ export default function Section4() {
       rating: 5,
       featured: false
     },
-    {
-      id: 6,
-      name: "Raj Patel",
-      role: "PhD Candidate",
-      department: "Applied Physics",
-      image: "/images/Himanshu.jpeg", // Using existing image as placeholder
-      quote: "The Overleaf tutorials saved me countless hours during my thesis writing. The professional formatting and collaborative features are incredible.",
-      rating: 5,
-      featured: false
-    },
-    {
-      id: 7,
-      name: "Sneha Gupta",
-      role: "Research Scholar",
-      department: "Biostatistics",
-      image: "/images/Khilesh.jpeg", // Using existing image as placeholder
-      quote: "As someone from a non-technical background, the step-by-step MATLAB tutorials made statistical computing accessible and enjoyable for me.",
-      rating: 5,
-      featured: false
-    },
-    {
-      id: 8,
-      name: "Arjun Kumar",
-      role: "Master's Student",
-      department: "Mechanical Engineering",
-      image: "/images/Abhinav.jpeg", // Using existing image as placeholder
-      quote: "The numerical methods workshops using MATLAB helped me understand complex engineering simulations. It's been invaluable for my research projects.",
-      rating: 5,
-      featured: false
-    }
   ];
 
   const carouselTestimonials = testimonials.slice(1); // All except the featured one
 
   // Typing effect for "Members Say"
   useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
+    let timeoutId: ReturnType<typeof setTimeout>;
     
     const startTyping = () => {
       setIsTyping(true);
@@ -127,7 +97,7 @@ export default function Section4() {
   // Continuous smooth auto-scroll functionality with true infinite loop
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => {
+      setCurrentIndex((prevIndex: number) => {
         // Move one position forward continuously
         const nextIndex = prevIndex + 1;
         // Reset invisibly when we're far enough into the duplicated content
