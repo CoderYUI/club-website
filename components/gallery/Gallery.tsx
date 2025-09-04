@@ -155,14 +155,14 @@ const Gallery: React.FC = () => {
         "Community building experiences"
       ],
       images: [
-        { src: "/gallery/1.jpg", alt: "VITB Got Latent Opening" },
-        { src: "/gallery/2.jpg", alt: "Murder Mystery Scene" },
-        { src: "/gallery/3.jpg", alt: "Lip Sync Battle" },
-        { src: "/gallery/4.jpg", alt: "Face Painting Activity" },
-        { src: "/gallery/5.jpg", alt: "Ice Cream Fight" },
-        { src: "/gallery/6.jpg", alt: "Group Photo Session" },
-        { src: "/gallery/7.jpg", alt: "Awards Ceremony" },
-        { src: "/gallery/8.jpg", alt: "Closing Celebration" }
+        { src: "/gallery/VITB_Got_Latent_Season_2/1.webp", alt: "VITB Got Latent Opening" },
+        { src: "/gallery/VITB_Got_Latent_Season_2/2.webp", alt: "Murder Mystery Scene" },
+        { src: "/gallery/VITB_Got_Latent_Season_2/3.webp", alt: "Lip Sync Battle" },
+        { src: "/gallery/VITB_Got_Latent_Season_2/4.webp", alt: "Face Painting Activity" },
+        { src: "/gallery/VITB_Got_Latent_Season_2/5.webp", alt: "Ice Cream Fight" },
+        { src: "/gallery/VITB_Got_Latent_Season_2/6.webp", alt: "Group Photo Session" },
+        { src: "/gallery/VITB_Got_Latent_Season_2/7.webp", alt: "Awards Ceremony" },
+        { src: "/gallery/VITB_Got_Latent_Season_2/8.webp", alt: "Closing Celebration" }
       ],
       stats: {
         participants: 400,
@@ -185,14 +185,14 @@ const Gallery: React.FC = () => {
         "Expert judging panel"
       ],
       images: [
-        { src: "/gallery/1.jpg", alt: "Hackathon Opening" },
-        { src: "/gallery/2.jpg", alt: "Coding Session" },
-        { src: "/gallery/3.jpg", alt: "Project Development" },
-        { src: "/gallery/4.jpg", alt: "Team Collaboration" },
-        { src: "/gallery/5.jpg", alt: "Project Presentation" },
-        { src: "/gallery/6.jpg", alt: "Judging Panel" },
-        { src: "/gallery/7.jpg", alt: "Winner Announcement" },
-        { src: "/gallery/8.jpg", alt: "Prize Distribution" }
+        { src: "/gallery/MatlabVerse_A_NextWave_Hackathon/1.webp", alt: "Hackathon Opening" },
+        { src: "/gallery/MatlabVerse_A_NextWave_Hackathon/2.webp", alt: "Coding Session" },
+        { src: "/gallery/MatlabVerse_A_NextWave_Hackathon/3.webp", alt: "Project Development" },
+        { src: "/gallery/MatlabVerse_A_NextWave_Hackathon/4.webp", alt: "Team Collaboration" },
+        { src: "/gallery/MatlabVerse_A_NextWave_Hackathon/5.webp", alt: "Project Presentation" },
+        { src: "/gallery/MatlabVerse_A_NextWave_Hackathon/6.webp", alt: "Judging Panel" },
+        { src: "/gallery/MatlabVerse_A_NextWave_Hackathon/7.webp", alt: "Winner Announcement" },
+        { src: "/gallery/MatlabVerse_A_NextWave_Hackathon/8.webp", alt: "Prize Distribution" }
       ],
       stats: {
         participants: 120,
@@ -216,14 +216,14 @@ const Gallery: React.FC = () => {
         "Face Painting creativity contest"
       ],
       images: [
-        { src: "/gallery/1.jpg", alt: "VIT Got Talent Opening" },
-        { src: "/gallery/2.jpg", alt: "Blind Fold Race" },
-        { src: "/gallery/3.jpg", alt: "Pop the Balloons" },
-        { src: "/gallery/4.jpg", alt: "Karaoke Battle" },
-        { src: "/gallery/5.jpg", alt: "Lip Sync Battle" },
-        { src: "/gallery/6.jpg", alt: "Face Painting" },
-        { src: "/gallery/7.jpg", alt: "Talent Show Performances" },
-        { src: "/gallery/8.jpg", alt: "Event Winners" }
+        { src: "/gallery/VIT_Go_Talent/1.webp", alt: "VIT Got Talent Opening" },
+        { src: "/gallery/VIT_Go_Talent/2.webp", alt: "Blind Fold Race" },
+        { src: "/gallery/VIT_Go_Talent/3.webp", alt: "Pop the Balloons" },
+        { src: "/gallery/VIT_Go_Talent/4.webp", alt: "Karaoke Battle" },
+        { src: "/gallery/VIT_Go_Talent/5.webp", alt: "Lip Sync Battle" },
+        { src: "/gallery/VIT_Go_Talent/6.webp", alt: "Face Painting" },
+        { src: "/gallery/VIT_Go_Talent/7.webp", alt: "Talent Show Performances" },
+        { src: "/gallery/VIT_Go_Talent/8.webp", alt: "Event Winners" }
       ],
       stats: {
         participants: 200,
