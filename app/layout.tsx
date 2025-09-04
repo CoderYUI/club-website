@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     canonical: "https://linpack.vercel.app",
   },
   verification: {
-    google: "your-google-site-verification-code-here", // Add your verification code here
+    google: "Q6-8ykaEPMN-BfwEH8zmHgsJ9F0v2F94UgCx1dhEAws",
   },
 };
 
