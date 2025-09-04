@@ -82,8 +82,8 @@ export default function ImageSlider() {
               {/* Editorial Date Stamp */}
               <div className="absolute top-6 left-6 bg-white dark:bg-black px-4 py-2 rounded-lg shadow-lg">
                 <div className="text-center">
-                  <div className="text-2xl font-serif font-bold text-black dark:text-white">18</div>
-                  <div className="text-xs uppercase tracking-widest text-gray-600 dark:text-gray-400">SEPT 2025</div>
+                  <div className="text-2xl font-serif font-bold text-black dark:text-white">Coming</div>
+                  <div className="text-xs uppercase tracking-widest text-gray-600 dark:text-gray-400">Soon..</div>
                 </div>
               </div>
               

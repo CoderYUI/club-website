@@ -11,26 +11,26 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: {
-    default: "MATLAB & Overleaf Club - VIT Bhopal University",
-    template: "%s | MATLAB & Overleaf Club"
+    default: "Linpack Club - VIT Bhopal University",
+    template: "%s | Linpack Club"
   },
-  description: "Official website of the MATLAB & Overleaf Club at VIT Bhopal University. Access exclusive resources, register for events, generate certificates, and explore interactive learning materials for MATLAB and Overleaf.",
+  description: "Official website of the Linpack Club at VIT Bhopal University. Access exclusive resources, register for events, generate certificates, and explore interactive learning materials for MATLAB and Overleaf.",
   keywords: ["MATLAB", "Overleaf", "VIT Bhopal", "Club", "Technical Club", "Student Club", "Certificate Generation", "Event Registration", "Research", "Signal Processing", "AI", "Robotics"],
   authors: [{ name: "Linpack Club" }],
   creator: "Linpack Club",
   publisher: "Linpack Club",
   metadataBase: new URL('https://linpack.vercel.app'),
   openGraph: {
-    title: "MATLAB & Overleaf Club - VIT Bhopal University",
-    description: "Official website of the MATLAB & Overleaf Club at VIT Bhopal University. Access exclusive resources, register for events, generate certificates, and explore interactive learning materials.",
+    title: "Linpack Club - VIT Bhopal University",
+    description: "Official website of the Linpack Club at VIT Bhopal University. Access exclusive resources, register for events, generate certificates, and explore interactive learning materials.",
     url: "https://linpack.vercel.app",
-    siteName: "MATLAB & Overleaf Club",
+    siteName: "Linpack Club",
     images: [
       {
         url: "https://linpack.vercel.app/preview.png",
         width: 1200,
         height: 630,
-        alt: "MATLAB & Overleaf Club - VIT Bhopal University"
+        alt: "Linpack Club - VIT Bhopal University"
       }
     ],
     locale: "en_US",
@@ -38,8 +38,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "MATLAB & Overleaf Club - VIT Bhopal University",
-    description: "Official website of the MATLAB & Overleaf Club at VIT Bhopal University. Access exclusive resources, register for events, and explore interactive learning materials.",
+    title: "Linpack Club - VIT Bhopal University",
+    description: "Official website of the Linpack Club at VIT Bhopal University. Access exclusive resources, register for events, and explore interactive learning materials.",
     images: ["https://linpack.vercel.app/preview.png"],
     creator: "@LinpackClub"
   },
@@ -62,6 +62,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        {/* Primary favicon */}
+        <link rel="icon" href="/logo.png" />
+        {/* Optional touch icons / manifest */}
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="manifest" href="/site.webmanifest" />
+      </head>
       <body className={`${inter.className}`}>
         <Providers>
           <CustomCursor />
