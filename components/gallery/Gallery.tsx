@@ -234,7 +234,7 @@ const Gallery: React.FC = () => {
       id: 4,
       title: "Inaugural Event",
       subtitle: "Embarking on the Basics of MATLAB",
-      date: "Date Not Specified",
+      date: "22nd September 2023",
       location: "VIT University Campus",
       category: "Educational",
       description: "The Linpack Club hosted its inaugural event titled 'Embarking on the Basics of MATLAB: A Primer to Unlocking Its Potential.' The event started with distribution of unique hashed event tickets through college mail IDs to registered students. It featured an engaging workshop on MATLAB, designed to provide participants with a comprehensive understanding of the software. The workshop included hands-on sessions and quizzes to explore new technologies and enhance participants' skills. The event concluded with prize distribution and unique participation certificates for all attendees.",
@@ -246,14 +246,15 @@ const Gallery: React.FC = () => {
         "Participation certificates for all"
       ],
       images: [
-        { src: "/gallery/1.jpg", alt: "Inaugural Event Opening" },
-        { src: "/gallery/2.jpg", alt: "MATLAB Workshop Session" },
-        { src: "/gallery/3.jpg", alt: "Hands-on Learning" },
-        { src: "/gallery/4.jpg", alt: "Interactive Quiz" },
-        { src: "/gallery/5.jpg", alt: "Prize Distribution" },
-        { src: "/gallery/6.jpg", alt: "Certificate Distribution" },
-        { src: "/gallery/7.jpg", alt: "Group Photo" },
-        { src: "/gallery/8.jpg", alt: "Event Closing" }
+        { src: "/gallery/Inaugural_Event/7.webp", alt: "Inaugrural Event Opening" },
+        { src: "/gallery/Inaugural_Event/1.webp", alt: "Inaugural Speech" },
+        { src: "/gallery/Inaugural_Event/3.webp", alt: "Hands-on Session" },
+        { src: "/gallery/Inaugural_Event/8.webp", alt: "Hands-on Learning" },
+        { src: "/gallery/Inaugural_Event/2.webp", alt: "Prize Distribution" },
+        { src: "/gallery/Inaugural_Event/4.webp", alt: "Prize Distribution" },
+        { src: "/gallery/Inaugural_Event/5.webp", alt: "Prize Distribution" },
+        { src: "/gallery/Inaugural_Event/6.webp", alt: "Group Photo" }
+        
       ],
       stats: {
         participants: 150,
