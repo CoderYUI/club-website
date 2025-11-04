@@ -1,14 +1,9 @@
 "use client"
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
+import Script from 'next/script'
 import { motion } from 'framer-motion'
 import { Mail, MapPin, Phone, Send, Twitter, Instagram, Github, Linkedin } from 'lucide-react'
-
-declare global {
-  interface Window {
-    CustomSubstackWidget: any;
-  }
-}
 
 export default function MagazineContactSection() {
   const [formData, setFormData] = useState({
@@ -47,64 +42,6 @@ export default function MagazineContactSection() {
     return () => {
       clearTimeout(initialDelay);
       clearTimeout(timeoutId);
-    };
-  }, []);
-
-  useEffect(() => {
-    // Adding custom Substack widget script after the component mounts
-    const script = document.createElement("script");
-    script.src = "https://substackapi.com/widget.js";
-    script.async = true;
-    document.body.appendChild(script);
-
-    // Configuring the Substack widget
-    window.CustomSubstackWidget = {
-      substackUrl: "linpack.substack.com",
-      placeholder: "Enter your email",
-      buttonText: "Subscribe",
-      theme: "purple",
-    };
-
-    // Initialize widgets for both desktop and mobile after a short delay
-    const initWidgets = () => {
-      // Small delay to ensure DOM is ready
-      setTimeout(() => {
-        if (window.CustomSubstackWidget && window.CustomSubstackWidget.init) {
-          // Initialize desktop widget
-          const desktopContainer = document.getElementById("custom-substack-embed");
-          if (desktopContainer) {
-            try {
-              window.CustomSubstackWidget.init(desktopContainer);
-            } catch (e) {
-              console.log("Error initializing desktop Substack widget:", e);
-            }
-          }
-          
-          // Initialize mobile widget
-          const mobileContainer = document.getElementById("custom-substack-embed-mobile");
-          if (mobileContainer) {
-            try {
-              window.CustomSubstackWidget.init(mobileContainer);
-            } catch (e) {
-              console.log("Error initializing mobile Substack widget:", e);
-            }
-          }
-        }
-      }, 100);
-    };
-
-    // Check if widget is already loaded, otherwise wait for it
-    if (window.CustomSubstackWidget && window.CustomSubstackWidget.init) {
-      initWidgets();
-    } else {
-      script.onload = initWidgets;
-    }
-
-    return () => {
-      // Cleanup the script when the component unmounts
-      if (document.body.contains(script)) {
-        document.body.removeChild(script);
-      }
     };
   }, []);
 
@@ -219,7 +156,7 @@ export default function MagazineContactSection() {
                   </p>
                   <div className="flex space-x-3">
                     <motion.a
-                      href="#"
+                      href="https://twitter.com/linpack_club"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       className="w-12 h-12 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg flex items-center justify-center transition-all duration-200 hover:bg-blue-50 dark:hover:bg-blue-950 hover:border-blue-200 dark:hover:border-blue-800"
@@ -274,9 +211,13 @@ export default function MagazineContactSection() {
                       </p>
                     </div>
                     
-                    {/* Substack Widget Container */}
-                    <div className="max-w-md mx-auto mb-4">
-                      <div id="custom-substack-embed" className="mb-4"></div>
+                    {/* Supascribe Widget Container */}
+                    <div className="max-w-md mx-auto">
+                      <div data-supascribe-embed-id="465755711117" data-supascribe-subscribe></div>
+                      <Script 
+                        src="https://js.supascribe.com/v1/loader/wsSfGwhTK5V8rkZNm5vZXlgeQZ33.js"
+                        strategy="lazyOnload"
+                      />
                     </div>
                   </div>
                 </div>
