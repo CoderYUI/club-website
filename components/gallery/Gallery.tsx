@@ -472,24 +472,18 @@ const Gallery: React.FC = () => {
                       </div>
                       <div className="space-y-3">
                         <div className="flex items-center space-x-3 bg-gray-50 dark:bg-gray-800/50 p-3 rounded-lg border border-gray-100 dark:border-gray-800">
-                          <div className="bg-gray-200 border-2 border-dashed rounded-full w-12 h-12" />
-                          <div>
-                            <div className="font-medium text-black dark:text-white text-sm">Dr. Alex Morgan</div>
-                            <div className="text-xs text-gray-500 dark:text-gray-400">Keynote Speaker</div>
+                          <div className="relative w-12 h-12 rounded-full overflow-hidden">
+                            <Image 
+                              src="/images/hero-image.jpg" 
+                              alt="Placeholder profile" 
+                              width={48} 
+                              height={48} 
+                              className="object-cover w-full h-full"
+                            />
                           </div>
-                        </div>
-                        <div className="flex items-center space-x-3 bg-gray-50 dark:bg-gray-800/50 p-3 rounded-lg border border-gray-100 dark:border-gray-800">
-                          <div className="bg-gray-200 border-2 border-dashed rounded-full w-12 h-12" />
                           <div>
-                            <div className="font-medium text-black dark:text-white text-sm">Prof. Sarah Johnson</div>
-                            <div className="text-xs text-gray-500 dark:text-gray-400">Industry Expert</div>
-                          </div>
-                        </div>
-                        <div className="flex items-center space-x-3 bg-gray-50 dark:bg-gray-800/50 p-3 rounded-lg border border-gray-100 dark:border-gray-800">
-                          <div className="bg-gray-200 border-2 border-dashed rounded-full w-12 h-12" />
-                          <div>
-                            <div className="font-medium text-black dark:text-white text-sm">Mr. James Wilson</div>
-                            <div className="text-xs text-gray-500 dark:text-gray-400">Tech Innovator</div>
+                            <div className="font-medium text-black dark:text-white text-sm">Not Available</div>
+                            <div className="text-xs text-gray-500 dark:text-gray-400">Guest information currently unavailable</div>
                           </div>
                         </div>
                       </div>

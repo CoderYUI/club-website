@@ -344,21 +344,7 @@ export default function ImageSlider() {
         </div>
       </div>
       
-      {/* Gallery Button Section */}
-      <div className="flex justify-center mt-2 mb-1 sm:mt-4 sm:mb-2">
-        <a 
-          href="/gallery"
-          className="inline-flex items-center group"
-        >
-          <button
-            type="button"
-            className="px-8 py-4 rounded-full bg-gradient-to-r from-red-500 to-red-600 font-serif font-bold text-base sm:text-lg md:text-xl text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 tracking-wide border-2 border-red-600 hover:from-red-600 hover:to-red-700 dark:from-red-600 dark:to-red-700 dark:hover:from-red-700 dark:hover:to-red-800"
-          >
-            Explore Gallery
-          </button>
-          <span className="ml-3 text-red-500 group-hover:translate-x-1 transition-transform text-xl hidden sm:inline">→</span>
-        </a>
-      </div>
+    
 
       {/* Join Our Club Section */}
       <div className="relative flex justify-center items-center w-[92vw] sm:w-[85vw] md:w-[80vw] h-auto min-h-[40vh] my-8 px-4">
