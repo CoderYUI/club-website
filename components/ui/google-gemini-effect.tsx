@@ -23,26 +23,26 @@ export const GoogleGeminiEffect = ({
     <div className={cn("sticky top-80 bg-white dark:bg-black", className)}>
       <div className="text-center mb-6">
         <h2 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extralight tracking-[-0.02em] text-black dark:text-white mb-6 leading-[0.9] font-serif max-w-5xl mx-auto">
-          {title || `Build with `}
+          {title || `Join Our `}
           <span className="font-thin italic bg-gradient-to-r from-red-400 via-red-500 to-red-600 bg-clip-text text-transparent dark:bg-gradient-to-r dark:from-red-400 dark:via-red-500 dark:to-red-600">
-            Aceternity UI
+            Community
           </span>
         </h2>
       </div>
       <p className="text-base md:text-lg text-gray-600 dark:text-gray-400 font-extralight leading-relaxed tracking-wide max-w-3xl mx-auto mb-8">
         {description ||
-          `Scroll this component and see the bottom SVG come to life wow this works!`}
+          `Become a member to access exclusive resources and join our community of MATLAB and Overleaf enthusiasts.`}
       </p>
       <div className="w-full h-[890px] -top-60 md:-top-40 flex items-center justify-center absolute">
         <a 
-          href="https://ui.aceternity.com" 
+          href="https://forms.gle/KxZrPb5P1ySvwFQs7" 
           target="_blank" 
           rel="noopener noreferrer"
           className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-medium rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg"
         >
-          <span className="mr-2">Visit Aceternity UI</span>
+          <span className="mr-2">Join Our Community</span>
           <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
           </svg>
         </a>
       </div>
