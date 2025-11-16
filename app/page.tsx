@@ -15,10 +15,10 @@ export default function page() {
       <Hero/>
       {/* <InfiniteScroll /> - Removed for now */}
       <ImgeSlider />
+      <GoogleGeminiEffectDemo />
       <ProjectScroller />
       <Section4/>
       <MagazineResearchSection />
-      <GoogleGeminiEffectDemo />
       <ChatComp/>
       <MagazineContactSection/> 
     </div>
