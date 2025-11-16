@@ -17,9 +17,8 @@ export function GoogleGeminiEffectDemo() {
   const pathLengthFifth = useTransform(scrollYProgress, [0, 0.8], [0, 1.2]);
 
   return (
-    // Added 'hidden md:block' to hide on mobile and show only on medium screens and up
     <div
-      className="hidden md:block h-[400vh] bg-white dark:bg-black w-full dark:border dark:border-white/[0.1] rounded-md relative pt-40 overflow-clip"
+      className="h-[400vh] bg-white dark:bg-black w-full dark:border dark:border-white/[0.1] rounded-md relative pt-40 overflow-clip"
       ref={ref}
     >
       <GoogleGeminiEffect
