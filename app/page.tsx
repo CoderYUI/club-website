@@ -6,6 +6,7 @@ import ImgeSlider from '@/components/carousel/ImgeSlider'
 import Section4 from '@/components/section/section4'
 import ProjectScroller from '@/components/scroller/ProjectScroller'
 // import InfiniteScroll from '@/components/infinite-scroll/InfiniteScroll' - Removed for now
+import { GoogleGeminiEffectDemo } from '@/components/ui/google-gemini-effect-demo'
 import React from 'react'
 
 export default function page() {
@@ -17,6 +18,7 @@ export default function page() {
       <ProjectScroller />
       <Section4/>
       <MagazineResearchSection />
+      <GoogleGeminiEffectDemo />
       <ChatComp/>
       <MagazineContactSection/> 
     </div>
