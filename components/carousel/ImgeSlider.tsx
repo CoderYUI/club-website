@@ -67,12 +67,12 @@ export default function ImageSlider() {
         {/* Editorial Layout Event Card */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
           {/* Visual Storytelling */}
-          <div className="relative h-[500px] rounded-2xl overflow-hidden shadow-2xl">
+          <div className="relative h-[600px] md:h-[700px] lg:h-[750px] rounded-2xl overflow-hidden shadow-2xl">
             <Image
               src="/images/draft_to_direction.png"
               alt="DRAFT TO DIRECTION Event Poster"
               fill
-              className="object-cover"
+              className="object-contain"
               priority
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
@@ -153,17 +153,21 @@ export default function ImageSlider() {
 
             {/* Editorial CTA */}
             <div className="border-t border-gray-200 dark:border-gray-800 pt-8">
-              <div className="inline-flex items-center group cursor-not-allowed opacity-75">
+              <a 
+                href="https://forms.gle/No1xs4GJGt5EWcMQ7"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center group"
+              >
                 <button
                   type="button"
-                  disabled
-                  className="px-8 py-4 rounded-full bg-gray-400 dark:bg-gray-700 font-serif font-bold text-base sm:text-lg md:text-xl text-white shadow-lg transition-all duration-300 tracking-wide cursor-not-allowed"
+                  className="px-8 py-4 rounded-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 font-serif font-bold text-base sm:text-lg md:text-xl text-white shadow-lg hover:shadow-xl transition-all duration-300 tracking-wide transform hover:scale-105"
                 >
-                  Registration Link Coming Soon
+                  Register Now
                 </button>
-              </div>
+              </a>
               <p className="text-sm text-gray-500 dark:text-gray-400 mt-3">
-                Check back later for the registration link.
+                Limited seats available. Register today!
               </p>
             </div>
           </div>

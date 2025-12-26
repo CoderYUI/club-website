@@ -38,26 +38,9 @@ const ProjectScroller: React.FC = () => {
       }
     },
     
+    
     {
       brand: "President",
-      title: "Abhyanand Sharma",
-      tags: "Leading the club with passion and dedication, driving initiatives and community growth",
-      contact: {
-        email: "abhyanand.23bai11047@vitbhopal.ac.in",
-        phone: "+91 98765 43211",
-        registration: "23BAI11047"
-      },
-      image: "/images/scroller2.webp",
-      color: "#E67FB4",
-      socialLinks: {
-        linkedin: "#",
-        github: "#",
-        instagram: "#",
-        whatsapp: "#"
-      }
-    },
-    {
-      brand: "Vice President",
       title: "Amit Bankey",
       tags: "Supporting leadership and driving initiatives, ensuring smooth operations and execution",
       contact: {
@@ -75,7 +58,7 @@ const ProjectScroller: React.FC = () => {
       }
     },
     {
-      brand: "General Secretary",
+      brand: "Vice President",
       title: "Aastha Patel",
       tags: "Managing operations and communications, coordinating events and member engagement",
       contact: {
@@ -93,7 +76,7 @@ const ProjectScroller: React.FC = () => {
       }
     },
     {
-      brand: "Joint Secretary",
+      brand: "General Secretary",
       title: "Om Kumar Singh",
       tags: "Assisting in coordination and event planning, supporting administrative functions",
       contact: {
@@ -111,15 +94,15 @@ const ProjectScroller: React.FC = () => {
       }
     },
     {
-      brand: "Club Coordinator",
-      title: "Naman Gurjar",
+      brand: "Joint Secretary",
+      title: "Ishan Rai",
       tags: "Coordinating club activities and member engagement",
       contact: {
-        email: "naman.24bcg10007@vitbhopal.ac.in",
-        phone: "+91 87190 74752",
-        registration: "24BCG10007"
+        email: "ishan.23bce11718@vitbhopal.ac.in",
+        phone: "+91 86010 45471",
+        registration: "23BCE11718"
       },
-      image: "/images/scroller6.webp",
+      image: "/images/scroller6.jpeg",
       color: "#9BD3A8",
       socialLinks: {
         linkedin: "#",
