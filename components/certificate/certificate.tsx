@@ -305,11 +305,11 @@ export default function CertificateForm() {
     setIsLoading(true);
 
     try {
-      const response = await fetch(`${API_URL}api/py/generate-certificate`, {
+      const response = await fetch("/api/py/certificate", {
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({
-           name, reg_no: regNo }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          name, reg_number: regNo }),
       });
 
       if (!response.ok) {
@@ -339,6 +339,66 @@ export default function CertificateForm() {
       setError(
         err instanceof Error ? err.message : "An unknown error occurred"
       );
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleDownload = async () => {
+    if (!regNo) {
+      setError("Please enter registration number");
+      return;
+    }
+
+    if (!name) {
+      setError("Please enter your name");
+      return;
+    }
+
+    setIsLoading(true);
+    setError("");
+
+    try {
+      console.log("Sending request with reg_number:", regNo);
+      
+      const response = await fetch("/api/py/certificate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ 
+          reg_number: regNo.trim(),
+          name: name.trim()
+        }),
+      });
+
+      console.log("Response status:", response.status);
+
+      if (!response.ok) {
+        let errorMessage = "Certificate not found";
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.error || errorMessage;
+        } catch (e) {
+          console.error("Failed to parse error response:", e);
+        }
+        throw new Error(errorMessage);
+      }
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `certificate_${regNo}.png`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+      
+      setError("");
+    } catch (err) {
+      console.error("Download error:", err);
+      setError(err instanceof Error ? err.message : "Failed to generate certificate. Please check your registration number.");
     } finally {
       setIsLoading(false);
     }
@@ -392,7 +452,7 @@ export default function CertificateForm() {
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      strokeWidth={1.5}
+                      strokeWidth="1.5"
                       d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"
                     />
                   </svg>
@@ -405,7 +465,7 @@ export default function CertificateForm() {
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="text-4xl sm:text-5xl md:text-6xl font-extralight tracking-[-0.02em] text-white mb-6 leading-[0.9] font-serif max-w-4xl drop-shadow-xl"
               >
-                Event <span className="font-bold bg-gradient-to-r from-red-400 via-red-500 to-red-600 bg-clip-text text-transparent dark:bg-gradient-to-r dark:from-red-400 dark:via-red-500 dark:to-red-600">Registration</span>
+                Event <span className="font-bold bg-gradient-to-r from-red-400 via-red-500 to-red-600 bg-clip-text text-transparent dark:bg-gradient-to-r dark:from-red-400 dark:via-red-500 dark:to-red-600">Certificates</span>
               </motion.h1>
               
               <motion.p 
@@ -437,7 +497,7 @@ export default function CertificateForm() {
                       d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
                     />
                   </svg>
-                  <span>Event Date: February 22, 2025</span>
+                  <span>Event Date: December 30, 2025</span>
                 </div>
                 <div className="flex items-center bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full border border-white/20 shadow-lg">
                   <svg
@@ -459,7 +519,7 @@ export default function CertificateForm() {
                       d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                     />
                   </svg>
-                  <span>Venue: Academic Block 1, Room ###</span>
+                  <span>Online</span>
                 </div>
               </motion.div>
             </div>
@@ -603,7 +663,7 @@ export default function CertificateForm() {
                 <div className="p-5 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-900 rounded-2xl border border-blue-100 dark:border-gray-800">
                   <h3 className="font-medium text-blue-800 dark:text-blue-300 mb-3 flex items-center">
                     <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m-1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     Important Notes
                   </h3>
