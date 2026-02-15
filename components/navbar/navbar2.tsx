@@ -319,6 +319,7 @@ const Navbar2: React.FC = () => {
       <nav
         ref={navRef}
         className="fixed z-50 flex flex-col justify-between w-[105vw] h-[100vh] px-5 sm:px-10 uppercase py-20 gap-y-10 md:w-1/2 md:left-1/2 md:hidden shadow-2xl border-l-2 border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200"
+        style={{ display: 'none', transform: 'translateX(100%)' }}
       >
         {/* Add margin top to avoid navbar overlap */}
         <div className="mt-20"></div>

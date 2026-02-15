@@ -46,21 +46,21 @@ export default function ImageSlider() {
 
           {/* Main heading with magazine-style typography */}
           <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extralight tracking-[-0.02em] text-black dark:text-white mb-6 leading-[0.9] font-serif max-w-5xl mx-auto">
-            <span className="block lg:inline">DRAFT TO</span>
+            <span className="block lg:inline">VITB GOT</span>
             <span className="block lg:inline font-thin italic bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 bg-clip-text text-transparent mt-2 lg:mt-0 lg:ml-4">
-              DIRECTION
+              LATENT
             </span>
           </h1>
 
           {/* Event Taglines */}
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-light text-gray-700 dark:text-gray-300 mb-3 font-serif">
-
+            Season 2
           </h2>
           <p className="text-lg md:text-xl text-blue-600 dark:text-blue-400 font-medium mb-4">
-
+            The campus chaos you loved is BACK. Bigger games. Wilder moments. Zero chill. 👀
           </p>
           <p className="text-base md:text-lg text-gray-600 dark:text-gray-400 font-light">
-
+            Grab your partner and step into the ultimate 2-member showdown
           </p>
         </motion.div>
 
@@ -69,8 +69,8 @@ export default function ImageSlider() {
           {/* Visual Storytelling */}
           <div className="relative h-[600px] md:h-[700px] lg:h-[750px] rounded-2xl overflow-hidden shadow-2xl">
             <Image
-              src="/images/draft_to_direction.png"
-              alt="DRAFT TO DIRECTION Event Poster"
+              src="/images/vitb_got_latent_s2.png"
+              alt="VITB GOT LATENT Season 2 Event Poster"
               fill
               className="object-contain"
               priority
@@ -80,16 +80,16 @@ export default function ImageSlider() {
             {/* Editorial Date Stamp */}
             <div className="absolute top-6 left-6 bg-white dark:bg-black px-4 py-2 rounded-lg shadow-lg">
               <div className="text-center">
-                <div className="text-2xl font-serif font-bold text-black dark:text-white">30</div>
-                <div className="text-xs uppercase tracking-widest text-gray-600 dark:text-gray-400">DEC 2025</div>
+                <div className="text-2xl font-serif font-bold text-black dark:text-white">28</div>
+                <div className="text-xs uppercase tracking-widest text-gray-600 dark:text-gray-400">FEB 2026</div>
               </div>
             </div>
 
             {/* Editorial Caption */}
             <div className="absolute bottom-6 left-6 right-6">
               <div className="text-white">
-                <h3 className="text-2xl font-light">DRAFT TO DIRECTION</h3>
-                <p className="text-sm text-gray-200 mt-1">From What You Write to Where You Go</p>
+                <h3 className="text-2xl font-light">VITB GOT LATENT – Season 2</h3>
+                <p className="text-sm text-gray-200 mt-1">The campus chaos is back!</p>
               </div>
             </div>
           </div>
@@ -99,30 +99,30 @@ export default function ImageSlider() {
             <div>
               <div className="mb-6">
                 <span className="inline-block px-3 py-1.5 text-xs font-semibold text-blue-600 bg-blue-50 dark:bg-blue-900/20 rounded-full mb-4">
-                  A LaTeX × Cloud Career Journey
+                  Ultimate 2-Member Challenge
                 </span>
 
                 <h3 className="text-3xl font-extralight text-black dark:text-white mb-4 leading-tight tracking-[-0.02em]">
-                  Bridge the Gap
+                  Games, Talent & Fun
                 </h3>
 
                 <p className="text-gray-600 dark:text-gray-400 mb-6 text-lg leading-relaxed">
-                  In today’s fast-evolving tech landscape, many students find themselves uncertain about where to begin—whether to focus on DSA, Artificial Intelligence, or Cloud Computing. DRAFT TO DIRECTION is designed to offer clarity through hands-on learning and real career experiences.
+                  The campus chaos you loved is BACK. Team up with your partner for epic 2-member games, showcase your hidden talents in the Latent Show, and experience the wildest moments on campus. Zero chill guaranteed! 🔥
                 </p>
 
                 {/* Event Details Icons */}
                 <div className="flex flex-wrap gap-4 sm:gap-6 mb-8 p-4 bg-gray-50 dark:bg-gray-800/30 rounded-xl border border-gray-100 dark:border-gray-800">
                   <div className="flex items-center text-gray-700 dark:text-gray-300">
                     <svg className="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                    <span className="font-medium">30th Dec 2025</span>
+                    <span className="font-medium">28th Feb 2026</span>
                   </div>
                   <div className="flex items-center text-gray-700 dark:text-gray-300">
                     <svg className="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    <span className="font-medium">12:00 PM – 1:30 PM</span>
+                    <span className="font-medium">10:00 AM – 2:00 PM</span>
                   </div>
                   <div className="flex items-center text-gray-700 dark:text-gray-300">
                     <svg className="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                    <span className="font-medium">Online</span>
+                    <span className="font-medium">AR 102 & 103</span>
                   </div>
                 </div>
               </div>
@@ -132,20 +132,30 @@ export default function ImageSlider() {
                 <div className="bg-gray-50 dark:bg-gray-800/50 p-5 rounded-xl border border-gray-100 dark:border-gray-800 transition-all hover:shadow-md">
                   <h4 className="text-lg font-medium text-black dark:text-white mb-2 flex items-center">
                     <span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
-                    LaTeX Interactive Session
+                    Epic 2-Member Games 🎮
                   </h4>
                   <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed pl-5">
-                    A practical LaTeX workshop where participants build research papers, presentations, or CVs on Overleaf—leveraging AI for smart content generation.
+                    Ice Cream Fight, Dart Arena, Balloon Between Us, Cup Stack & Knock, Face Painting – Choose your battles and dominate!
                   </p>
                 </div>
 
                 <div className="bg-gray-50 dark:bg-gray-800/50 p-5 rounded-xl border border-gray-100 dark:border-gray-800 transition-all hover:shadow-md">
                   <h4 className="text-lg font-medium text-black dark:text-white mb-2 flex items-center">
                     <span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
-                    Cloud Career Journey Talk
+                    Latent Show 🎤
                   </h4>
                   <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed pl-5">
-                    Highlights a real student’s transition from DSA to Cloud, covering certification pathways, placement insights, and a clear roadmap.
+                    Got hidden talent? Send your intro video and perform live. Judges decide, but the audience can flip the game!
+                  </p>
+                </div>
+
+                <div className="bg-gray-50 dark:bg-gray-800/50 p-5 rounded-xl border border-gray-100 dark:border-gray-800 transition-all hover:shadow-md">
+                  <h4 className="text-lg font-medium text-black dark:text-white mb-2 flex items-center">
+                    <span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+                    Multiple Pass Options 💰
+                  </h4>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed pl-5">
+                    ₹50 Single Game | ₹100 Latent Show | ₹120 All Games | ₹150 All Games + Latent Show
                   </p>
                 </div>
               </div>
@@ -154,7 +164,7 @@ export default function ImageSlider() {
             {/* Editorial CTA */}
             <div className="border-t border-gray-200 dark:border-gray-800 pt-8">
               <a 
-                href="https://forms.gle/No1xs4GJGt5EWcMQ7"
+                href="https://forms.gle/N6rwkv8A75o63cYY8"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center group"
@@ -167,7 +177,7 @@ export default function ImageSlider() {
                 </button>
               </a>
               <p className="text-sm text-gray-500 dark:text-gray-400 mt-3">
-                Limited seats available. Register today!
+                Limited slots available. Tag your teammate and register!
               </p>
             </div>
           </div>
@@ -179,7 +189,7 @@ export default function ImageSlider() {
       {/* Editorial Tags */}
       <div className="mt-16 pt-8 border-t border-gray-200 dark:border-gray-800 w-full">
         <div className="flex flex-wrap gap-3 justify-center lg:justify-start">
-          {["#DraftToDirection", "#LaTeX", "#CloudComputing", "#CareerGuidance", "#HandsOnLearning"].map((tag) => (
+          {["#VITBGotLatent", "#Season2", "#CampusGames", "#LatentShow", "#TeamChallenge", "#CampusChaos"].map((tag) => (
             <span
               key={tag}
               className="text-sm font-medium text-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer"
