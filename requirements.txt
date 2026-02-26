@@ -19,3 +19,8 @@ typing_extensions==4.12.2
 uvicorn
 watchfiles==1.0.4
 websockets==14.2
+gspread
+google-auth
+google-auth-oauthlib
+google-auth-httplib2
+google-api-python-client

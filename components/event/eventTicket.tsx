@@ -177,7 +177,6 @@ function ConfirmationModal({
 
 export default function TicketForm() {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
-  const [name, setName] = useState("");
   const [regNo, setRegNo] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -187,6 +186,11 @@ export default function TicketForm() {
   const [isClient, setIsClient] = useState(false);
   const lenisRef = useRef<any>(null);
   const animationInitialized = useRef(false);
+  
+  // Team Finder state (separate section)
+  const [searchRegNo, setSearchRegNo] = useState("");
+  const [teamInfo, setTeamInfo] = useState<any>(null);
+  const [isLookingUp, setIsLookingUp] = useState(false);
 
   // Initialize client-side only features
   useEffect(() => {
@@ -298,6 +302,33 @@ export default function TicketForm() {
     };
   }, [status]);
 
+  // Team lookup function for separate finder section
+  const handleTeamLookup = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!searchRegNo.trim()) return;
+
+    setIsLookingUp(true);
+    setTeamInfo(null);
+    try {
+      const response = await fetch(
+        `${API_URL}api/py/lookup-team?reg_number=${encodeURIComponent(searchRegNo.trim())}`,
+        { cache: 'no-store' }
+      );
+      
+      if (response.ok) {
+        const data = await response.json();
+        setTeamInfo(data);
+      } else {
+        setTeamInfo({ error: "Registration number not found" });
+      }
+    } catch (err) {
+      console.error('Lookup error:', err);
+      setTeamInfo({ error: "Error looking up team information" });
+    } finally {
+      setIsLookingUp(false);
+    }
+  };
+
   const generateTicket = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
@@ -305,22 +336,25 @@ export default function TicketForm() {
     setIsLoading(true);
 
     try {
-      const response = await fetch(`${API_URL}api/py/generate-ticket`, {
+      // Call new Google Sheets-based API
+      const formData = new FormData();
+      formData.append('reg_number', regNo.trim());
+
+      const response = await fetch(`${API_URL}api/py/generate-event-ticket`, {
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({ name, reg_no: regNo }),
+        body: formData,
       });
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.detail || 'Failed to generate ticket');
+        throw new Error(errorData.detail || 'Registration number not found');
       }
 
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `${regNo}_ticket.png`;
+      a.download = `ticket_${regNo}.png`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -328,7 +362,6 @@ export default function TicketForm() {
 
       setStatus("Ticket generated successfully!");
       setShowConfirmation(true);
-      setName("");
       setRegNo("");
       // Confirmation modal will auto-close after 3 seconds
       setTimeout(() => {
@@ -431,7 +464,7 @@ export default function TicketForm() {
                       d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
                     />
                   </svg>
-                  <span>Event Date: February 22, 2025</span>
+                  <span>Event Date: February 28, 2026</span>
                 </div>
                 <div className="flex items-center bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full border border-white/20 shadow-lg">
                   <svg
@@ -453,7 +486,7 @@ export default function TicketForm() {
                       d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                     />
                   </svg>
-                  <span>Venue: Academic Block 1, Room ###</span>
+                  <span>Venue: Architecture Block, Room 102 & 103</span>
                 </div>
               </motion.div>
             </div>
@@ -485,29 +518,6 @@ export default function TicketForm() {
                 Ticket <span className="font-semibold bg-gradient-to-r from-red-400 via-red-500 to-red-600 bg-clip-text text-transparent">Details</span>
               </h2>
               <form onSubmit={generateTicket} className="space-y-6">
-                {/* Name Input */}
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
-                    Full Name
-                  </label>
-                  <div className="relative">
-                    <input
-                      id="name"
-                      type="text"
-                      placeholder="Enter your full name"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      className="w-full p-4 border border-gray-300 dark:border-gray-800 rounded-xl 
-                               focus:ring-2 focus:ring-blue-500 focus:border-blue-500 
-                               dark:bg-black/50 dark:text-white transition-all
-                               text-base backdrop-blur-sm bg-white/50
-                               dark:placeholder-gray-400"
-                      required
-                    />
-                    <div className="absolute inset-0 rounded-xl shadow-[0_0_0_1px_rgba(0,0,0,0.1)] dark:shadow-[0_0_0_1px_rgba(255,255,255,0.1)] pointer-events-none"></div>
-                  </div>
-                </div>
-
                 {/* Registration Number Input */}
                 <div>
                   <label htmlFor="regNo" className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
@@ -517,7 +527,7 @@ export default function TicketForm() {
                     <input
                       id="regNo"
                       type="text"
-                      placeholder="Enter your registration number"
+                      placeholder="Enter your registration number (e.g., 25bai11286)"
                       value={regNo}
                       onChange={(e) => setRegNo(e.target.value)}
                       className="w-full p-4 border border-gray-300 dark:border-gray-800 rounded-xl 
@@ -529,6 +539,9 @@ export default function TicketForm() {
                     />
                     <div className="absolute inset-0 rounded-xl shadow-[0_0_0_1px_rgba(0,0,0,0.1)] dark:shadow-[0_0_0_1px_rgba(255,255,255,0.1)] pointer-events-none"></div>
                   </div>
+                  <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                    Enter your registration number as registered for VITB's Got Latent 2
+                  </p>
                 </div>
 
                 {/* Submit Button */}
@@ -624,23 +637,164 @@ export default function TicketForm() {
                     </span>
                   </p>
                 </div>
-                
-                {/* Verify Ticket Button as Link */}
-                <div className="pt-4">
-                  <Link href="/scanner">
-                    <motion.div 
-                      whileHover={{ scale: 1.03 }}
-                      whileTap={{ scale: 0.98 }}
-                      className="w-full sm:w-auto bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-medium py-3 px-6 rounded-xl transition text-center shadow-lg cursor-pointer"
-                    >
-                      Verify Ticket
-                    </motion.div>
-                  </Link>
-                </div>
               </div>
             </div>
           </motion.div>
         </div>
+        
+        {/* Team Finder Section */}
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.7 }}
+          className="mt-8 sm:mt-12"
+        >
+          <div className="bg-white/80 dark:bg-black/80 backdrop-blur-xl shadow-2xl rounded-3xl p-6 sm:p-8 border border-white/50 dark:border-gray-800">
+            <div className="flex items-center mb-6">
+              <svg className="w-8 h-8 mr-3 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+              <h2 className="text-2xl sm:text-3xl font-extralight text-gray-800 dark:text-white">
+                Team <span className="font-semibold bg-gradient-to-r from-purple-400 via-purple-500 to-purple-600 bg-clip-text text-transparent">Finder</span>
+              </h2>
+            </div>
+            
+            <p className="text-gray-600 dark:text-gray-300 mb-6">
+              Enter your registration number to find your team information
+            </p>
+            
+            <form onSubmit={handleTeamLookup} className="mb-6">
+              <div className="flex flex-col sm:flex-row gap-4">
+                <div className="flex-1">
+                  <input
+                    type="text"
+                    placeholder="Enter registration number (e.g., 25bai11286)"
+                    value={searchRegNo}
+                    onChange={(e) => setSearchRegNo(e.target.value)}
+                    className="w-full p-4 border border-gray-300 dark:border-gray-800 rounded-xl 
+                             focus:ring-2 focus:ring-purple-500 focus:border-purple-500 
+                             dark:bg-black/50 dark:text-white transition-all
+                             text-base backdrop-blur-sm bg-white/50
+                             dark:placeholder-gray-400"
+                    required
+                  />
+                </div>
+                <button
+                  type="submit"
+                  disabled={isLookingUp}
+                  className={`px-8 py-4 rounded-xl text-white font-medium transition-all duration-300 transform hover:scale-[1.02] ${
+                    isLookingUp
+                      ? "bg-gray-400 dark:bg-gray-700 cursor-not-allowed"
+                      : "bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 shadow-lg"
+                  }`}
+                >
+                  {isLookingUp ? (
+                    <span className="flex items-center">
+                      <svg className="animate-spin h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Searching...
+                    </span>
+                  ) : (
+                    "Find Team"
+                  )}
+                </button>
+              </div>
+            </form>
+            
+            {/* Team Results */}
+            {teamInfo && !isLookingUp && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3 }}
+              >
+                {teamInfo.error ? (
+                  <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-6">
+                    <div className="flex items-center text-red-700 dark:text-red-300">
+                      <svg className="h-6 w-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span className="font-medium">{teamInfo.error}</span>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border border-purple-200 dark:border-purple-800 rounded-xl p-6 sm:p-8">
+                    <div className="flex items-start mb-6">
+                      <div className="flex-shrink-0">
+                        <svg className="h-8 w-8 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                      </div>
+                      <div className="ml-4 flex-1">
+                        <h3 className="text-2xl font-bold text-purple-900 dark:text-purple-100 mb-2">
+                          Team Found!
+                        </h3>
+                        <p className="text-purple-700 dark:text-purple-300">Here's your team information</p>
+                      </div>
+                    </div>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      {/* Team Details Card */}
+                      <div className="bg-white/60 dark:bg-black/40 backdrop-blur-sm rounded-xl p-6 border border-purple-200 dark:border-purple-700">
+                        <h4 className="text-sm font-semibold text-purple-600 dark:text-purple-400 uppercase tracking-wide mb-4">Team Details</h4>
+                        <div className="space-y-3">
+                          <div>
+                            <div className="text-xs text-purple-600 dark:text-purple-400 font-medium mb-1">Team ID</div>
+                            <div className="text-3xl font-bold text-purple-900 dark:text-purple-100">#{teamInfo.team_id}</div>
+                          </div>
+                          {teamInfo.team_name && teamInfo.team_name !== 'N/A' && (
+                            <div className="pt-2 border-t border-purple-200 dark:border-purple-700">
+                              <div className="text-xs text-purple-600 dark:text-purple-400 font-medium mb-1">Team Name</div>
+                              <div className="text-xl font-semibold text-purple-900 dark:text-purple-100">{teamInfo.team_name}</div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                      
+                      {/* Team Members Card */}
+                      <div className="bg-white/60 dark:bg-black/40 backdrop-blur-sm rounded-xl p-6 border border-purple-200 dark:border-purple-700">
+                        <h4 className="text-sm font-semibold text-purple-600 dark:text-purple-400 uppercase tracking-wide mb-4">Team Members</h4>
+                        <div className="space-y-4">
+                          {/* Member 1 */}
+                          <div className="flex items-start">
+                            <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold shadow-lg mr-3">
+                              1
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <div className="text-purple-900 dark:text-purple-100 font-semibold truncate">
+                                {teamInfo.member1.name}
+                              </div>
+                              <div className="text-purple-700 dark:text-purple-300 text-sm font-mono">
+                                {teamInfo.member1.reg_number}
+                              </div>
+                            </div>
+                          </div>
+                          
+                          {/* Member 2 */}
+                          <div className="flex items-start">
+                            <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-pink-500 to-pink-600 rounded-full flex items-center justify-center text-white font-bold shadow-lg mr-3">
+                              2
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <div className="text-purple-900 dark:text-purple-100 font-semibold truncate">
+                                {teamInfo.member2.name}
+                              </div>
+                              <div className="text-purple-700 dark:text-purple-300 text-sm font-mono">
+                                {teamInfo.member2.reg_number}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </motion.div>
+            )}
+          </div>
+        </motion.div>
       </main>
     </div>
   );
