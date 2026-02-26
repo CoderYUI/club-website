@@ -13,6 +13,10 @@ import csv
 import io
 import gspread
 from google.oauth2.service_account import Credentials
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 # Define paths first
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -24,14 +28,21 @@ CERTIFICATE_TEMPLATE_PATH = os.path.join(BASE_DIR, "assets", "certificate.png")
 FONT_PATH = os.path.join(BASE_DIR, "assets", "arial.ttf")
 PUBLIC_SANS_FONT_PATH = os.path.join(BASE_DIR, "assets", "PublicSans-Bold.ttf")
 
-# Google Sheets Configuration (Hardcoded as requested)
-# You'll need to replace this with your actual service account JSON
-# Replace with your working service account credentials
-GOOGLE_SHEETS_CREDENTIALS = {  "type": "service_account","project_id": "qr-based-entry","private_key_id": "736dd1794c062bfb0b5925990261585f1bfb24d6","private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDEnaVnieMRz3rn\n4mRO/NomGdENRTSh+YWnxbxuXDvHpVLV3BBEtXRBqnCEUGixlakupiLcYtyvW48z\nSRGRqYPPdjbvrx3fBK9ghYhyWQnGqRkipSq4BlydLwbqszOEuNGeeOwgw0q9sPgt\ndMnn23j9j1VCNqX4R6te32fi2V41xZm4Dj4ZRtGFLIPpEIMDgpewXPBLsoNfo0OJ\neI17X2y5y04Bi8uy80tpaK8RHSC8D/GCsizRLRGXkhcgtRgo9YRv0HEPozkPYFQY\ny+DVwHsUgd6SaLkuF60BrSc+Itj+VcOUcCbdbL1675AWy04aJtGNt6fCJ+9gOdd+\npxNF7gIfAgMBAAECggEAFS0PfAPPV4M7rw7kk9dK3ZCpQd8iyJE50nSLE23OqHWH\nYu41OFk8wLfNL4sDg6DlXFdbaNYjA6X+Wd00TbZusmD+kLkRJAx6oRAwvnQVh/Z9\ndQxJ+hEBV5KRkaSkV1aaiRFoCS1PdvfA+xBZkKXENbcCzUNag8+gRvMT2sxjh7Hk\nkCKqJqJ4PDO0FNeTbPCapM5bl6Edu8KjkNubAbQAWnjiDDors6TCYLxb1cOrenfK\nfPLKkNwS3vzq+2zvnmdWhXvisF4+pS2+OlMA/hCgRWgLSk45vVwcuNNYIWklJcQ0\nvj33xgtE54ZzPxz08tzFvlnGeBtwso879Lnw1kHCRQKBgQD2HtAIe0XntQBDrtDR\nafiSxipDmGFZZJsiMJzLev9vJCs5BGrCpzZphjxDVCV+Gvj9TgvOGW6S14qgRMT7\n0e/WxocrRo1jDt8D1dI/90dXI4y4iBTi3/8wjd0GkKjqYUxET9zlpZ7A+Zk2H617\nEYhPFiRieWx0x6aS/bFEYxDTwwKBgQDMgh0arVc38nLa5GVd6Pc4WLnCeuTjzkyl\nvqhMSAp3wVs50LXmuYA0ZeTlqvW9klY5wneQsKYKubnjLh/7uO4bTpB6rHQwAS4e\nC7GbLCM1YpfODw9Xvl6gSaqzSHolx+AUD4HKfkEamOYb9lj1Joz4Va6NC5ZUPgQG\nd9xPKPw+dQKBgQCSlg1/T7R16YbLyP3UDBKhkGcxtTsd297NwThRtOMX1ensXqYb\nYy30MaAI1cAy2Gu9qlM7oEgMK1YEWJEeDo6TU9DDxJSHEB9hkGNV97hEvQaeDWar\nLZA24fdnZpdEaUjcUtiU6kygUMigxMM1Tl7qA50ODZW8BAFBANooifxGswKBgFLi\nNOt3705Ua6o9QLvzzCZBB2BDsHqHRNcz0z+/PsbUTaW76c0Nx2D1HvTZ+eiP43Rb\nVVwFy/Wy2hyxt/KsO4xDphihxiEiiU9SC/RIyig7wiyYO+6iz/UEhjNNH3wqaq2W\nr1KjIr2l1DTm/Zy1uBJ5n1m4pX+U9sqsT1Sh1sF1AoGAS5j8dvOQOnM+DIjQE9Ef\nn1oMTjTDrtDUgXIZdlpmn9G+JrRCTu90UEfAg5X4NUuAZZ7yTG9LrlGPsDpRv2Ph\nEt2Fl6m3Mjppej9TnNwoXKUdRyv0h8PGx3iXYA1qF0DS/Q+bBzvqm+J3zk0Srcoj\nBAUXFcTxnoQOc4DqDoYeceo=\n-----END PRIVATE KEY-----\n","client_email": "sheets-bot@qr-based-entry.iam.gserviceaccount.com","client_id": "116558975843942662136","auth_uri": "https://accounts.google.com/o/oauth2/auth","token_uri": "https://oauth2.googleapis.com/token","auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs","client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/sheets-bot%40qr-based-entry.iam.gserviceaccount.com","universe_domain": "googleapis.com"}
+# Google Sheets Configuration from Environment Variables
+# Load service account credentials from environment variable
+google_credentials_json = os.getenv('GOOGLE_SHEETS_CREDENTIALS')
+if not google_credentials_json:
+    raise ValueError("GOOGLE_SHEETS_CREDENTIALS environment variable is not set")
 
-# Get spreadsheet ID from URL: https://docs.google.com/spreadsheets/d/SPREADSHEET_ID/edit
-# Replace this with your actual spreadsheet ID
-SPREADSHEET_ID = "1wVVl8_ktxVXvNxej5wHyxzY_yxJtiamVG8eLY9MHUXI"  # Get this from your Google Sheets URL
+try:
+    GOOGLE_SHEETS_CREDENTIALS = json.loads(google_credentials_json)
+except json.JSONDecodeError as e:
+    raise ValueError(f"Invalid JSON in GOOGLE_SHEETS_CREDENTIALS: {e}")
+
+# Get spreadsheet ID from environment variable
+SPREADSHEET_ID = os.getenv('GOOGLE_SPREADSHEET_ID')
+if not SPREADSHEET_ID:
+    raise ValueError("GOOGLE_SPREADSHEET_ID environment variable is not set")
 
 # Configurable positioning for ticket generation (adjust these values as needed)
 TICKET_CONFIG = {
