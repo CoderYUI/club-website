@@ -11,14 +11,140 @@ import base64
 import datetime
 import csv
 import io
+import gspread
+from google.oauth2.service_account import Credentials
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 # Define paths first
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 CERTIFICATE_DATA_FILE = os.path.join(BASE_DIR, "assets", "data2.json")
 TICKET_DATA_FILE = os.path.join(BASE_DIR, "assets", "data-tickets.json")
 TEMPLATE_PATH = os.path.join(BASE_DIR, "assets", "event.png")
+EVENT_TICKET_TEMPLATE_PATH = os.path.join(BASE_DIR, "assets", "event-ticket.png")
 CERTIFICATE_TEMPLATE_PATH = os.path.join(BASE_DIR, "assets", "certificate.png")
 FONT_PATH = os.path.join(BASE_DIR, "assets", "arial.ttf")
+PUBLIC_SANS_FONT_PATH = os.path.join(BASE_DIR, "assets", "PublicSans-Bold.ttf")
+
+# Google Sheets Configuration from Environment Variables
+# Load service account credentials from environment variable
+google_credentials_json = os.getenv('GOOGLE_SHEETS_CREDENTIALS')
+if not google_credentials_json:
+    raise ValueError("GOOGLE_SHEETS_CREDENTIALS environment variable is not set")
+
+try:
+    GOOGLE_SHEETS_CREDENTIALS = json.loads(google_credentials_json)
+except json.JSONDecodeError as e:
+    raise ValueError(f"Invalid JSON in GOOGLE_SHEETS_CREDENTIALS: {e}")
+
+# Get spreadsheet ID from environment variable
+SPREADSHEET_ID = os.getenv('GOOGLE_SPREADSHEET_ID')
+if not SPREADSHEET_ID:
+    raise ValueError("GOOGLE_SPREADSHEET_ID environment variable is not set")
+
+# Configurable positioning for ticket generation (adjust these values as needed)
+TICKET_CONFIG = {
+    "member1_name": {
+        "x": 170,  # Adjust X position
+        "y": 500,  # Adjust Y position
+        "size": 40,
+        "color": "#c1ff72",
+        "bold": True
+    },
+    "member2_name": {
+        "x": 170,  # Adjust X position
+        "y": 550,  # Adjust Y position
+        "size": 40,
+        "color": "#c1ff72",
+        "bold": True
+    },
+    "row_id": {
+        "x": 1850,  # Adjust X position
+        "y": 180,  # Adjust Y position
+        "size":60,
+        "color": "white",
+        "bold": True
+    },
+    "qr_code": {
+        "x": 1640,  # Adjust X position
+        "y": 280,  # Adjust Y position
+        "size": 280  # QR code size
+    }
+}
+
+def get_google_sheets_client():
+    """Initialize Google Sheets client with service account (Sheets API only, no Drive API)"""
+    try:
+        # Use Sheets API scope with read/write permissions
+        scopes = [
+            'https://www.googleapis.com/auth/spreadsheets'
+        ]
+        credentials = Credentials.from_service_account_info(
+            GOOGLE_SHEETS_CREDENTIALS,
+            scopes=scopes
+        )
+        client = gspread.authorize(credentials)
+        return client
+    except Exception as e:
+        print(f"Error initializing Google Sheets client: {e}")
+        return None
+
+def fetch_participant_data(reg_number):
+    """Fetch participant data from Google Sheets by registration number"""
+    try:
+        client = get_google_sheets_client()
+        if not client:
+            return None
+        
+        # Open spreadsheet by ID (no Drive API needed)
+        spreadsheet = client.open_by_key(SPREADSHEET_ID)
+        worksheet = spreadsheet.sheet1  # Get first sheet
+        
+        # Get all values (works even with duplicate column names)
+        all_values = worksheet.get_all_values()
+        
+        if not all_values or len(all_values) < 2:
+            print("No data found in spreadsheet")
+            return None
+        
+        # First row is headers
+        headers = all_values[0]
+        
+        # Find column indices
+        col_indices = {}
+        for i, header in enumerate(headers):
+            col_indices[header] = i
+        
+        # Search for participant by registration number (case-insensitive)
+        reg_number_lower = reg_number.lower()
+        
+        for row in all_values[1:]:  # Skip header row
+            if len(row) <= max(col_indices.values()):
+                continue
+                
+            # Check both member registration numbers (case-insensitive)
+            reg1 = str(row[col_indices.get('Reg Number (1)', 0)] if 'Reg Number (1)' in col_indices else '').strip()
+            reg2 = str(row[col_indices.get('Reg Number (2)', 0)] if 'Reg Number (2)' in col_indices else '').strip()
+            
+            if reg1.lower() == reg_number_lower or reg2.lower() == reg_number_lower:
+                return {
+                    'row_id': row[col_indices.get('Row ID', 0)] if 'Row ID' in col_indices else '',
+                    'team_name': row[col_indices.get('Team Name', 0)] if 'Team Name' in col_indices else '',
+                    'member1_name': row[col_indices.get('Member 1 Name', 0)] if 'Member 1 Name' in col_indices else '',
+                    'reg_number_1': reg1,
+                    'member2_name': row[col_indices.get('Member 2 Name', 0)] if 'Member 2 Name' in col_indices else '',
+                    'reg_number_2': reg2,
+                    'games_playing': row[col_indices.get('Games Playing', 0)] if 'Games Playing' in col_indices else ''
+                }
+        
+        return None
+    except Exception as e:
+        print(f"Error fetching data from Google Sheets: {e}")
+        import traceback
+        traceback.print_exc()
+        return None
 
 # Initialize FastAPI app and middleware
 app = FastAPI()
@@ -507,6 +633,337 @@ async def verify_participant(request: Request):
         
     except Exception as e:
         return JSONResponse({"error": str(e)}, status_code=500)
+
+@app.get("/api/py/lookup-team")
+async def lookup_team(reg_number: str):
+    """Lookup team information by registration number"""
+    try:
+        client = get_google_sheets_client()
+        if not client:
+            raise HTTPException(status_code=500, detail="Failed to connect to Google Sheets")
+        
+        # Open spreadsheet by ID
+        spreadsheet = client.open_by_key(SPREADSHEET_ID)
+        worksheet = spreadsheet.sheet1
+        
+        # Get all values
+        all_values = worksheet.get_all_values()
+        
+        if not all_values or len(all_values) < 2:
+            raise HTTPException(status_code=500, detail="No data found in spreadsheet")
+        
+        # First row is headers
+        headers = all_values[0]
+        
+        # Find column indices
+        col_indices = {}
+        for i, header in enumerate(headers):
+            col_indices[header] = i
+        
+        # Find Status columns
+        status1_col = col_indices.get('Status1', col_indices.get('Status', -1))
+        status2_col = col_indices.get('Status2', -1)
+        
+        # Search for participant (case-insensitive)
+        reg_number_lower = reg_number.strip().lower()
+        
+        for idx, row in enumerate(all_values[1:], start=2):
+            if len(row) <= max(col_indices.values()):
+                continue
+            
+            reg1 = str(row[col_indices.get('Reg Number (1)', 0)] if 'Reg Number (1)' in col_indices else '').strip()
+            reg2 = str(row[col_indices.get('Reg Number (2)', 0)] if 'Reg Number (2)' in col_indices else '').strip()
+            
+            if reg1.lower() == reg_number_lower or reg2.lower() == reg_number_lower:
+                # Get current status
+                status1 = row[status1_col] if status1_col >= 0 and status1_col < len(row) else ''
+                status2 = row[status2_col] if status2_col >= 0 and status2_col < len(row) else ''
+                
+                return {
+                    "success": True,
+                    "team_id": row[col_indices.get('Row ID', 0)] if 'Row ID' in col_indices else 'N/A',
+                    "team_name": row[col_indices.get('Team Name', 0)] if 'Team Name' in col_indices else 'N/A',
+                    "row_number": idx,
+                    "member1": {
+                        "name": row[col_indices.get('Member 1 Name', 0)] if 'Member 1 Name' in col_indices else 'N/A',
+                        "reg_number": reg1,
+                        "status": status1,
+                        "is_present": status1.lower() == 'present'
+                    },
+                    "member2": {
+                        "name": row[col_indices.get('Member 2 Name', 0)] if 'Member 2 Name' in col_indices else 'N/A',
+                        "reg_number": reg2,
+                        "status": status2,
+                        "is_present": status2.lower() == 'present'
+                    }
+                }
+        
+        raise HTTPException(status_code=404, detail="Registration number not found")
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Error in lookup_team: {e}")
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/api/py/mark-entry")
+async def mark_entry(row_number: int = Form(...), member_number: int = Form(...)):
+    """Mark attendance/entry for a specific team member - OPTIMIZED"""
+    try:
+        if member_number not in [1, 2]:
+            raise HTTPException(status_code=400, detail="Member number must be 1 or 2")
+        
+        client = get_google_sheets_client()
+        if not client:
+            raise HTTPException(status_code=500, detail="Failed to connect to Google Sheets")
+        
+        # Open spreadsheet by ID
+        spreadsheet = client.open_by_key(SPREADSHEET_ID)
+        worksheet = spreadsheet.sheet1
+        
+        # Get headers only for column mapping
+        headers = worksheet.row_values(1)
+        
+        # Find column indices
+        col_indices = {header: i for i, header in enumerate(headers)}
+        
+        # Find Status columns
+        status1_col = col_indices.get('Status1', col_indices.get('Status', -1))
+        status2_col = col_indices.get('Status2', -1)
+        
+        # Determine which status column to update
+        status_col = status1_col if member_number == 1 else status2_col
+        
+        if status_col < 0:
+            raise HTTPException(status_code=500, detail=f"Status{member_number} column not found")
+        
+        # Convert to A1 notation
+        col_letter = chr(65 + status_col)
+        cell_address = f"{col_letter}{row_number}"
+        
+        # Build Google Sheets API service (reuse credentials)
+        from googleapiclient.discovery import build
+        from google.oauth2.service_account import Credentials
+        
+        creds = Credentials.from_service_account_info(
+            GOOGLE_SHEETS_CREDENTIALS,
+            scopes=['https://www.googleapis.com/auth/spreadsheets']
+        )
+        service = build('sheets', 'v4', credentials=creds)
+        
+        # Batch update: value + formatting in ONE API call
+        batch_update_request = {
+            'requests': [
+                # Update value
+                {
+                    'updateCells': {
+                        'range': {
+                            'sheetId': 0,
+                            'startRowIndex': row_number - 1,
+                            'endRowIndex': row_number,
+                            'startColumnIndex': status_col,
+                            'endColumnIndex': status_col + 1
+                        },
+                        'rows': [
+                            {
+                                'values': [
+                                    {
+                                        'userEnteredValue': {'stringValue': 'Present'},
+                                        'userEnteredFormat': {
+                                            'backgroundColor': {
+                                                'red': 0.0,
+                                                'green': 0.8,
+                                                'blue': 0.0
+                                            },
+                                            'textFormat': {
+                                                'foregroundColor': {
+                                                    'red': 1.0,
+                                                    'green': 1.0,
+                                                    'blue': 1.0
+                                                },
+                                                'bold': True
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        ],
+                        'fields': 'userEnteredValue,userEnteredFormat(backgroundColor,textFormat)'
+                    }
+                }
+            ]
+        }
+        
+        # Execute in one batch request
+        service.spreadsheets().batchUpdate(
+            spreadsheetId=SPREADSHEET_ID,
+            body=batch_update_request
+        ).execute()
+        
+        return {
+            "success": True,
+            "message": f"Member {member_number} marked as present",
+            "row_number": row_number,
+            "member_number": member_number
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Error in mark_entry: {e}")
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/api/py/generate-event-ticket")
+async def generate_event_ticket(reg_number: str = Form(...)):
+    """Generate event ticket from Google Sheets data"""
+    print(f"Generating ticket for registration number: {reg_number}")
+    
+    try:
+        # Fetch participant data from Google Sheets
+        participant = fetch_participant_data(reg_number.strip())
+        
+        if not participant:
+            raise HTTPException(
+                status_code=404,
+                detail="Registration number not found in the system"
+            )
+        
+        print(f"Found participant: {participant}")
+        
+        # Load ticket template
+        if not os.path.exists(EVENT_TICKET_TEMPLATE_PATH):
+            raise HTTPException(
+                status_code=500,
+                detail=f"Ticket template not found at: {EVENT_TICKET_TEMPLATE_PATH}"
+            )
+        
+        ticket = Image.open(EVENT_TICKET_TEMPLATE_PATH)
+        draw = ImageDraw.Draw(ticket)
+        
+        # Load PublicSans-Bold font
+        try:
+            # Font for member names (size 12)
+            font_member = ImageFont.truetype(PUBLIC_SANS_FONT_PATH, TICKET_CONFIG["member1_name"]["size"])
+            # Font for row ID (size 15)
+            font_row_id = ImageFont.truetype(PUBLIC_SANS_FONT_PATH, TICKET_CONFIG["row_id"]["size"])
+        except IOError:
+            print("Warning: PublicSans-Bold font not found! Using default font.")
+            font_member = ImageFont.load_default()
+            font_row_id = ImageFont.load_default()
+        
+        # Convert hex color to RGB
+        def hex_to_rgb(hex_color):
+            hex_color = hex_color.lstrip('#')
+            return tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
+        
+        # Draw Row ID
+        row_id_color = TICKET_CONFIG["row_id"]["color"]
+        if row_id_color != "white":
+            row_id_color = hex_to_rgb(row_id_color)
+        else:
+            row_id_color = (255, 255, 255)
+        
+        draw.text(
+            (TICKET_CONFIG["row_id"]["x"], TICKET_CONFIG["row_id"]["y"]),
+            f"{participant['row_id']}",
+            font=font_row_id,
+            fill=row_id_color
+        )
+        
+        # Draw Member 1 Name
+        member1_color = hex_to_rgb(TICKET_CONFIG["member1_name"]["color"])
+        draw.text(
+            (TICKET_CONFIG["member1_name"]["x"], TICKET_CONFIG["member1_name"]["y"]),
+            participant['member1_name'],
+            font=font_member,
+            fill=member1_color
+        )
+        
+        # Draw Member 2 Name
+        member2_color = hex_to_rgb(TICKET_CONFIG["member2_name"]["color"])
+        draw.text(
+            (TICKET_CONFIG["member2_name"]["x"], TICKET_CONFIG["member2_name"]["y"]),
+            participant['member2_name'],
+            font=font_member,
+            fill=member2_color
+        )
+        
+        # Generate QR Code with registration number
+        qr = qrcode.QRCode(
+            version=1,
+            error_correction=qrcode.constants.ERROR_CORRECT_L,
+            box_size=10,
+            border=2,
+        )
+        qr.add_data(reg_number)
+        qr.make(fit=True)
+        qr_img = qr.make_image(fill_color="black", back_color="white")
+        
+        # Resize QR code to fit
+        qr_size = TICKET_CONFIG["qr_code"]["size"]
+        qr_img = qr_img.resize((qr_size, qr_size), Image.Resampling.LANCZOS)
+        
+        # Paste QR code on ticket
+        ticket.paste(
+            qr_img,
+            (TICKET_CONFIG["qr_code"]["x"], TICKET_CONFIG["qr_code"]["y"])
+        )
+        
+        # Save ticket to bytes
+        img_byte_arr = BytesIO()
+        ticket.save(img_byte_arr, format='PNG')
+        img_byte_arr.seek(0)
+        
+        print(f"Ticket generated successfully for {reg_number}")
+        
+        return StreamingResponse(
+            img_byte_arr,
+            media_type="image/png",
+            headers={
+                'Content-Disposition': f'attachment; filename="ticket_{reg_number}.png"'
+            }
+        )
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Error generating ticket: {e}")
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to generate ticket: {str(e)}"
+        )
+
+@app.get("/api/py/ticket-config")
+async def get_ticket_config():
+    """Get current ticket configuration for debugging"""
+    return JSONResponse(TICKET_CONFIG)
+
+@app.post("/api/py/update-ticket-config")
+async def update_ticket_config(request: Request):
+    """Update ticket configuration for positioning adjustments"""
+    try:
+        data = await request.json()
+        global TICKET_CONFIG
+        
+        # Update only the provided fields
+        for section, values in data.items():
+            if section in TICKET_CONFIG:
+                for key, value in values.items():
+                    if key in TICKET_CONFIG[section]:
+                        TICKET_CONFIG[section][key] = value
+        
+        return JSONResponse({
+            "message": "Configuration updated successfully",
+            "config": TICKET_CONFIG
+        })
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
