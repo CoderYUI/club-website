@@ -35,7 +35,7 @@ const Navbar2: React.FC = () => {
   useGSAP(() => {
     // Set initial states
     if (navRef.current) {
-      gsap.set(navRef.current, { xPercent: 100, display: 'none' });
+      gsap.set(navRef.current, { x: '100%', display: 'none' });
     }
     
     const allLinks = gsap.utils.toArray(linksRef.current);
@@ -53,7 +53,7 @@ const Navbar2: React.FC = () => {
       .timeline({ paused: true })
       .to(navRef.current, {
         display: 'flex',
-        xPercent: 0,
+        x: 0,
         duration: 1,
         ease: "power3.out",
       })
@@ -184,8 +184,8 @@ const Navbar2: React.FC = () => {
 
   const navItems = [
     { name: "Home", href: "/#home" },
-    { name: "Leaderboard", href: "https://leaderboard-linpack.vercel.app/" },
-    { name: "Expense", href: "https://linpack-expense-tracker.vercel.app/" },
+    { name: "Leaderboard", href: "https://leaderboard-peach-seven.vercel.app/" },
+    /*{ name: "Expense", href: "https://linpack-expense-tracker.vercel.app/" },*/
     // { name: "About Us", href: "/#aboutus" },
     { name: "Certificate", href: "/certificate" },
     { name: "Ticket", href: "/ticket" },
@@ -315,12 +315,42 @@ const Navbar2: React.FC = () => {
         </div>
       </nav>
 
+      {/* Backdrop overlay for mobile menu */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[9999] md:hidden"
+          onClick={toggleMenu}
+          aria-label="Close menu"
+        />
+      )}
+
       {/* Mobile Menu with Sliding Animation */}
       <nav
         ref={navRef}
-        className="fixed z-50 flex flex-col justify-between w-[105vw] h-[100vh] px-5 sm:px-10 uppercase py-20 gap-y-10 md:w-1/2 md:left-1/2 md:hidden shadow-2xl border-l-2 border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200"
-        style={{ display: 'none', transform: 'translateX(100%)' }}
+        className="fixed top-0 right-0 z-[10000] flex flex-col justify-between w-full h-[100vh] px-5 sm:px-10 uppercase py-20 gap-y-10 max-w-md shadow-2xl border-l-2 border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200"
+        style={{ display: 'none' }}
       >
+        {/* Close Button */}
+        <button
+          onClick={toggleMenu}
+          className="absolute top-6 right-6 p-2 text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white transition-colors duration-300 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
+          aria-label="Close menu"
+        >
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+
         {/* Add margin top to avoid navbar overlap */}
         <div className="mt-20"></div>
         
