@@ -184,8 +184,8 @@ const Navbar2: React.FC = () => {
 
   const navItems = [
     { name: "Home", href: "/#home" },
-    { name: "Leaderboard", href: "https://leaderboard-linpack.vercel.app/" },
-    { name: "Expense", href: "https://linpack-expense-tracker.vercel.app/" },
+    { name: "Leaderboard", href: "https://leaderboard-peach-seven.vercel.app/" },
+    /*{ name: "Expense", href: "https://linpack-expense-tracker.vercel.app/" },*/
     // { name: "About Us", href: "/#aboutus" },
     { name: "Certificate", href: "/certificate" },
     { name: "Ticket", href: "/ticket" },
@@ -318,7 +318,7 @@ const Navbar2: React.FC = () => {
       {/* Mobile Menu with Sliding Animation */}
       <nav
         ref={navRef}
-        className="fixed z-50 flex flex-col justify-between w-[105vw] h-[100vh] px-5 sm:px-10 uppercase py-20 gap-y-10 md:w-1/2 md:left-1/2 md:hidden shadow-2xl border-l-2 border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200"
+        className="fixed z-[10000] flex flex-col justify-between w-[105vw] h-[100vh] px-5 sm:px-10 uppercase py-20 gap-y-10 md:w-1/2 md:left-1/2 md:hidden shadow-2xl border-l-2 border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200"
         style={{ display: 'none', transform: 'translateX(100%)' }}
       >
         {/* Add margin top to avoid navbar overlap */}
