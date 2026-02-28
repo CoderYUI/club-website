@@ -25,6 +25,8 @@ export default function ScannerPage() {
   } | { verified: false } | null>(null);
   const [error, setError] = useState<string>('');
   const [isMarking, setIsMarking] = useState<number | null>(null); // Track which member is being marked (1, 2, or null)
+  const [manualRegNo, setManualRegNo] = useState<string>('');
+  const [isManualLookup, setIsManualLookup] = useState<boolean>(false);
   const scannerRef = useRef<Html5Qrcode | null>(null);
 
   const stopScanner = useCallback(async () => {
@@ -156,6 +158,55 @@ export default function ScannerPage() {
     }
   };
 
+  const handleManualLookup = async () => {
+    if (!manualRegNo.trim()) {
+      setError('Please enter a registration number');
+      return;
+    }
+
+    setIsManualLookup(true);
+    setError('');
+    try {
+      const response = await fetch(
+        `/api/py/lookup-team?reg_number=${encodeURIComponent(manualRegNo.trim())}`,
+        { cache: 'no-store' }
+      );
+      
+      if (response.ok) {
+        const data = await response.json();
+        setResult({
+          verified: true,
+          team_id: data.team_id,
+          team_name: data.team_name,
+          row_number: data.row_number,
+          member1: {
+            name: data.member1.name,
+            reg_number: data.member1.reg_number,
+            status: data.member1.status,
+            is_present: data.member1.is_present
+          },
+          member2: {
+            name: data.member2.name,
+            reg_number: data.member2.reg_number,
+            status: data.member2.status,
+            is_present: data.member2.is_present
+          },
+          scanned_reg: manualRegNo.trim()
+        });
+        setManualRegNo(''); // Clear input after successful lookup
+      } else {
+        setResult({ verified: false });
+        setError('Registration number not found');
+      }
+    } catch (err) {
+      console.error('Manual lookup error:', err);
+      setResult({ verified: false });
+      setError('Failed to lookup registration number');
+    } finally {
+      setIsManualLookup(false);
+    }
+  };
+
   const markEntry = async (memberNumber: 1 | 2) => {
     if (!result || !result.verified || !('row_number' in result) || !result.row_number) return;
 
@@ -252,6 +303,51 @@ export default function ScannerPage() {
         )}
 
         <div id="qr-reader" className="mb-6 overflow-hidden rounded-xl shadow-inner dark:bg-gray-700" />
+
+        {/* Manual Entry Section */}
+        <div className="mb-6">
+          <div className="flex items-center justify-center mb-3">
+            <div className="flex-1 border-t border-gray-300 dark:border-gray-600"></div>
+            <span className="px-4 text-sm text-gray-500 dark:text-gray-400 font-medium">OR</span>
+            <div className="flex-1 border-t border-gray-300 dark:border-gray-600"></div>
+          </div>
+          <div className="space-y-3">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              Manual Registration Number
+            </label>
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={manualRegNo}
+                onChange={(e) => setManualRegNo(e.target.value)}
+                onKeyPress={(e) => e.key === 'Enter' && handleManualLookup()}
+                placeholder="Enter registration number"
+                className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+                disabled={isManualLookup}
+              />
+              <button
+                onClick={handleManualLookup}
+                disabled={isManualLookup || !manualRegNo.trim()}
+                className={`px-6 py-2 rounded-lg font-medium transition-all duration-200 ${
+                  isManualLookup || !manualRegNo.trim()
+                    ? 'bg-gray-400 dark:bg-gray-600 cursor-not-allowed text-white'
+                    : 'bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 text-white shadow-md hover:shadow-lg'
+                }`}
+              >
+                {isManualLookup ? (
+                  <span className="flex items-center">
+                    <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                  </span>
+                ) : (
+                  'Lookup'
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
 
         {result && (
           <div className={`p-6 rounded-xl transition-all duration-200 ${
