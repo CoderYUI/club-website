@@ -176,13 +176,14 @@ function ConfirmationModal({
 }
 
 export default function CertificateForm() {
-  const FEATURE_ENABLED = false; // Set to true to enable certificate generation
+  const FEATURE_ENABLED = true; // Set to true to enable certificate generation
   
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
-  const [name, setName] = useState("");
   const [regNo, setRegNo] = useState("");
+  const [foundName, setFoundName] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isSearching, setIsSearching] = useState(false);
   const [status, setStatus] = useState("");
   const [isApiOnline, setIsApiOnline] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -300,18 +301,55 @@ export default function CertificateForm() {
     };
   }, [status]);
 
-  const generatecertificate = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const searchParticipant = async () => {
+    if (!regNo.trim()) {
+      setError("Please enter a registration number");
+      return;
+    }
+    setError("");
+    setFoundName("");
+    setIsSearching(true);
+
+    try {
+      const response = await fetch(
+        `${API_URL}api/py/search-participant?reg_number=${encodeURIComponent(regNo.trim())}`
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.detail || "Participant not found");
+      }
+
+      const data = await response.json();
+      setFoundName(data.name);
+      setStatus("Participant found! Configure position and generate certificate.");
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "Failed to search participant"
+      );
+      setFoundName("");
+    } finally {
+      setIsSearching(false);
+    }
+  };
+
+  const generatecertificate = async (e?: React.FormEvent<HTMLFormElement>) => {
+    if (e) e.preventDefault();
+    if (!foundName) {
+      setError("Please search for a participant first");
+      return;
+    }
     setError("");
     setStatus("");
     setIsLoading(true);
 
     try {
-      const response = await fetch("/api/py/certificate", {
+      const formData = new FormData();
+      formData.append("reg_number", regNo.trim());
+
+      const response = await fetch(`${API_URL}api/py/generate-certificate`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ 
-          name, reg_number: regNo }),
+        body: formData,
       });
 
       if (!response.ok) {
@@ -323,7 +361,7 @@ export default function CertificateForm() {
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `${regNo}_certificate.png`;
+      a.download = `${regNo.trim()}_certificate.png`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -331,8 +369,8 @@ export default function CertificateForm() {
 
       setStatus("Certificate Generated Successfully!");
       setShowConfirmation(true);
-      setName("");
       setRegNo("");
+      setFoundName("");
       // Confirmation modal will auto-close after 3 seconds
       setTimeout(() => {
         setShowConfirmation(false);
@@ -341,66 +379,6 @@ export default function CertificateForm() {
       setError(
         err instanceof Error ? err.message : "An unknown error occurred"
       );
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleDownload = async () => {
-    if (!regNo) {
-      setError("Please enter registration number");
-      return;
-    }
-
-    if (!name) {
-      setError("Please enter your name");
-      return;
-    }
-
-    setIsLoading(true);
-    setError("");
-
-    try {
-      console.log("Sending request with reg_number:", regNo);
-      
-      const response = await fetch("/api/py/certificate", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ 
-          reg_number: regNo.trim(),
-          name: name.trim()
-        }),
-      });
-
-      console.log("Response status:", response.status);
-
-      if (!response.ok) {
-        let errorMessage = "Certificate not found";
-        try {
-          const errorData = await response.json();
-          errorMessage = errorData.error || errorMessage;
-        } catch (e) {
-          console.error("Failed to parse error response:", e);
-        }
-        throw new Error(errorMessage);
-      }
-
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `certificate_${regNo}.png`;
-      document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(a);
-      
-      setError("");
-    } catch (err) {
-      console.error("Download error:", err);
-      setError(err instanceof Error ? err.message : "Failed to generate certificate. Please check your registration number.");
     } finally {
       setIsLoading(false);
     }
@@ -646,7 +624,7 @@ export default function CertificateForm() {
                       d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
                     />
                   </svg>
-                  <span>Event Date: December 30, 2025</span>
+                  <span>Event Date: February 28, 2026</span>
                 </div>
                 <div className="flex items-center bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full border border-white/20 shadow-lg">
                   <svg
@@ -668,7 +646,7 @@ export default function CertificateForm() {
                       d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                     />
                   </svg>
-                  <span>Online</span>
+                  <span>Venue: Architechture Block 102 & 103</span>
                 </div>
               </motion.div>
             </div>
@@ -703,33 +681,7 @@ export default function CertificateForm() {
                 onSubmit={generatecertificate}
                 className="space-y-6"
               >
-                {/* Name Input */}
-                <div>
-                  <label
-                    htmlFor="name"
-                    className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2"
-                  >
-                    Full Name
-                  </label>
-                  <div className="relative">
-                    <input
-                      id="name"
-                      type="text"
-                      placeholder="Enter your full name"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      className="w-full p-4 border border-gray-300 dark:border-gray-800 rounded-xl 
-                               focus:ring-2 focus:ring-blue-500 focus:border-blue-500 
-                               dark:bg-black/50 dark:text-white transition-all
-                               text-base backdrop-blur-sm bg-white/50
-                               dark:placeholder-gray-400"
-                      required
-                    />
-                    <div className="absolute inset-0 rounded-xl shadow-[0_0_0_1px_rgba(0,0,0,0.1)] dark:shadow-[0_0_0_1px_rgba(255,255,255,0.1)] pointer-events-none"></div>
-                  </div>
-                </div>
-
-                {/* Registration Number Input */}
+                {/* Registration Number Input with Search */}
                 <div>
                   <label
                     htmlFor="regNo"
@@ -737,30 +689,61 @@ export default function CertificateForm() {
                   >
                     Registration Number
                   </label>
-                  <div className="relative">
-                    <input
-                      id="regNo"
-                      type="text"
-                      placeholder="Enter your registration number"
-                      value={regNo}
-                      onChange={(e) => setRegNo(e.target.value)}
-                      className="w-full p-4 border border-gray-300 dark:border-gray-800 rounded-xl 
-                               focus:ring-2 focus:ring-blue-500 focus:border-blue-500 
-                               dark:bg-black/50 dark:text-white transition-all
-                               text-base backdrop-blur-sm bg-white/50
-                               dark:placeholder-gray-400"
-                      required
-                    />
-                    <div className="absolute inset-0 rounded-xl shadow-[0_0_0_1px_rgba(0,0,0,0.1)] dark:shadow-[0_0_0_1px_rgba(255,255,255,0.1)] pointer-events-none"></div>
+                  <div className="flex gap-2">
+                    <div className="relative flex-1">
+                      <input
+                        id="regNo"
+                        type="text"
+                        placeholder="Enter your registration number"
+                        value={regNo}
+                        onChange={(e) => setRegNo(e.target.value)}
+                        onKeyPress={(e) => e.key === 'Enter' && searchParticipant()}
+                        className="w-full p-4 border border-gray-300 dark:border-gray-800 rounded-xl 
+                                 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 
+                                 dark:bg-black/50 dark:text-white transition-all
+                                 text-base backdrop-blur-sm bg-white/50
+                                 dark:placeholder-gray-400"
+                      />
+                      <div className="absolute inset-0 rounded-xl shadow-[0_0_0_1px_rgba(0,0,0,0.1)] dark:shadow-[0_0_0_1px_rgba(255,255,255,0.1)] pointer-events-none"></div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={searchParticipant}
+                      disabled={isSearching || !regNo.trim()}
+                      className={`px-6 py-4 rounded-xl font-medium transition-all duration-300 ${
+                        isSearching || !regNo.trim()
+                          ? "bg-gray-400 dark:bg-gray-700 cursor-not-allowed text-white"
+                          : "bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white shadow-lg"
+                      }`}
+                    >
+                      {isSearching ? (
+                        <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                      ) : (
+                        "Search"
+                      )}
+                    </button>
                   </div>
                 </div>
+
+                {/* Found Name Display */}
+                {foundName && (
+                  <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl p-4">
+                    <p className="text-sm text-green-600 dark:text-green-400">Found Participant</p>
+                    <p className="text-lg font-semibold text-green-900 dark:text-green-100">{foundName}</p>
+                  </div>
+                )}
+
+                
 
                 {/* Submit Button */}
                 <button
                   type="submit"
-                  disabled={isLoading}
+                  disabled={isLoading || !foundName}
                   className={`w-full p-4 rounded-xl text-white font-medium transition-all duration-300 transform hover:scale-[1.02] ${
-                    isLoading
+                    isLoading || !foundName
                       ? "bg-gray-400 dark:bg-gray-700 cursor-not-allowed"
                       : "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg"
                   }`}
@@ -849,18 +832,7 @@ export default function CertificateForm() {
                   </p>
                 </div>
                 
-                {/* Verify Certificate Button as Link */}
-                <div className="pt-4">
-                  <Link href="/scanner">
-                    <motion.div 
-                      whileHover={{ scale: 1.03 }}
-                      whileTap={{ scale: 0.98 }}
-                      className="w-full sm:w-auto bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-medium py-3 px-6 rounded-xl transition text-center shadow-lg cursor-pointer"
-                    >
-                      Verify Certificate
-                    </motion.div>
-                  </Link>
-                </div>
+                
               </div>
             </div>
           </motion.div>

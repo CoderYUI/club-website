@@ -24,9 +24,10 @@ CERTIFICATE_DATA_FILE = os.path.join(BASE_DIR, "assets", "data2.json")
 TICKET_DATA_FILE = os.path.join(BASE_DIR, "assets", "data-tickets.json")
 TEMPLATE_PATH = os.path.join(BASE_DIR, "assets", "event.png")
 EVENT_TICKET_TEMPLATE_PATH = os.path.join(BASE_DIR, "assets", "event-ticket.png")
-CERTIFICATE_TEMPLATE_PATH = os.path.join(BASE_DIR, "assets", "certificate.png")
-FONT_PATH = os.path.join(BASE_DIR, "assets", "arial.ttf")
+CERTIFICATE_TEMPLATE_PATH = os.path.join(BASE_DIR, "assets", "vitb-got-latent", "certificate.png")
+FONT_PATH = os.path.join(BASE_DIR, "assets", "vitb-got-latent", "playlist.otf")
 PUBLIC_SANS_FONT_PATH = os.path.join(BASE_DIR, "assets", "PublicSans-Bold.ttf")
+CSV_DATA_PATH = os.path.join(BASE_DIR, "assets", "vitb-got-latent", "data.csv")
 
 # Google Sheets Configuration from Environment Variables
 # Load service account credentials from environment variable
@@ -73,6 +74,43 @@ TICKET_CONFIG = {
         "size": 280  # QR code size
     }
 }
+
+# Configurable positioning for certificate generation (adjust these values as needed)
+CERTIFICATE_CONFIG = {
+    "name": {
+        "x": 350,  # Adjust X position
+        "y": 830,  # Adjust Y position
+        "size": 140,  # Font size
+        "color": "Red",
+        "align": "center"  # Text alignment: "left", "center", "right"
+    }
+}
+
+def load_vitb_csv_data():
+    """Load participant data from VITB Got Latent CSV file"""
+    participants = []
+    try:
+        with open(CSV_DATA_PATH, 'r', encoding='utf-8') as file:
+            csv_reader = csv.DictReader(file)
+            for row in csv_reader:
+                participants.append(row)
+    except Exception as e:
+        print(f"Error loading CSV: {e}")
+    return participants
+
+def normalize_reg_no(reg_no):
+    """Normalize registration number: remove spaces and convert to lowercase"""
+    return reg_no.strip().lower().replace(" ", "") if reg_no else ""
+
+def search_participant_by_reg_no(reg_no):
+    """Search for participant in CSV by registration number (case-insensitive, space-insensitive)"""
+    participants = load_vitb_csv_data()
+    normalized_search = normalize_reg_no(reg_no)
+    
+    for participant in participants:
+        if normalize_reg_no(participant.get('Reg_No', '')) == normalized_search:
+            return participant
+    return None
 
 def get_google_sheets_client():
     """Initialize Google Sheets client with service account (Sheets API only, no Drive API)"""
@@ -357,70 +395,90 @@ async def generate_ticket(name: str = Form(...), reg_no: str = Form(...)):
         }
     )
 
+@app.get("/api/py/search-participant")
+async def search_participant(reg_number: str):
+    """Search for participant by registration number in VITB Got Latent CSV"""
+    print(f"Searching for registration number: {reg_number}")
+    
+    participant = search_participant_by_reg_no(reg_number)
+    
+    if not participant:
+        raise HTTPException(
+            status_code=404,
+            detail="Participant not found"
+        )
+    
+    return {
+        "name": participant.get('Name', ''),
+        "reg_number": participant.get('Reg_No', ''),
+        "found": True
+    }
+
 @app.post("/api/py/generate-certificate")
-async def generate_certificate(name: str = Form(...)):
-    print(f"Received input: name='{name}'")
+async def generate_certificate(
+    reg_number: str = Form(...),
+    x: int = Form(None),
+    y: int = Form(None),
+    font_size: int = Form(None)
+):
+    """Generate certificate with name printed on it using configurable position and font size"""
+    print(f"Generating certificate for registration number: {reg_number}")
     
-    # Normalize the input name
-    normalized_input_name = normalize_name(name)
+    # Search for participant
+    participant = search_participant_by_reg_no(reg_number)
     
-    # Find the user in certificate database
-    matching_user = None
-    valid_names = []
-    
-    for user in CERTIFICATE_USERS_DATA:
-        valid_names.append(user["name"])
-        normalized_stored_name = normalize_name(user["name"])
-        if normalize_name(name) == normalized_stored_name:
-            matching_user = user
-            break
-    
-    if not matching_user:
-        print("User not found!")
+    if not participant:
+        print("Participant not found!")
         raise HTTPException(
             status_code=404, 
-            detail="No User Found"  # Simplified error message
+            detail="Participant not found"
         )
-
-    # Use the stored name from JSON instead of input name
-    stored_name = matching_user["name"]
+    
+    stored_name = participant.get('Name', '')
     print(f"Using stored name: {stored_name}")
-
-    hashed_data = matching_user["certificate_hash"]
-    print(f"Using stored hash: {hashed_data}")
-
-    qr = qrcode.make(hashed_data)  # Only store the hash
-    qr = qr.resize((200, 200))
-    print("QR Code generated with hash!")
-
+    
     if not os.path.exists(CERTIFICATE_TEMPLATE_PATH):
         raise FileNotFoundError("Error: certificate template not found!")
-
+    
     certificate = Image.open(CERTIFICATE_TEMPLATE_PATH)
     print("Certificate template loaded!")
-
-    qr_code_position = (1650, 1100)  # (x, y)
-    certificate.paste(qr, qr_code_position)
-    print("QR Code pasted!")
-
+    
+    # Use configurable position and font size, allowing overrides
+    config = CERTIFICATE_CONFIG["name"]
+    name_x = x if x is not None else config["x"]
+    name_y = y if y is not None else config["y"]
+    size = font_size if font_size is not None else config["size"]
+    color = config["color"]
+    alignment = config.get("align", "left")  # Get alignment, default to left
+    
     draw = ImageDraw.Draw(certificate)
     try:
-        font = ImageFont.truetype(FONT_PATH, 75)  # Adjust font size as needed
+        font = ImageFont.truetype(FONT_PATH, size)
     except IOError:
         print("Warning: Font not found! Using default font.")
         font = ImageFont.load_default()
     print("Font loaded!")
-
-    # Name position only (removing reg_no)
-    name_position = (600, 550)  
-    draw.text(name_position, f"{stored_name}", font=font, fill="Brown")
-    print("Name drawn!")
-
+    
+    # Calculate centered position if alignment is center
+    if alignment == "center":
+        # Get image width
+        img_width = certificate.width
+        # Calculate text width using textbbox
+        bbox = draw.textbbox((0, 0), stored_name, font=font)
+        text_width = bbox[2] - bbox[0]
+        # Center the text horizontally
+        name_x = (img_width - text_width) // 2
+        print(f"Text centered: image_width={img_width}, text_width={text_width}, final_x={name_x}")
+    
+    # Draw name at configured position
+    draw.text((name_x, name_y), stored_name, font=font, fill=color)
+    print(f"Name drawn at position ({name_x}, {name_y}) with font size {size}!")
+    
     # Generate certificate in memory only
     img_byte_arr = BytesIO()
     certificate.save(img_byte_arr, format='PNG')
     img_byte_arr.seek(0)
-
+    
     return StreamingResponse(
         img_byte_arr,
         media_type="image/png",
