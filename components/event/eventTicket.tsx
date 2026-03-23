@@ -176,6 +176,7 @@ function ConfirmationModal({
 }
 
 export default function TicketForm() {
+  const FEATURE_ENABLED = false; // Set to true to enable event ticket generation
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const [regNo, setRegNo] = useState("");
   const [error, setError] = useState("");
@@ -379,6 +380,134 @@ export default function TicketForm() {
     return (
       <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-black dark:to-black">
         <div className="h-16"></div>
+      </div>
+    );
+  }
+
+  // Coming Soon Page
+  if (!FEATURE_ENABLED) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-black dark:to-black flex items-center justify-center px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="max-w-2xl w-full text-center"
+        >
+          <div className="bg-white/80 dark:bg-black/80 backdrop-blur-xl shadow-2xl rounded-3xl p-8 sm:p-12 border border-white/50 dark:border-gray-800">
+            {/* Icon */}
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ 
+                type: "spring", 
+                stiffness: 260, 
+                damping: 20,
+                delay: 0.2 
+              }}
+              className="mx-auto flex items-center justify-center h-20 w-20 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 mb-8 shadow-lg"
+            >
+              <svg
+                className="w-10 h-10 text-white drop-shadow"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="1.5"
+                  d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"
+                />
+              </svg>
+            </motion.div>
+
+            {/* Title */}
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="text-4xl sm:text-5xl font-extralight text-gray-800 dark:text-white mb-4"
+            >
+              Event Tickets
+            </motion.h1>
+
+            {/* Coming Soon Badge */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              className="inline-block mb-6"
+            >
+              <span className="px-6 py-2 bg-gradient-to-r from-yellow-500 to-orange-500 text-white text-lg font-semibold rounded-full shadow-lg">
+                Coming Soon
+              </span>
+            </motion.div>
+
+            {/* Description */}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+              className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed"
+            >
+              We're working hard to bring you fast and easy event ticket generation.
+              Check back soon for updates!
+            </motion.p>
+
+            {/* Features List */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-900 rounded-2xl p-6 mb-8 border border-blue-100 dark:border-gray-800"
+            >
+              <h3 className="font-medium text-blue-800 dark:text-blue-300 mb-4 text-left flex items-center">
+                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                What to Expect
+              </h3>
+              <ul className="text-left text-gray-700 dark:text-gray-300 space-y-3">
+                <li className="flex items-start">
+                  <span className="inline-block w-2 h-2 rounded-full bg-blue-500 mt-2 mr-3"></span>
+                  <span>Instant event ticket generation for participants</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="inline-block w-2 h-2 rounded-full bg-purple-500 mt-2 mr-3"></span>
+                  <span>QR code integrated tickets with verification</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="inline-block w-2 h-2 rounded-full bg-pink-500 mt-2 mr-3"></span>
+                  <span>Easy download and sharing capabilities</span>
+                </li>
+              </ul>
+            </motion.div>
+
+            {/* Contact Information */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.7 }}
+              className="text-gray-600 dark:text-gray-300"
+            >
+              <p className="flex items-center justify-center">
+                <svg className="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                <span>
+                  Questions? Contact us at{" "}
+                  <a
+                    href="mailto:linpack@vitbhopal.ac.in"
+                    className="text-blue-600 dark:text-blue-400 hover:underline"
+                  >
+                    linpack@vitbhopal.ac.in
+                  </a>
+                </span>
+              </p>
+            </motion.div>
+          </div>
+        </motion.div>
       </div>
     );
   }
