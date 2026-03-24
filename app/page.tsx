@@ -7,11 +7,13 @@ import Section4 from '@/components/section/section4'
 import ProjectScroller from '@/components/scroller/ProjectScroller'
 // import InfiniteScroll from '@/components/infinite-scroll/InfiniteScroll' - Removed for now
 import { GoogleGeminiEffectDemo } from '@/components/ui/google-gemini-effect-demo'
+import EventPopup from '@/components/EventPopup'
 import React from 'react'
 
 export default function page() {
   return (
     <div>
+      <EventPopup />
       <Hero/>
       {/* <InfiniteScroll /> - Removed for now */}
       <ImgeSlider />

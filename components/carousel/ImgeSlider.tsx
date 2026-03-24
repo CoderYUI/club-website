@@ -46,49 +46,38 @@ export default function ImageSlider() {
 
           {/* Main heading with magazine-style typography */}
           <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extralight tracking-[-0.02em] text-black dark:text-white mb-6 leading-[0.9] font-serif max-w-5xl mx-auto">
-            <span className="block lg:inline">VITB GOT</span>
+            <span className="block lg:inline">Hack</span>
             <span className="block lg:inline font-thin italic bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 bg-clip-text text-transparent mt-2 lg:mt-0 lg:ml-4">
-              LATENT
+              Matrix
             </span>
           </h1>
 
           {/* Event Taglines */}
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-light text-gray-700 dark:text-gray-300 mb-3 font-serif">
-            Season 2
-          </h2>
-          <p className="text-lg md:text-xl text-blue-600 dark:text-blue-400 font-medium mb-4">
+          {/* <p className="text-lg md:text-xl text-blue-600 dark:text-blue-400 font-medium mb-4">
             The campus chaos you loved is BACK. Bigger games. Wilder moments. Zero chill. 👀
-          </p>
+          </p> */}
           <p className="text-base md:text-lg text-gray-600 dark:text-gray-400 font-light">
-            Grab your partner and step into the ultimate 2-member showdown
+            Grab your team and step into a high-energy hackathon where innovation meets execution.
           </p>
         </motion.div>
 
         {/* Editorial Layout Event Card */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
           {/* Visual Storytelling */}
-          <div className="relative h-[600px] md:h-[700px] lg:h-[750px] rounded-2xl overflow-hidden shadow-2xl">
+          <div className="relative h-[700px] md:h-[800px] lg:h-[850px] rounded-2xl overflow-hidden shadow-2xl">
             <Image
-              src="/images/vitb_got_latent_s2.png"
-              alt="VITB GOT LATENT Season 2 Event Poster"
+              src="/images/hackmatrix.png"
+              alt="Hack Matrix Event Poster"
               fill
               className="object-contain"
               priority
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
 
-            {/* Editorial Date Stamp */}
-            <div className="absolute top-6 left-6 bg-white dark:bg-black px-4 py-2 rounded-lg shadow-lg">
-              <div className="text-center">
-                <div className="text-2xl font-serif font-bold text-black dark:text-white">28</div>
-                <div className="text-xs uppercase tracking-widest text-gray-600 dark:text-gray-400">FEB 2026</div>
-              </div>
-            </div>
-
             {/* Editorial Caption */}
             <div className="absolute bottom-6 left-6 right-6">
               <div className="text-white">
-                <h3 className="text-2xl font-light">VITB GOT LATENT – Season 2</h3>
+                <h3 className="text-2xl font-light">Hack Matrix</h3>
                 <p className="text-sm text-gray-200 mt-1">The campus chaos is back!</p>
               </div>
             </div>
@@ -99,22 +88,22 @@ export default function ImageSlider() {
             <div>
               <div className="mb-6">
                 <span className="inline-block px-3 py-1.5 text-xs font-semibold text-blue-600 bg-blue-50 dark:bg-blue-900/20 rounded-full mb-4">
-                  Ultimate 2-Member Challenge
+                  Ultimate Hackathon Experience
                 </span>
 
                 <h3 className="text-3xl font-extralight text-black dark:text-white mb-4 leading-tight tracking-[-0.02em]">
-                  Games, Talent & Fun
+                  Innovation, Build & Compete
                 </h3>
 
                 <p className="text-gray-600 dark:text-gray-400 mb-6 text-lg leading-relaxed">
-                  The campus chaos you loved is BACK. Team up with your partner for epic 2-member games, showcase your hidden talents in the Latent Show, and experience the wildest moments on campus. Zero chill guaranteed! 🔥
+                  The campus innovation hub is LIVE. Team up, bring your ideas to life, and compete in a high-intensity hybrid hackathon. From ideation to execution, experience the thrill of building real-world solutions. Zero limits. Pure innovation. 🚀
                 </p>
 
                 {/* Event Details Icons */}
                 <div className="flex flex-wrap gap-4 sm:gap-6 mb-8 p-4 bg-gray-50 dark:bg-gray-800/30 rounded-xl border border-gray-100 dark:border-gray-800">
                   <div className="flex items-center text-gray-700 dark:text-gray-300">
                     <svg className="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                    <span className="font-medium">28th Feb 2026</span>
+                    <span className="font-medium">3rd April 2026</span>
                   </div>
                   <div className="flex items-center text-gray-700 dark:text-gray-300">
                     <svg className="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
@@ -132,30 +121,40 @@ export default function ImageSlider() {
                 <div className="bg-gray-50 dark:bg-gray-800/50 p-5 rounded-xl border border-gray-100 dark:border-gray-800 transition-all hover:shadow-md">
                   <h4 className="text-lg font-medium text-black dark:text-white mb-2 flex items-center">
                     <span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
-                    Epic 2-Member Games 🎮
+                    Online Idea Screening 💻
                   </h4>
                   <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed pl-5">
-                    Ice Cream Fight, Dart Arena, Balloon Between Us, Cup Stack & Knock, Face Painting – Choose your battles and dominate!
+                    Submit your PPT with problem statement, solution, architecture, and tech stack. Get shortlisted based on innovation and feasibility.
                   </p>
                 </div>
 
                 <div className="bg-gray-50 dark:bg-gray-800/50 p-5 rounded-xl border border-gray-100 dark:border-gray-800 transition-all hover:shadow-md">
                   <h4 className="text-lg font-medium text-black dark:text-white mb-2 flex items-center">
                     <span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
-                    Latent Show 🎤
+                    Offline Final Hackathon 🛠️
                   </h4>
                   <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed pl-5">
-                    Got hidden talent? Send your intro video and perform live. Judges decide, but the audience can flip the game!
+                    Build your solution live on campus, develop prototypes, and present to judges in a full-day competitive environment.
                   </p>
                 </div>
 
                 <div className="bg-gray-50 dark:bg-gray-800/50 p-5 rounded-xl border border-gray-100 dark:border-gray-800 transition-all hover:shadow-md">
                   <h4 className="text-lg font-medium text-black dark:text-white mb-2 flex items-center">
                     <span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
-                    Multiple Pass Options 💰
+                    💰 Registration Options
                   </h4>
                   <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed pl-5">
-                    ₹50 Single Game | ₹100 Latent Show | ₹120 All Games | ₹150 All Games + Latent Show
+                    ₹69 Solo | ₹89 Duo | ₹119 Squad (3–4 Members) 
+                  </p>
+                </div>
+
+                <div className="bg-gray-50 dark:bg-gray-800/50 p-5 rounded-xl border border-gray-100 dark:border-gray-800 transition-all hover:shadow-md">
+                  <h4 className="text-lg font-medium text-black dark:text-white mb-2 flex items-center">
+                    <span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+                    📜 Participation Certificates
+                  </h4>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed pl-5">
+                    All participants will receive E-certificates to recognize their effort, innovation, and contribution. 
                   </p>
                 </div>
               </div>
@@ -164,7 +163,7 @@ export default function ImageSlider() {
             {/* Editorial CTA */}
             <div className="border-t border-gray-200 dark:border-gray-800 pt-8">
               <a 
-                href="https://forms.gle/N6rwkv8A75o63cYY8"
+                href="https://docs.google.com/forms/d/e/1FAIpQLSdH6DuQgHYbatfkKIRjVY0JSvrLFM9wUj5G16kpbbCYJyj0Cw/viewform"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center group"
