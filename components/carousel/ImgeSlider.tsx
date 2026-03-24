@@ -53,9 +53,9 @@ export default function ImageSlider() {
           </h1>
 
           {/* Event Taglines */}
-          <p className="text-lg md:text-xl text-blue-600 dark:text-blue-400 font-medium mb-4">
+          {/* <p className="text-lg md:text-xl text-blue-600 dark:text-blue-400 font-medium mb-4">
             The campus chaos you loved is BACK. Bigger games. Wilder moments. Zero chill. 👀
-          </p>
+          </p> */}
           <p className="text-base md:text-lg text-gray-600 dark:text-gray-400 font-light">
             Grab your team and step into a high-energy hackathon where innovation meets execution.
           </p>
